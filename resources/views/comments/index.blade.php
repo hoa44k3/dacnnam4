@@ -9,33 +9,35 @@
     <div class="card-body">
         <div class="table-responsive">
             <table class="table table-striped table-hover">
-        <thead>
-            <tr>
-                <th>Content</th>
-                <th>Dish</th>
-                <th>Customer</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach($comments as $comment)
-            <tr>
-                <td>{{ $comment->content }}</td>
-                <td>{{ $comment->dish ? $comment->dish->name : 'N/A' }}</td>
+                <thead>
+                    <tr>
+                        <th>Content</th>
+                        <th>Dish</th>
+                        <th>Customer</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach($comments as $comment)
+                    <tr>
+                        <td>{{ $comment->content }}</td>
+                        <td>{{ $comment->dish ? $comment->dish->name : 'N/A' }}</td>
 
-                <td>{{ $comment->customer_id ? $comment->customer->name : 'N/A' }}</td>
-                <td>
-                    <a href="{{ route('comments.edit', $comment->id) }}" class="btn btn-warning">Edit</a>
-                    <form action="{{ route('comments.destroy', $comment->id) }}" method="POST" style="display:inline;" class="delete-form">
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit" class="btn btn-danger">Delete</button>
-                    </form>
-                </td>
-            </tr>
-            @endforeach
-        </tbody>
-    </table>
+                        <td>{{ $comment->customer_id ? $comment->customer->name : 'N/A' }}</td>
+                        <td>
+                            <a href="{{ route('comments.edit', $comment->id) }}" class="btn btn-warning">Edit</a>
+                            <form action="{{ route('comments.destroy', $comment->id) }}" method="POST" style="display:inline;" class="delete-form">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-danger">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>
 @endsection
 

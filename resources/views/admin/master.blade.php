@@ -78,135 +78,97 @@
           <div class="sidebar-content">
             <ul class="nav nav-secondary">
               <!-- Thẻ Dashboard -->
-              <li class="nav-item active">
-                <a href="{{route('admin.index')}}">
+              <li class="nav-item {{ request()->routeIs('admin.index') ? 'active' : '' }}">
+                <a href="{{ route('admin.index') }}">
                   <i class="fas fa-home"></i>
-                  <p>Dashboard</p>
-                  <span class="caret"></span>
+                  <p>Quản lý Admin</p>
                 </a>
               </li>
         
               <!-- Thẻ Category -->
-              <li class="nav-item">
-                <a data-bs-toggle="collapse" href="#base">
+              <li class="nav-item {{ request()->routeIs('category.*') ? 'active' : '' }}">
+                <a href="{{ route('category.index') }}">
                   <i class="fas fa-layer-group"></i>
                   <p>Category</p>
-                  <span class="caret"></span>
                 </a>
-                <div class="collapse" id="base">
-                  <ul class="nav nav-collapse">
-                    <li>
-                      <a href="{{route('category.index')}}">
-                        <span class="sub-item">List Category</span>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="{{route('category.create')}}">
-                        <span class="sub-item">Add new category</span>
-                      </a>
-                    </li>
-                  </ul>
-                </div>
               </li>
-              
         
-              <!-- Thẻ Tags -->
-              <li class="nav-item">
-                <a data-bs-toggle="collapse" href="#tags">
-                  <i class="fas fa-tags"></i>
-                  <p>Hish</p>
-                  <span class="caret"></span>
+              <!-- Thẻ Dishes -->
+              <li class="nav-item {{ request()->routeIs('dish.*') ? 'active' : '' }}">
+                <a href="{{ route('dish.index') }}">
+                  <i class="fas fa-utensils"></i>
+                  <p>Dishes</p>
                 </a>
-                <div class="collapse" id="tags">
-                  <ul class="nav nav-collapse">
-                    <li>
-                      <a href="{{route('dish.index')}}">
-                        <span class="sub-item">List Dish</span>
-                      </a>
-                    </li>
-                    {{-- <li>
-                      <a href="{{route('dish.create')}}">
-                        <span class="sub-item">Add new dish</span>
-                      </a>
-                    </li> --}}
-                  </ul>
-                </div>
               </li>
-              <li class="nav-item">
-                <a data-bs-toggle="collapse" href="#tags">
-                  <i class="fas fa-tags"></i>
-                  <p>Blog</p>
-                  <span class="caret"></span>
+        
+              <!-- Thẻ Blogs -->
+              <li class="nav-item {{ request()->routeIs('blogs.*') ? 'active' : '' }}">
+                <a href="{{ route('blogs.index') }}">
+                  <i class="fas fa-newspaper"></i>
+                  <p>Blogs</p>
                 </a>
-                <div class="collapse" id="tags">
-                  <ul class="nav nav-collapse">
-                    <li>
-                      <a href="{{route('blogs.index')}}">
-                        <span class="sub-item">List Blog</span>
-                      </a>
-                    </li>
-                    {{-- <li>
-                      <a href="{{route('blogs.create')}}">
-                        <span class="sub-item">Add new blog</span>
-                      </a>
-                    </li> --}}
-                  </ul>
-                </div>
               </li>
-              <li class="nav-item">
-                <a data-bs-toggle="collapse" href="#tags">
-                  <i class="fas fa-tags"></i>
-                  <p>Customer</p>
-                  <span class="caret"></span>
+        
+              <!-- Thẻ Customers -->
+              <li class="nav-item {{ request()->routeIs('customers.*') ? 'active' : '' }}">
+                <a href="{{ route('customers.index') }}">
+                  <i class="fas fa-users"></i>
+                  <p>Customers</p>
                 </a>
-                <div class="collapse" id="tags">
-                  <ul class="nav nav-collapse">
-                    <li>
-                      <a href="{{route('customers.index')}}">
-                        <span class="sub-item">List Customer</span>
-                      </a>
-                    </li>
-                    
-                  </ul>
-                </div>
               </li>
-              <li class="nav-item">
-                <a data-bs-toggle="collapse" href="#tags">
-                  <i class="fas fa-tags"></i>
-                  <p>Comment</p>
-                  <span class="caret"></span>
+        
+              <!-- Thẻ Comments -->
+              <li class="nav-item {{ request()->routeIs('comments.*') ? 'active' : '' }}">
+                <a href="{{ route('comments.index') }}">
+                  <i class="fas fa-comments"></i>
+                  <p>Comments</p>
                 </a>
-                <div class="collapse" id="tags">
-                  <ul class="nav nav-collapse">
-                    <li>
-                      <a href="{{route('comments.index')}}">
-                        <span class="sub-item">List Comment</span>
-                      </a>
-                    </li>
-                    
-                  </ul>
-                </div>
               </li>
-              <li class="nav-item">
-                <a data-bs-toggle="collapse" href="#tags">
-                  <i class="fas fa-tags"></i>
-                  <p>Favorite</p>
-                  <span class="caret"></span>
+        
+              <!-- Thẻ Favorites -->
+              <li class="nav-item {{ request()->routeIs('favorites.*') ? 'active' : '' }}">
+                <a href="{{ route('favorites.index') }}">
+                  <i class="fas fa-heart"></i>
+                  <p>Favorites</p>
                 </a>
-                <div class="collapse" id="tags">
-                  <ul class="nav nav-collapse">
-                    <li>
-                      <a href="{{route('favorites.index')}}">
-                        <span class="sub-item">List favorite</span>
-                      </a>
-                    </li>
-                    
-                  </ul>
-                </div>
               </li>
+
+               {{-- Thẻ liên hệ --}}
+               <li class="nav-item {{ request()->routeIs('contacts.*') ? 'active' : '' }}">
+                  <a href="{{ route('contacts.index') }}">
+                      <i class="fas fa-envelope"></i>
+                      <p>Contacts</p>
+                  </a>
+              </li>
+
+              <!-- Thẻ Orders -->
+              <li class="nav-item {{ request()->routeIs('orders.*') ? 'active' : '' }}">
+                <a href="{{ route('orders.index') }}">
+                  <i class="fas fa-box"></i>
+                  <p>Orders</p>
+                </a>
+              </li>
+
+              <!-- Thẻ Carts -->
+              <li class="nav-item {{ request()->routeIs('carts.*') ? 'active' : '' }}">
+                <a href="{{ route('carts.index') }}">
+                  <i class="fas fa-shopping-cart"></i>
+                  <p>Carts</p>
+                </a>
+              </li>
+
+              <!-- Thẻ Payments -->
+              <li class="nav-item {{ request()->routeIs('payments.*') ? 'active' : '' }}">
+                <a href="{{ route('payments.index') }}">
+                  <i class="fas fa-credit-card"></i>
+                  <p>Payments</p>
+                </a>
+              </li>
+            
             </ul>
           </div>
         </div>
+        
         
       </div>
       <!-- End Sidebar -->

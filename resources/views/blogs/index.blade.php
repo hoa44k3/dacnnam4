@@ -13,7 +13,6 @@
                     <tr>
                         <th>ID</th>
                         <th>Tên blog</th>
-                       
                         <th>Hình ảnh</th>
                         <th>Mô tả</th>
                         <th>Trạng thái</th>
@@ -24,8 +23,7 @@
                     @foreach ($blogs as $blog)
                         <tr>
                             <td>{{ $blog->id }}</td>
-                            <td>{{ $blog->name }}</td>
-                           
+                            <td>{{ $blog->name }}</td>    
                             <td>
                                 <img src="{{ asset('storage/' . $blog->image) }}" alt="{{ $blog->name }}" width="50">
                             </td>

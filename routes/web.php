@@ -10,6 +10,11 @@ use App\Http\Controllers\BlogController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\FavoriteController;
+use App\Http\Controllers\ContactController;
+use App\Http\Controllers\OrderController;
+use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\CartController;
+use App\Models\Contact;
 use App\Models\Favorite;
 
 /*
@@ -33,6 +38,37 @@ Route::group(['prefix'=>''],function(){
 
 Route::group(['prefix' => 'admin'], function () {
     Route::get('/', [AdminController::class, 'index'])->name('admin.index');
+    
+    // Orders routes
+    Route::prefix('orders')->group(function () {
+        Route::get('/', [OrderController::class, 'index'])->name('orders.index');
+        Route::get('/create', [OrderController::class, 'create'])->name('orders.create');
+        Route::post('/', [OrderController::class, 'store'])->name('orders.store');
+        Route::get('/{order}/edit', [OrderController::class, 'edit'])->name('orders.edit');
+        Route::put('/{order}', [OrderController::class, 'update'])->name('orders.update');
+        Route::delete('/{order}', [OrderController::class, 'destroy'])->name('orders.destroy');
+    });
+
+     // Carts routes
+     Route::prefix('carts')->group(function () {
+        Route::get('/', [CartController::class, 'index'])->name('carts.index');
+        Route::get('/create', [CartController::class, 'create'])->name('carts.create');
+        Route::post('/', [CartController::class, 'store'])->name('carts.store');
+        Route::get('/{cart}/edit', [CartController::class, 'edit'])->name('carts.edit');
+        Route::put('/{cart}', [CartController::class, 'update'])->name('carts.update');
+        Route::delete('/{cart}', [CartController::class, 'destroy'])->name('carts.destroy');
+    });
+
+     // Payments routes
+     Route::prefix('payments')->group(function () {
+        Route::get('/', [PaymentController::class, 'index'])->name('payments.index');
+        Route::get('/create', [PaymentController::class, 'create'])->name('payments.create');
+        Route::post('/', [PaymentController::class, 'store'])->name('payments.store');
+        Route::get('/{payment}/edit', [PaymentController::class, 'edit'])->name('payments.edit');
+        Route::put('/{payment}', [PaymentController::class, 'update'])->name('payments.update');
+        Route::delete('/{payment}', [PaymentController::class, 'destroy'])->name('payments.destroy');
+    });
+
     Route::group(['prefix' => 'category'], function () {
         Route::get('/', [CategoryController::class, 'index'])->name('category.index');
         Route::get('/create', [CategoryController::class, 'create'])->name('category.create');
@@ -83,5 +119,7 @@ Route::group(['prefix' => 'admin'], function () {
         Route::delete('/{favorite}', [FavoriteController::class, 'destroy'])->name('favorites.destroy');  
     });
     
-    
+    Route::prefix('contacts')->group(function () {
+        Route::get('/', [ContactController::class, 'index'])->name('contacts.index');         
+    });
 });

@@ -5,7 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Review extends Model
+class Contact extends Model
 {
     use HasFactory;
+    protected $fillable = ['id', 'name','email','message','response','response_date'];
 }
