@@ -47,6 +47,7 @@ Route::group(['prefix' => 'admin'], function () {
         Route::get('/{order}/edit', [OrderController::class, 'edit'])->name('orders.edit');
         Route::put('/{order}', [OrderController::class, 'update'])->name('orders.update');
         Route::delete('/{order}', [OrderController::class, 'destroy'])->name('orders.destroy');
+        Route::post('/{order}/approve', [OrderController::class, 'approve'])->name('orders.approve');
     });
 
      // Carts routes
@@ -57,6 +58,8 @@ Route::group(['prefix' => 'admin'], function () {
         Route::get('/{cart}/edit', [CartController::class, 'edit'])->name('carts.edit');
         Route::put('/{cart}', [CartController::class, 'update'])->name('carts.update');
         Route::delete('/{cart}', [CartController::class, 'destroy'])->name('carts.destroy');
+        Route::get('carts/{id}/pay', [CartController::class, 'pay'])->name('carts.pay');
+
     });
 
      // Payments routes

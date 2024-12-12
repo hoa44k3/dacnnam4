@@ -33,4 +33,9 @@ class Dish extends Model
     {
         return $this->hasMany(Comment::class);
     }
+    public function orders()
+{
+    return $this->belongsToMany(Order::class)->withPivot('quantity');
+}
+
 }

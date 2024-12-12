@@ -30,10 +30,11 @@
                             <td>{{ $dish->name }}</td>
                             <td>{{ $dish->price }}</td>
                             <td>{{ $dish->sale_price }}</td>
+                           
                             <td>
-                                <img src="{{ $dish->image ? asset('storage/' . $dish->image) : asset('default-image.jpg') }}" alt="{{ $dish->name }}" width="50">
-
+                                <img src="{{ asset('storage/' . $dish->image) }}" alt="Image" style="width: 90px; height: 70px; object-fit: cover;">
                             </td>
+                            
                             <td>{{ $dish->category->name ?? 'Không có danh mục' }}</td>
                             <td>
                                 <a href="{{ route('dish.edit', $dish->id) }}" class="btn btn-warning btn-sm">Sửa</a>

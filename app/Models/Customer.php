@@ -9,5 +9,10 @@ class Customer extends Model
 {
     use HasFactory;
     protected $fillable = ['name','email','phone','address','gender','password'];
+     // Quan hệ với đơn hàng
+     public function orders()
+     {
+         return $this->hasMany(Order::class, 'customer_id');
+     }
 
 }

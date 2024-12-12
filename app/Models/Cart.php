@@ -8,16 +8,23 @@ use Illuminate\Database\Eloquent\Model;
 class Cart extends Model
 {
     use HasFactory;
-    protected $fillable = ['customer_id', 'dish_id', 'quantity', 'total'];
-    // Model Cart
-    public function customer()
-    {
-        return $this->belongsTo(Customer::class);
-    }
+    protected $fillable = [
+        'customer_id',
+        'dish_id',
+        'quantity',
+        'total',
+    ];
 
+    // Quan hệ với bảng dishes
     public function dish()
     {
-        return $this->belongsTo(Dish::class);
+        return $this->belongsTo(Dish::class, 'dish_id');
+    }
+
+    // Quan hệ với bảng customers
+    public function customer()
+    {
+        return $this->belongsTo(Customer::class, 'customer_id');
     }
 
 }

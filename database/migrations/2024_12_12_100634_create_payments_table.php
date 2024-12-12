@@ -17,6 +17,7 @@ return new class extends Migration
             $table->unsignedBigInteger('customer_id')->nullable();
             $table->decimal('total', 15, 2);
             $table->string('method');
+            $table->boolean('is_paid')->default(false);
             $table->timestamps();
             $table->foreign('customer_id')->references('id')->on('customers')->onDelete('cascade');  
         });

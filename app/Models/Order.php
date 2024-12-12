@@ -12,7 +12,20 @@ class Order extends Model
     // Model Order
     public function customer()
     {
-        return $this->belongsTo(Customer::class);
+        return $this->belongsTo(Customer::class, 'customer_id');
     }
+// Order.php (Model)
+    // public function dishes()
+    // {
+    //     return $this->belongsToMany(Dish::class)->withPivot('total');
+    // }
+// Order.php
+protected $casts = [
+    'dishes' => 'array',  // Chuyển đổi dữ liệu JSON thành mảng
+];
+public function dishes()
+{
+    return $this->belongsToMany(Dish::class)->withPivot('quantity');
+}
 
 }
