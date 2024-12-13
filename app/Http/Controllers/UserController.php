@@ -27,7 +27,7 @@ class UserController extends Controller
             'phone' => 'nullable|string',
             'role' => 'required|in:admin,user',
             'password' => 'required|string|min:6',
-            'avatar' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'avatar' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
         User::create([
@@ -39,7 +39,8 @@ class UserController extends Controller
             
         ]);
         if ($request->hasFile('avatar')) {
-            $data['avatar'] = $request->file('avatar')->store('avatars', 'public');
+            $avatarPath ['avatar'] = $request->file('avatar')->store('avatars', 'public');
+            $data['avatar'] = $avatarPath;
         }
         return redirect()->route('users.index')->with('success', 'User created successfully.');
     }
@@ -51,19 +52,20 @@ class UserController extends Controller
 
     public function update(Request $request, User $user)
     {
-        $request->validate([
+        $validated =$request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email,' . $user->id,
             'phone' => 'nullable|string',
             'role' => 'required|in:admin,user',
             'password' => 'nullable|string|min:6',
-            'avatar' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'avatar' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
         $data = $request->only(['name', 'email', 'phone', 'role']);
         if ($request->password) {
             $data['password'] = Hash::make($request->password);
         }
+        $user->fill($validated);
         if ($request->hasFile('avatar')) {
             if ($user->avatar) {
                 Storage::disk('public')->delete($user->avatar);

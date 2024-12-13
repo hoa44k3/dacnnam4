@@ -170,11 +170,15 @@
                   <p>Users</p>
                 </a>
               </li>
+              <li class="nav-item {{ request()->routeIs('users.*')?'active' : '' }}">
+                <a href="{{ route('home') }}">
+                  <i class="fas fa-users"></i>
+                  <p>Đăng xuất</p>
+                </a>
+              </li>
             </ul>
           </div>
         </div>
-        
-        
       </div>
       <!-- End Sidebar -->
 

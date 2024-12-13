@@ -4,79 +4,43 @@
 
 @section('title','Trang chủ')
 @section('body')
-    
-
-
-		<!--================ Start Breakfast Area =================-->
 		<div class="breakfast-area section_gap_top">
 			<div class="container">
 				<div class="row align-items-center justify-content-center">
-					<div class="col-lg-5">
-						<div class="left-content">
-							<h1>Daily Food Courses with Drinks </h1>
-							<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-								dolore
-								magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-								consequat.</p>
-							<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-								dolore
-								magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.</p>
-							<a href="#" class="primary-btn">See Full Menu</a>
-						</div>
-					</div>
-					<div class="col-lg-6 offset-lg-1">
-						<div class="right-img">
-							<img class="img1 img-fluid" src="img/food/food1.jpg" alt="">
-							<img class="img2 img-fluid" src="img/food/food2.png" alt="">
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-		<!--================ End Breakfast Area =================-->
-
-		<!--================ Start Lunch Area =================-->
-		<div class="breakfast-area lunch-area section_gap">
-			<div class="container">
-				<div class="row align-items-center justify-content-center">
-					<div class="col-lg-6 ">
-						<div class="right-img">
-							<img class="img1 img-fluid" src="img/food/food3.jpg" alt="">
-							<img class="img2 img-fluid" src="img/food/food4.png" alt="">
-						</div>
-					</div>
-					<div class="col-lg-5 offset-lg-1">
-						<div class="left-content">
-							<h1>Daily Food Courses with Drinks </h1>
-							<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-								dolore
-								magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-								consequat.</p>
-							<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-								dolore
-								magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.</p>
-							<div class="chef-title">
-								<div class="thumb"><img src="img/about-author.png" alt=""></div>
-								<div class="c-desc">
-									<h6>Marvel Maison</h6>
-									<p>Chief Executive, Amazon</p>
-								</div>
+					@foreach($blogs as $key => $blog)
+						<div class="col-lg-6 {{ $key % 2 == 0 ? 'order-lg-1' : 'order-lg-2' }}">
+							<div class="right-img">
+								<!-- Hiển thị ảnh 1 -->
+								<img class="img1 img-fluid" src="{{ asset('storage/' . $blog->image) }}" alt="{{ $blog->name }}">
+								
+								<!-- Hiển thị ảnh 2 nếu có -->
+								{{-- @if(isset($blogs[$key + 1]))
+									<img class="img2 img-fluid" src="{{ asset('storage/' . $blogs[$key + 1]->image) }}" alt="{{ $blogs[$key + 1]->name }}">
+								@endif --}}
 							</div>
 						</div>
-					</div>
+						<div class="col-lg-5 {{ $key % 2 == 0 ? 'order-lg-2' : 'order-lg-1' }}">
+							<div class="left-content">
+								<h1>{{ $blog->name }}</h1>
+								<p>{{ $blog->description }}</p>
+								<a href="#" class="primary-btn">Read More</a>
+							</div>
+						</div>
+						@break($key == 1) <!-- Dừng vòng lặp sau khi hiển thị 2 bài -->
+					@endforeach
 				</div>
 			</div>
 		</div>
-		<!--================ End Lunch Area =================-->
-
-
+		
+		
+		
 		<!--================ Start Reservstion Area =================-->
 		<section class="reservation-area section_gap_top">
 			<div class="container">
 				<div class="row align-items-center justify-content-center">
 					<div class="col-lg-6 offset-lg-6">
 						<div class="contact-form-section">
-							<h1>Reservation Form</h1>
+							<h1>Đặt bàn</h1>
 							<form class="contact-form-area contact-page-form contact-form text-right" id="myForm" action="mail.html" method="post">
 								<div class="form-group col-md-12">
 									<input type="text" class="form-control" id="name" name="name" placeholder="Name" onfocus="this.placeholder = ''"
@@ -138,14 +102,9 @@
 					</div>
 					<div class="col-lg-5 offset-lg-1">
 						<div class="left-content">
-							<h1>Daily Food Courses with Drinks </h1>
-							<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-								dolore
-								magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-								consequat.</p>
-							<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-								dolore
-								magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.</p>
+							<h1>Các món ăn hàng ngày có đồ uống </h1>
+							<p>Luôn luôn tận tâm, tận tình, chu đáo phục vụ khách hàng 24/24h!.</p>
+							<p>Tạo một không gian ăn uống thoải mái và lành mạnh, đảm bảo chất lượng đồ ăn 100% là đồ tươi ngon nhập khẩu từ Mỹ</p>
 							<img src="img/chef/signature.png" alt="">
 						</div>
 					</div>

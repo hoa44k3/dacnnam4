@@ -2,7 +2,31 @@
 
 @section('title','Trang chủ')
 @section('body')
-
+<!-- Start banner bottom -->
+<div class="row banner-bottom common-bottom-banner align-items-center justify-content-center">
+    <div class="col-lg-8 offset-lg-4">
+        <div class="banner_content">
+            <div class="row d-flex align-items-center">
+                <div class="col-lg-7 col-md-12">
+                    <h1>Blog Details</h1>
+                    <p>inappropriate behavior is often laughed off as “boys will be boys,” women face higher
+                        conduct standards
+                        especially in the workplace. That’s why it’s crucial that, as women.</p>
+                </div>
+                <div class="col-lg-5 col-md-12">
+                    <div class="page-link-wrap">
+                        <div class="page_link">
+                            <a href="index.html">Home</a>
+                            <a href="index.html">Blog</a>
+                            <a href="single-blog.html">Details</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End banner bottom -->
         <!--================Blog Area =================-->
         <section class="blog_area single-post-area section_gap">
             <div class="container">

@@ -36,14 +36,16 @@ Route::group(['prefix'=>''],function(){
     Route::get('/about',[HomeController::class,'about'])->name('about');
     Route::get('/blog',[HomeController::class,'blog'])->name('blog');
     Route::get('/blogdetail',[HomeController::class,'blogdetail'])->name('blogdetail');
+    Route::get('/menu',[HomeController::class,'menu'])->name('menu');
+    Route::post('/contact', [ContactController::class, 'storeContact']);
 });
 Route::get('auth/register',[AuthController::class,'register'])->name('auth.register');
 Route::post('auth/register', [AuthController::class, 'post_register'])->name('auth.register.post');
 Route::get('auth/login',[AuthController::class,'login'])->name('auth.login');
 Route::post('auth/login', [AuthController::class, 'post_login'])->name('auth.login.post');
+
 Route::prefix('admin')->middleware('admin')->group(function () {
     Route::get('/', [AdminController::class, 'index'])->name('admin.index');
-    
 
     // Orders routes
     Route::prefix('orders')->group(function () {

@@ -41,7 +41,7 @@
 				<ul class="navbar-nav">
 					<li class="nav-item"><a class="nav-link active" href="{{ route('home') }}"><img src="img/header/nav-icon1.png" alt=""> home</a></li>
 					<li class="nav-item"><a class="nav-link" href="{{ route('about') }}"><img src="img/header/nav-icon2.png" alt="">about</a></li>
-					<li class="nav-item"><a class="nav-link" href="menu.html"><img src="img/header/nav-icon3.png" alt="">menu</a></li>
+					<li class="nav-item"><a class="nav-link" href="{{ route('menu') }}"><img src="img/header/nav-icon3.png" alt="">menu</a></li>
 					<li class="nav-item submenu dropdown">
 						<a href="" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
 						 aria-expanded="false"><img src="img/header/nav-icon7.png" alt="">Blog</a>
@@ -51,6 +51,7 @@
 						</ul>
 					</li>
 					<li class="nav-item"><a class="nav-link" href="{{ route('contact') }}"><img src="img/header/nav-icon8.png" alt="">contact</a></li>
+					<li class="nav-item"><a class="nav-link" href="{{ route('auth.login') }}"><img src="img/header/nav-icon8.png" alt="">login</a></li>
 				</ul>
 			</div>
 		</div>
@@ -86,10 +87,9 @@
 				<div class="banner_content">
 					<div class="row d-flex align-items-center">
 						<div class="col-lg-8 col-md-12">
-							<p class="top-text">Steak Shop offers best steak in town</p>
-							<h1>Steak Shop offers best steak in town</h1>
-							<p>inappropriate behavior is often laughed off as “boys will be boys,” women face higher conduct standards
-								especially in the workplace. That’s why it’s crucial that, as women.</p>
+							<p class="top-text"> Cung cấp các món ngon nhất trong nhà hàng Steak Shop</p>
+							<h1>Giới thiệu các món ăn ngon trong nhà hàng Steak Shop</h1>
+							<p>Khẩu vị của khách hàng luôn là tiêu chí hàng đầu trong nhà hàng của chúng tôi! Mong mọi quý khách sẽ có một bữa ăn ngon nhất.</p>
 						</div>
 						<div class="col-lg-4 col-md-12">
 							<div class="banner-btn">
