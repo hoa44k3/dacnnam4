@@ -164,7 +164,12 @@
                   <p>Payments</p>
                 </a>
               </li>
-            
+              <li class="nav-item {{ request()->routeIs('users.*')?'active' : '' }}">
+                <a href="{{ route('users.index') }}">
+                  <i class="fas fa-users"></i>
+                  <p>Users</p>
+                </a>
+              </li>
             </ul>
           </div>
         </div>

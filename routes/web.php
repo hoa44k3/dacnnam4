@@ -14,6 +14,8 @@ use App\Http\Controllers\ContactController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\AuthController;
 use App\Models\Contact;
 use App\Models\Favorite;
 
@@ -35,10 +37,14 @@ Route::group(['prefix'=>''],function(){
     Route::get('/blog',[HomeController::class,'blog'])->name('blog');
     Route::get('/blogdetail',[HomeController::class,'blogdetail'])->name('blogdetail');
 });
-
-Route::group(['prefix' => 'admin'], function () {
+Route::get('auth/register',[AuthController::class,'register'])->name('auth.register');
+Route::post('auth/register', [AuthController::class, 'post_register'])->name('auth.register.post');
+Route::get('auth/login',[AuthController::class,'login'])->name('auth.login');
+Route::post('auth/login', [AuthController::class, 'post_login'])->name('auth.login.post');
+Route::prefix('admin')->middleware('admin')->group(function () {
     Route::get('/', [AdminController::class, 'index'])->name('admin.index');
     
+
     // Orders routes
     Route::prefix('orders')->group(function () {
         Route::get('/', [OrderController::class, 'index'])->name('orders.index');
@@ -125,4 +131,27 @@ Route::group(['prefix' => 'admin'], function () {
     Route::prefix('contacts')->group(function () {
         Route::get('/', [ContactController::class, 'index'])->name('contacts.index');         
     });
+
+    Route::prefix('users')->group(function () {
+        Route::get('/', [UserController::class, 'index'])->name('users.index');         
+        Route::get('/create', [UserController::class, 'create'])->name('users.create');  
+        Route::post('/', [UserController::class, 'store'])->name('users.store');        
+        Route::get('/{user}/edit', [UserController::class, 'edit'])->name('users.edit'); 
+        Route::put('/{user}', [UserController::class, 'update'])->name('users.update'); 
+        Route::delete('/{user}', [UserController::class, 'destroy'])->name('users.destroy');  
+    });
+
+
+    
+          
 });
+
+
+   
+
+
+
+    
+   
+    
+

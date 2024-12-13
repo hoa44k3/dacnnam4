@@ -1,5 +1,7 @@
 @extends('admin.master')
+
 @section('title', 'Customer Manager')
+
 @section('body')
 <div class="card">
     <div class="card-header">
@@ -11,6 +13,7 @@
             <table class="table table-striped table-hover">
                 <thead>
                     <tr>
+                        <th>Avatar</th>
                         <th>Name</th>
                         <th>Email</th>
                         <th>Phone</th>
@@ -22,6 +25,9 @@
                 <tbody>
                     @foreach($customers as $customer)
                         <tr id="customer-{{ $customer->id }}">
+                            <td>
+                                <img src="{{ asset('storage/' . $customer->avatar) }}" alt="{{ $customer->name }}" width="50">
+                            </td>
                             <td>{{ $customer->name }}</td>
                             <td>{{ $customer->email }}</td>
                             <td>{{ $customer->phone }}</td>
@@ -37,7 +43,7 @@
             </table>
         </div>
     </div>
-</div>     
+</div>
 @endsection
 
 @section('scripts')

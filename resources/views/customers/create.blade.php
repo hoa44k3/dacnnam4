@@ -7,8 +7,14 @@
         <h4>Thêm Customer Mới</h4>
     </div>
     <div class="card-body">
-        <form action="{{ route('customers.store') }}" method="POST">
+        <!-- Thêm enctype="multipart/form-data" để hỗ trợ tải lên file -->
+        <form action="{{ route('customers.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
+            <div class="form-group mb-3">
+                <label for="avatar">Avatar</label>
+                <input type="file" name="avatar" id="avatar" class="form-control">
+            </div>
+
             <div class="form-group">
                 <label for="name">Name</label>
                 <input type="text" class="form-control" name="name" id="name" required>
@@ -47,4 +53,5 @@
         </form>
     </div>
 </div>
+
 @endsection
