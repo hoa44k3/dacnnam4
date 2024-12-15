@@ -170,6 +170,12 @@
                   <p>Users</p>
                 </a>
               </li>
+              <li class="nav-item {{ request()->routeIs('tags.*')?'active' : '' }}">
+                <a href="{{ route('tags.index') }}">
+                  <i class="fas fa-tags"></i>
+                  <p>Tags</p>
+                </a>
+              </li>
               <li class="nav-item {{ request()->routeIs('users.*')?'active' : '' }}">
                 <a href="{{ route('home') }}">
                   <i class="fas fa-users"></i>

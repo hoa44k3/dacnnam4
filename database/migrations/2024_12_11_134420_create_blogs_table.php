@@ -14,11 +14,13 @@ return new class extends Migration
         Schema::create('blogs', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-          
             $table->string('image');
             $table->text('description');
             $table->string('position')->nullable();
+            $table->unsignedBigInteger('view_count')->default(0);
             $table->enum('status', ['pending', 'approved'])->default('pending');
+            $table->unsignedBigInteger('category_id')->nullable();
+             $table->foreign('category_id')->references('id')->on('categories')->onDelete('set null');
             $table->timestamps();
         });
     }

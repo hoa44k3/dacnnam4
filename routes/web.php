@@ -16,6 +16,7 @@ use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\TagController;
 use App\Models\Contact;
 use App\Models\Favorite;
 
@@ -30,15 +31,21 @@ use App\Models\Favorite;
 |
 */
 
-Route::group(['prefix'=>''],function(){
-    Route::get('/',[HomeController::class,'index'])->name('home');
-    Route::get('/contact',[HomeController::class,'contact'])->name('contact');
-    Route::get('/about',[HomeController::class,'about'])->name('about');
-    Route::get('/blog',[HomeController::class,'blog'])->name('blog');
-    Route::get('/blogdetail',[HomeController::class,'blogdetail'])->name('blogdetail');
-    Route::get('/menu',[HomeController::class,'menu'])->name('menu');
+Route::group(['prefix' => ''], function() {
+    Route::get('/', [HomeController::class, 'index'])->name('home');
+    Route::get('/contact', [HomeController::class, 'contact'])->name('contact');
+    Route::get('/about', [HomeController::class, 'about'])->name('about');
+    Route::get('/blog', [HomeController::class, 'blog'])->name('blog');
+     Route::get('/blogdetail', [HomeController::class, 'blogdetail'])->name('blogdetail');
+    //Route::get('/blogdetail/{id}', [HomeController::class, 'blogdetail'])->name('blogdetail');
+
+    Route::get('/menu', [HomeController::class, 'menu'])->name('menu');
     Route::post('/contact', [ContactController::class, 'storeContact']);
+    
+    // Route để hiển thị bài viết theo tag
+    Route::get('/tags/{tag}', [HomeController::class, 'showByTag'])->name('tags.show');
 });
+
 Route::get('auth/register',[AuthController::class,'register'])->name('auth.register');
 Route::post('auth/register', [AuthController::class, 'post_register'])->name('auth.register.post');
 Route::get('auth/login',[AuthController::class,'login'])->name('auth.login');
@@ -104,6 +111,8 @@ Route::prefix('admin')->middleware('admin')->group(function () {
         Route::get('/{blog}/edit', [BlogController::class, 'edit'])->name('blogs.edit');
         Route::put('/{blog}', [BlogController::class, 'update'])->name('blogs.update');
         Route::delete('/{blog}', [BlogController::class, 'destroy'])->name('blogs.destroy');
+        Route::get('/{blog}', [BlogController::class, 'show'])->name('blogs.show');
+
     });
     Route::prefix('customers')->group(function () {
         Route::get('/', [CustomerController::class, 'index'])->name('customers.index');
@@ -131,7 +140,9 @@ Route::prefix('admin')->middleware('admin')->group(function () {
     });
     
     Route::prefix('contacts')->group(function () {
-        Route::get('/', [ContactController::class, 'index'])->name('contacts.index');         
+        Route::get('/', [ContactController::class, 'index'])->name('contacts.index'); 
+        Route::post('/reply', [ContactController::class, 'reply'])->name('contacts.reply');
+        Route::post('/edit-response', [ContactController::class, 'editResponse'])->name('contacts.editResponse');        
     });
 
     Route::prefix('users')->group(function () {
@@ -141,6 +152,15 @@ Route::prefix('admin')->middleware('admin')->group(function () {
         Route::get('/{user}/edit', [UserController::class, 'edit'])->name('users.edit'); 
         Route::put('/{user}', [UserController::class, 'update'])->name('users.update'); 
         Route::delete('/{user}', [UserController::class, 'destroy'])->name('users.destroy');  
+    });
+    Route::prefix('tags')->group(function () {
+        Route::get('/', [TagController::class, 'index'])->name('tags.index');         
+        Route::get('/create', [TagController::class, 'create'])->name('tags.create');  
+        Route::post('/', [TagController::class, 'store'])->name('tags.store');        
+        Route::get('/{tag}/edit', [TagController::class, 'edit'])->name('tags.edit'); 
+        Route::put('/{tag}', [TagController::class, 'update'])->name('tags.update'); 
+        Route::delete('/{tag}', [TagController::class, 'destroy'])->name('tags.destroy');  
+
     });
 
 

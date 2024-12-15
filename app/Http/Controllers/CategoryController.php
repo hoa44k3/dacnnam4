@@ -8,8 +8,9 @@ class CategoryController extends Controller
 {
     public function index()
     {
-        $data = Category::orderBy('id', 'asc')->paginate(6);
-
+       // $data = Category::orderBy('id', 'asc')->paginate(6);
+        // Lấy danh sách các danh mục và số lượng bài viết
+        $data = Category::withCount('blogs')->orderBy('id', 'asc')->paginate(6);
         return view('category.index', compact('data'));
        
     }

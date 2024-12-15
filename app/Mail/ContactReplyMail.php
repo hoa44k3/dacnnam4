@@ -12,7 +12,7 @@ use Illuminate\Queue\SerializesModels;
 class ContactReplyMail extends Mailable
 {
     use Queueable, SerializesModels;
-
+    public $response;
     /**
      * Create a new message instance.
      */
@@ -38,6 +38,9 @@ class ContactReplyMail extends Mailable
     {
         return new Content(
             view: 'emails.contact_reply',
+            with: [
+                'response' => $this->response, // Truyền biến tới view
+            ],
         );
     }
 

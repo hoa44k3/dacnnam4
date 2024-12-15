@@ -10,6 +10,7 @@ class ContactController extends Controller
 {
     public function index(){
         $contacts = Contact::all();
+    //    $contacts = Contact::orderBy('created_at', 'desc')->get();
         return view('contacts.index', compact('contacts'));
     }
     public function reply(Request $request)
@@ -64,22 +65,23 @@ class ContactController extends Controller
         return back()->with('success', 'Phản hồi đã được cập nhật thành công.');
     }
     public function storeContact(Request $request)
-{
-    // Validate dữ liệu nhập vào
-    $request->validate([
-        'name' => 'required|string|max:255',
-        'email' => 'required|email|max:255',
-        'message' => 'required|string|max:1000',
-    ]);
+    {
+        // Validate dữ liệu nhập vào
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|max:255',
+            'message' => 'required|string|max:1000',
+        ]);
 
-    // Lưu dữ liệu vào bảng contact
-    Contact::create([
-        'name' => $request->name,
-        'email' => $request->email,
-        'message' => $request->message,
-    ]);
+        // Lưu dữ liệu vào bảng contact
+        Contact::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'message' => $request->message,
+        ]);
 
-    // Có thể thêm thông báo thành công
-    return redirect()->route('contact')->with('success', 'Your message has been sent successfully!');
-}
+        // Có thể thêm thông báo thành công
+        return redirect()->route('contact')->with('success', 'Your message has been sent successfully!');
+    }
+    
 }

@@ -21,10 +21,12 @@
                     <img src="{{ asset('storage/' . $blog->image) }}" alt="{{ $blog->name }}" width="100" class="mt-2">
                 @endif
             </div>
+
             <div class="form-group">
                 <label for="description">Mô tả</label>
                 <textarea name="description" class="form-control" id="description" rows="3" required>{{ $blog->description }}</textarea>
             </div>
+
             <div class="form-group">
                 <label for="status">Trạng thái</label>
                 <select name="status" id="status" class="form-control">
@@ -32,6 +34,19 @@
                     <option value="approved" {{ $blog->status === 'approved' ? 'selected' : '' }}>Approved</option>
                 </select>
             </div>
+
+            <div class="form-group">
+                <label for="category_id">Danh mục</label>
+                <select name="category_id" id="category_id" class="form-control">
+                    <option value="">Chọn danh mục</option>
+                    @foreach($categories as $category)
+                        <option value="{{ $category->id }}" {{ $blog->category_id == $category->id ? 'selected' : '' }}>
+                            {{ $category->name }}
+                        </option>
+                    @endforeach
+                </select>
+            </div>
+
             <button type="submit" class="btn btn-success">Cập nhật</button>
         </form>
     </div>

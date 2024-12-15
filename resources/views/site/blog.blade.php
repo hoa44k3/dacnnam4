@@ -66,10 +66,13 @@
                                     <div class="col-md-3">
                                         <div class="blog_info text-right">
                                             <div class="post_tag">
-                                                <a href="#">Food,</a>
+                                                {{-- <a href="#">Food,</a>
                                                 <a class="active" href="#">Technology,</a>
                                                 <a href="#">Politics,</a>
-                                                <a href="#">Lifestyle</a>
+                                                <a href="#">Lifestyle</a> --}}
+                                                {{-- @foreach ($blog->tags as $tag)
+                                                    <a href="{{ route('tags.show', $tag->id) }}">{{ $tag->name }}</a>
+                                                @endforeach --}}
                                             </div>
                                             <ul class="blog_meta list">
                                                 <li><a href="#">Mark wiens<i class="lnr lnr-user"></i></a></li>
@@ -93,32 +96,13 @@
                                     </div>
                                 </article>
                             @endforeach
-
-                            
+                        
+                            <!-- Phân trang -->
                             <nav class="blog-pagination justify-content-center d-flex">
-                                <ul class="pagination">
-                                    <li class="page-item">
-                                        <a href="#" class="page-link" aria-label="Previous">
-                                            <span aria-hidden="true">
-                                                <span class="lnr lnr-chevron-left"></span>
-                                            </span>
-                                        </a>
-                                    </li>
-                                    <li class="page-item"><a href="#" class="page-link">01</a></li>
-                                    <li class="page-item active"><a href="#" class="page-link">02</a></li>
-                                    <li class="page-item"><a href="#" class="page-link">03</a></li>
-                                    <li class="page-item"><a href="#" class="page-link">04</a></li>
-                                    <li class="page-item"><a href="#" class="page-link">09</a></li>
-                                    <li class="page-item">
-                                        <a href="#" class="page-link" aria-label="Next">
-                                            <span aria-hidden="true">
-                                                <span class="lnr lnr-chevron-right"></span>
-                                            </span>
-                                        </a>
-                                    </li>
-                                </ul>
+                                {{ $blogs->links('pagination::bootstrap-4') }}
                             </nav>
                         </div>
+                        
                     </div>
                     <div class="col-lg-4">
                         <div class="blog_right_sidebar">
@@ -190,53 +174,20 @@
                                 <div class="br"></div>
                             </aside>
                             <aside class="single_sidebar_widget post_category_widget">
-                                <h4 class="widget_title">Post Catgories</h4>
+                                <h4 class="widget_title">Post Categories</h4>
                                 <ul class="list cat-list">
-                                    <li>
-                                        <a href="#" class="d-flex justify-content-between">
-                                            <p>Technology</p>
-                                            <p>37</p>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#" class="d-flex justify-content-between">
-                                            <p>Lifestyle</p>
-                                            <p>24</p>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#" class="d-flex justify-content-between">
-                                            <p>Fashion</p>
-                                            <p>59</p>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#" class="d-flex justify-content-between">
-                                            <p>Art</p>
-                                            <p>29</p>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#" class="d-flex justify-content-between">
-                                            <p>Food</p>
-                                            <p>15</p>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#" class="d-flex justify-content-between">
-                                            <p>Architecture</p>
-                                            <p>09</p>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#" class="d-flex justify-content-between">
-                                            <p>Adventure</p>
-                                            <p>44</p>
-                                        </a>
-                                    </li>
+                                    @foreach ($categories as $category)
+                                        <li>
+                                            <a href="{{ route('blog', ['category' => $category->id]) }}" class="d-flex justify-content-between">
+                                                <p>{{ $category->name }}</p>
+                                                <p>{{ $category->blogs_count }}</p> <!-- Số lượng bài viết trong danh mục -->
+                                            </a>
+                                        </li>
+                                    @endforeach
                                 </ul>
                                 <div class="br"></div>
                             </aside>
+                            
                             <aside class="single-sidebar-widget newsletter_widget">
                                 <h4 class="widget_title">Newsletter</h4>
                                 <p>
@@ -259,20 +210,13 @@
                             <aside class="single-sidebar-widget tag_cloud_widget">
                                 <h4 class="widget_title">Các thẻ tìm kiếm</h4>
                                 <ul class="list">
-                                    <li><a href="#">Ngon nhất</a></li>
-                                    <li><a href="#">Đắt nhất</a></li>
-                                    <li><a href="#">Rẻ nhất</a></li>
-                                    <li><a href="#">món canh</a></li>
-                                    <li><a href="#">nước uống</a></li>
-                                    <li><a href="#">món thịt kho</a></li>
-                                    <li><a href="#">rau xào</a></li>
-                                    <li><a href="#">thịt rán</a></li>
-                                    <li><a href="#">cá kho</a></li>
-                                    <li><a href="#">canh thập cẩm</a></li>
-                                    <li><a href="#">trà trái cây</a></li>
-                                    <li><a href="#">giải nhiệt</a></li>
+                                    @foreach (\App\Models\Tag::all() as $tag)
+                                        <li><a href="{{ route('tags.show', $tag->id) }}">{{ $tag->name }}</a></li>
+                                    @endforeach
                                 </ul>
                             </aside>
+                            
+                            
                         </div>
                     </div>
                 </div>

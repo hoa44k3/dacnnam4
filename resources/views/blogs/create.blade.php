@@ -17,10 +17,12 @@
                 <label for="image">Hình ảnh</label>
                 <input type="file" name="image" class="form-control" id="image" required>
             </div>
+
             <div class="form-group">
                 <label for="description">Mô tả</label>
                 <textarea name="description" class="form-control" id="description" rows="3" required>{{ old('description') }}</textarea>
             </div>
+
             <div class="form-group">
                 <label for="status">Trạng thái</label>
                 <select name="status" id="status" class="form-control">
@@ -28,6 +30,17 @@
                     <option value="approved">Approved</option>
                 </select>
             </div>
+
+            <div class="form-group">
+                <label for="category_id">Danh mục</label>
+                <select name="category_id" id="category_id" class="form-control">
+                    <option value="">Chọn danh mục</option>
+                    @foreach($categories as $category)
+                        <option value="{{ $category->id }}">{{ $category->name }}</option>
+                    @endforeach
+                </select>
+            </div>
+
             <button type="submit" class="btn btn-success">Lưu</button>
         </form>
     </div>

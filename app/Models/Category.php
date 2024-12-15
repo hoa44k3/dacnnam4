@@ -28,4 +28,8 @@ class Category extends Model
     {
         return $this->belongsToMany(Dish::class, 'category_dish');
     }
+    public function blogs()
+    {
+        return $this->hasMany(Blog::class);
+    }
 }

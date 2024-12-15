@@ -8,17 +8,15 @@
         <div class="banner_content">
             <div class="row d-flex align-items-center">
                 <div class="col-lg-7 col-md-12">
-                    <h1>Blog Details</h1>
-                    <p>inappropriate behavior is often laughed off as “boys will be boys,” women face higher
-                        conduct standards
-                        especially in the workplace. That’s why it’s crucial that, as women.</p>
+                    <h1>Chi tiết bài viết</h1>
+                    <p>Mọi phản hồi của tất cả quý khách sẽ luôn đem lại những giá trị lớn cho cửa hàng chúng tôi.</p>
                 </div>
                 <div class="col-lg-5 col-md-12">
                     <div class="page-link-wrap">
                         <div class="page_link">
-                            <a href="index.html">Home</a>
-                            <a href="index.html">Blog</a>
-                            <a href="single-blog.html">Details</a>
+                            <a href="{{ route('home') }}">Home</a>
+                            <a href="{{ route('blog') }}">Blog</a>
+                            <a href="#">Details</a>
                         </div>
                     </div>
                 </div>
@@ -35,99 +33,47 @@
                         <div class="single-post row">
                             <div class="col-lg-12">
                                 <div class="feature-img">
-                                    <img class="img-fluid" src="img/blog/feature-img1.jpg" alt="">
+                                    <img class="img-fluid" src="{{ asset('storage/' . $blog->image) }}" alt="{{ $blog->name }}">
                                 </div>
                             </div>
-                            <div class="col-lg-3  col-md-3">
+                            <div class="col-lg-3 col-md-3">
                                 <div class="blog_info text-right">
                                     <div class="post_tag">
-                                        <a href="#">Food,</a>
-                                        <a class="active" href="#">Technology,</a>
-                                        <a href="#">Politics,</a>
-                                        <a href="#">Lifestyle</a>
+                                        @foreach ($blog->tags as $tag)
+                                            <a href="#">{{ $tag->name }}</a>
+                                        @endforeach
                                     </div>
                                     <ul class="blog_meta list">
-                                        <li><a href="#">Mark wiens<i class="lnr lnr-user"></i></a></li>
-                                        <li><a href="#">12 Dec, 2017<i class="lnr lnr-calendar-full"></i></a></li>
-                                        <li><a href="#">1.2M Views<i class="lnr lnr-eye"></i></a></li>
-                                        <li><a href="#">06 Comments<i class="lnr lnr-bubble"></i></a></li>
-                                    </ul>
-                                    <ul class="social-links">
-                                        <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-                                        <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-                                        <li><a href="#"><i class="fa fa-github"></i></a></li>
-                                        <li><a href="#"><i class="fa fa-behance"></i></a></li>
+                                        <li><a href="#">Lượt xem: {{ $blog->view_count }}<i class="lnr lnr-eye"></i></a></li>
+                                        <li><a href="#">Ngày tạo: {{ $blog->created_at->format('d M, Y') }}<i class="lnr lnr-calendar-full"></i></a></li>
                                     </ul>
                                 </div>
                             </div>
                             <div class="col-lg-9 col-md-9 blog_details">
-                                <h2>Astronomy Binoculars A Great Alternative</h2>
+                                <h2>{{ $blog->name }}</h2>
                                 <p class="excert">
-                                    MCSE boot camps have its supporters and its detractors. Some people do not
-                                    understand
-                                    why you should have to spend money on boot camp when you can get the MCSE study
-                                    materials yourself at a fraction.
+                                    {{ $blog->description }}
                                 </p>
-                                <p>
-                                    Boot camps have its supporters and its detractors. Some people do not understand
-                                    why
-                                    you should have to spend money on boot camp when you can get the MCSE study
-                                    materials
-                                    yourself at a fraction of the camp price. However, who has the willpower to
-                                    actually
-                                    sit through a self-imposed MCSE training. who has the willpower to actually sit
-                                    through
-                                    a self-imposed
-                                </p>
-                                <p>
-                                    Boot camps have its supporters and its detractors. Some people do not understand
-                                    why
-                                    you should have to spend money on boot camp when you can get the MCSE study
-                                    materials
-                                    yourself at a fraction of the camp price. However, who has the willpower to
-                                    actually
-                                    sit through a self-imposed MCSE training. who has the willpower to actually sit
-                                    through
-                                    a self-imposed
-                                </p>
-                            </div>
-                            <div class="col-lg-12">
-                                <div class="quotes">
-                                    MCSE boot camps have its supporters and its detractors. Some people do not
-                                    understand
-                                    why you should have to spend money on boot camp when you can get the MCSE study
-                                    materials yourself at a fraction of the camp price. However, who has the willpower
-                                    to
-                                    actually sit through a self-imposed MCSE training.
-                                </div>
-                                <div class="row">
-                                    <div class="col-6">
-                                        <img class="img-fluid" src="img/blog/post-img1.jpg" alt="">
-                                    </div>
-                                    <div class="col-6">
-                                        <img class="img-fluid" src="img/blog/post-img2.jpg" alt="">
-                                    </div>
-                                    <div class="col-lg-12 mt-25">
-                                        <p>
-                                            MCSE boot camps have its supporters and its detractors. Some people do not
-                                            understand why you should have to spend money on boot camp when you can get
-                                            the
-                                            MCSE study materials yourself at a fraction of the camp price. However, who
-                                            has
-                                            the willpower.
-                                        </p>
-                                        <p>
-                                            MCSE boot camps have its supporters and its detractors. Some people do not
-                                            understand why you should have to spend money on boot camp when you can get
-                                            the
-                                            MCSE study materials yourself at a fraction of the camp price. However, who
-                                            has
-                                            the willpower.
-                                        </p>
-                                    </div>
-                                </div>
                             </div>
                         </div>
+                        
+                        <div class="related-posts mt-5">
+                            <h4>Bài viết liên quan</h4>
+                            <div class="row">
+                                @foreach ($relatedBlogs as $related)
+                                <div class="col-lg-6">
+                                    <div class="single-related-post">
+                                        <img class="img-fluid" src="{{ asset('storage/' . $related->image) }}" alt="{{ $related->name }}">
+                                        <h5><a href="javascript:void(0);" class="related-post-link" data-id="{{ $related->id }}">{{ $related->name }}</a></h5>
+                                        <p>{{ \Illuminate\Support\Str::limit($related->description, 100) }}</p>
+                                    </div>
+                                </div>
+                                
+                                
+                                @endforeach
+                            </div>
+                        </div>
+                        
                         <div class="navigation-area">
                             <div class="row">
                                 <div class="col-lg-6 col-md-6 col-12 nav-left flex-row d-flex justify-content-start align-items-center">
@@ -355,53 +301,21 @@
                                 <div class="br"></div>
                             </aside>
                             <aside class="single_sidebar_widget post_category_widget">
-                                <h4 class="widget_title">Post Catgories</h4>
+                                <h4 class="widget_title">Post Categories</h4>
                                 <ul class="list cat-list">
-                                    <li>
-                                        <a href="#" class="d-flex justify-content-between">
-                                            <p>Technology</p>
-                                            <p>37</p>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#" class="d-flex justify-content-between">
-                                            <p>Lifestyle</p>
-                                            <p>24</p>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#" class="d-flex justify-content-between">
-                                            <p>Fashion</p>
-                                            <p>59</p>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#" class="d-flex justify-content-between">
-                                            <p>Art</p>
-                                            <p>29</p>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#" class="d-flex justify-content-between">
-                                            <p>Food</p>
-                                            <p>15</p>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#" class="d-flex justify-content-between">
-                                            <p>Architecture</p>
-                                            <p>09</p>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#" class="d-flex justify-content-between">
-                                            <p>Adventure</p>
-                                            <p>44</p>
-                                        </a>
-                                    </li>
+                                    @foreach ($categories as $category)
+                                        <li>
+                                            <a href="{{ route('blogdetail', ['category' => $category->id]) }}" class="d-flex justify-content-between">
+                                                <p>{{ $category->name }}</p>
+                                                <p>{{ $category->blogs()->count() }}</p> <!-- Số lượng bài viết trong danh mục -->
+                                            </a>
+                                        </li>
+                                    @endforeach
                                 </ul>
                                 <div class="br"></div>
                             </aside>
+                            
+                            
                             <aside class="single-sidebar-widget newsletter_widget">
                                 <h4 class="widget_title">Newsletter</h4>
                                 <p>
@@ -421,23 +335,7 @@
                                 <p class="text-bottom">You can unsubscribe at any time</p>
                                 <div class="br"></div>
                             </aside>
-                            <aside class="single-sidebar-widget tag_cloud_widget">
-                                <h4 class="widget_title">Tag Clouds</h4>
-                                <ul class="list">
-                                    <li><a href="#">Technology</a></li>
-                                    <li><a href="#">Fashion</a></li>
-                                    <li><a href="#">Architecture</a></li>
-                                    <li><a href="#">Fashion</a></li>
-                                    <li><a href="#">Food</a></li>
-                                    <li><a href="#">Technology</a></li>
-                                    <li><a href="#">Lifestyle</a></li>
-                                    <li><a href="#">Art</a></li>
-                                    <li><a href="#">Adventure</a></li>
-                                    <li><a href="#">Food</a></li>
-                                    <li><a href="#">Lifestyle</a></li>
-                                    <li><a href="#">Adventure</a></li>
-                                </ul>
-                            </aside>
+                            
                         </div>
                     </div>
                 </div>
@@ -445,4 +343,26 @@
         </section>
         <!--================Blog Area =================-->
 @endsection
-      
+<script>
+    $(document).ready(function () {
+        $(".related-post-link").click(function (e) {
+            e.preventDefault(); // Ngừng hành động mặc định (tải lại trang)
+
+            var blogId = $(this).data("id"); // Lấy ID bài viết liên quan
+
+            $.ajax({
+                url: "{{ route('blogdetail') }}", // URL của route blogdetail
+                method: "GET",
+                data: { id: blogId }, // Gửi ID qua dữ liệu yêu cầu AJAX
+                success: function(response) {
+                    // Cập nhật nội dung bài viết
+                    $(".blog_details").html(response.blog);
+                },
+                error: function() {
+                    alert("Có lỗi xảy ra, vui lòng thử lại!");
+                }
+            });
+        });
+    });
+</script>
+   

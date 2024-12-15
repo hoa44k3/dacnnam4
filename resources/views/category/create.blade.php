@@ -22,18 +22,22 @@
             @csrf
             <div class="form-group">
                 <label for="name">Category Name</label>
-                <input type="text" name="name" id="name" class="form-control" required>
+                <input type="text" name="name" id="name" class="form-control" value="{{ old('name') }}" required>
             </div>
             <div class="form-group">
                 <label for="description">Description</label>
-                <textarea name="description" id="description" class="form-control" rows="4"></textarea>
+                <textarea name="description" id="description" class="form-control" rows="4">{{ old('description') }}</textarea>
             </div>
             <div class="form-group">
                 <label for="status">Status</label>
                 <select name="status" id="status" class="form-control">
-                    <option value="1">Hiển thị</option>
-                    <option value="0">Ẩn</option>
+                    <option value="1" {{ old('status') == 1 ? 'selected' : '' }}>Hiển thị</option>
+                    <option value="0" {{ old('status') == 0 ? 'selected' : '' }}>Ẩn</option>
                 </select>
+            </div>
+            <div class="form-group">
+                <label for="blogs_count">Number of Blogs</label>
+                <input type="text" id="blogs_count" class="form-control" value="0" disabled> <!-- Chỉ hiển thị số lượng bài viết, không cần nhập -->
             </div>
             <button type="submit" class="btn btn-primary">Save</button>
         </form>
