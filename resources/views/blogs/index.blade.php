@@ -38,7 +38,8 @@
                                     <span class="badge bg-primary">{{ $tag->name }}</span>
                                 @endforeach
                             </td>
-                            <td>{{ $blog->description }}</td>
+                            {{-- <td>{{ $blog->description }}</td> --}}
+                            <td>{{ \Illuminate\Support\Str::limit($blog->description, 50) }}</td>
                             <td>{{ $blog->category ? $blog->category->name : 'Chưa phân loại' }}</td> <!-- Hiển thị tên danh mục -->
                             <td>{{ ucfirst($blog->status) }}</td>
                             <td>{{ $blog->view_count }}</td>

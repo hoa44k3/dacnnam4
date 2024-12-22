@@ -20,7 +20,7 @@ return new class extends Migration
             $table->unsignedBigInteger('view_count')->default(0);
             $table->enum('status', ['pending', 'approved'])->default('pending');
             $table->unsignedBigInteger('category_id')->nullable();
-             $table->foreign('category_id')->references('id')->on('categories')->onDelete('set null');
+            $table->foreign('category_id')->references('id')->on('categories')->onDelete('set null');
             $table->timestamps();
         });
     }

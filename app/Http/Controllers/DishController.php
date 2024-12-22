@@ -27,6 +27,7 @@ class DishController extends Controller
             'name' => 'required|string|max:255',
             'price' => 'required|numeric',
             'sale_price' => 'nullable|numeric',
+            'description' => 'required|string',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'category_id' => 'nullable|exists:categories,id',
         ]);
@@ -34,6 +35,7 @@ class DishController extends Controller
         $dish = new Dish();
         $dish->name = $validated['name'];
         $dish->price = $validated['price'];
+        $dish->description = $validated['description'];
         $dish->sale_price = $validated['sale_price'] ?? null;
 
         if ($request->hasFile('image')) {
@@ -61,6 +63,7 @@ class DishController extends Controller
             'name' => 'required|string|max:255',
             'price' => 'required|numeric',
             'sale_price' => 'nullable|numeric',
+            'description' => 'required|string',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'category_id' => 'nullable|exists:categories,id',
         ]);
@@ -68,6 +71,7 @@ class DishController extends Controller
         $dish = Dish::findOrFail($id);
         $dish->name = $validated['name'];
         $dish->price = $validated['price'];
+        $dish->description = $validated['description'];
         $dish->sale_price = $validated['sale_price'] ?? null;
 
         if ($request->hasFile('image')) {
@@ -99,4 +103,11 @@ class DishController extends Controller
 
         return response()->json(['success' => 'Món ăn đã được xóa thành công!']);
     }
+
+    public function show($id)
+    {
+        $dish = Dish::with('category')->findOrFail($id); // Lấy món ăn kèm danh mục
+        return view('dish.show', compact('dish'));
+    }
+
 }

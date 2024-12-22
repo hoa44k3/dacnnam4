@@ -19,4 +19,8 @@ class Comment extends Model
     {
         return $this->belongsTo(Customer::class);
     }
+    public function blog()
+    {
+        return $this->belongsTo(Blog::class); // Điều này giả sử bạn có trường `blog_id` trong bảng comments
+    }
 }

@@ -2,24 +2,27 @@
 <html lang="en">
 
 <head>
-	<!-- Required meta tags -->
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<link rel="icon" href="img/favicon.png" type="image/png">
-	<title>SteakShop Restaurant</title>
-	<!-- Bootstrap CSS -->
-	<link rel="stylesheet" href="css/bootstrap.css">
-	<link rel="stylesheet" href="vendors/linericon/style.css">
-	<link rel="stylesheet" href="css/font-awesome.min.css">
-	<link rel="stylesheet" href="css/magnific-popup.css">
-	<link rel="stylesheet" href="vendors/owl-carousel/owl.carousel.min.css">
-	<link rel="stylesheet" href="vendors/lightbox/simpleLightbox.css">
-	<link rel="stylesheet" href="vendors/nice-select/css/nice-select.css">
-	<link rel="stylesheet" href="vendors/jquery-ui/jquery-ui.css">
-	<link rel="stylesheet" href="vendors/animate-css/animate.css">
-	<!-- main css -->
-	<link rel="stylesheet" href="css/style.css">
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="icon" href="{{ asset('img/favicon.png') }}" type="image/png">
+    <title>SteakShop Restaurant</title>
+    
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="{{ asset('css/bootstrap.css') }}">
+    <link rel="stylesheet" href="{{ asset('vendors/linericon/style.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/font-awesome.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/magnific-popup.css') }}">
+    <link rel="stylesheet" href="{{ asset('vendors/owl-carousel/owl.carousel.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('vendors/lightbox/simpleLightbox.css') }}">
+    <link rel="stylesheet" href="{{ asset('vendors/nice-select/css/nice-select.css') }}">
+    <link rel="stylesheet" href="{{ asset('vendors/jquery-ui/jquery-ui.css') }}">
+    <link rel="stylesheet" href="{{ asset('vendors/animate-css/animate.css') }}">
+    
+    <!-- main css -->
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
 </head>
+
 
 <body>
 
@@ -41,13 +44,16 @@
 				<ul class="navbar-nav">
 					<li class="nav-item"><a class="nav-link active" href="{{ route('home') }}"><img src="img/header/nav-icon1.png" alt=""> home</a></li>
 					<li class="nav-item"><a class="nav-link" href="{{ route('about') }}"><img src="img/header/nav-icon2.png" alt="">about</a></li>
-					<li class="nav-item"><a class="nav-link" href="{{ route('menu') }}"><img src="img/header/nav-icon3.png" alt="">menu</a></li>
+					<li class="nav-item"><a class="nav-link" href="{{ route('menu') }}"><img src="img/header/nav-icon3.png" alt="">menu</a>
+
+					</li>
 					<li class="nav-item submenu dropdown">
 						<a href="" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
 						 aria-expanded="false"><img src="img/header/nav-icon7.png" alt="">Blog</a>
 						<ul class="dropdown-menu">
 							<li class="nav-item"><a class="nav-link" href="{{ route('blog') }}">Blog</a></li>
 							<li class="nav-item"><a class="nav-link" href="{{ route('blogdetail') }}">Blog Details</a></li>
+							
 						</ul>
 					</li>
 					<li class="nav-item"><a class="nav-link" href="{{ route('contact') }}"><img src="img/header/nav-icon8.png" alt="">contact</a></li>
@@ -89,7 +95,7 @@
 						<div class="col-lg-8 col-md-12">
 							<p class="top-text"> Cung cấp các món ngon nhất trong nhà hàng Steak Shop</p>
 							<h1>Giới thiệu các món ăn ngon trong nhà hàng Steak Shop</h1>
-							<p>Khẩu vị của khách hàng luôn là tiêu chí hàng đầu trong nhà hàng của chúng tôi! Mong mọi quý khách sẽ có một bữa ăn ngon nhất.</p>
+							{{-- <p>Khẩu vị của khách hàng luôn là tiêu chí hàng đầu trong nhà hàng của chúng tôi! Mong mọi quý khách sẽ có một bữa ăn ngon nhất.</p> --}}
 						</div>
 						<div class="col-lg-4 col-md-12">
 							<div class="banner-btn">
@@ -213,23 +219,24 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 
 	<!-- Optional JavaScript -->
 	<!-- jQuery first, then Popper.js, then Bootstrap JS -->
-	<script src="js/jquery-3.2.1.min.js"></script>
-	<script src="js/popper.js"></script>
-	<script src="js/bootstrap.min.js"></script>
-	<script src="js/stellar.js"></script>
-	<script src="js/jquery.magnific-popup.min.js"></script>
-	<script src="vendors/lightbox/simpleLightbox.min.js"></script>
-	<script src="vendors/nice-select/js/jquery.nice-select.min.js"></script>
-	<script src="vendors/owl-carousel/owl.carousel.min.js"></script>
-	<script src="vendors/jquery-ui/jquery-ui.js"></script>
-	<script src="js/jquery.ajaxchimp.min.js"></script>
-	<script src="vendors/counter-up/jquery.waypoints.min.js"></script>
-	<script src="vendors/counter-up/jquery.counterup.js"></script>
-	<script src="js/mail-script.js"></script>
-	<!--gmaps Js-->
-	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCjCGmQ0Uq4exrzdcL6rvxywDDOvfAu6eE"></script>
-	<script src="js/gmaps.min.js"></script>
-	<script src="js/theme.js"></script>
+	<script src="{{ asset('js/jquery-3.2.1.min.js') }}"></script>
+<script src="{{ asset('js/popper.js') }}"></script>
+<script src="{{ asset('js/bootstrap.min.js') }}"></script>
+<script src="{{ asset('js/stellar.js') }}"></script>
+<script src="{{ asset('js/jquery.magnific-popup.min.js') }}"></script>
+<script src="{{ asset('vendors/lightbox/simpleLightbox.min.js') }}"></script>
+<script src="{{ asset('vendors/nice-select/js/jquery.nice-select.min.js') }}"></script>
+<script src="{{ asset('vendors/owl-carousel/owl.carousel.min.js') }}"></script>
+<script src="{{ asset('vendors/jquery-ui/jquery-ui.js') }}"></script>
+<script src="{{ asset('js/jquery.ajaxchimp.min.js') }}"></script>
+<script src="{{ asset('vendors/counter-up/jquery.waypoints.min.js') }}"></script>
+<script src="{{ asset('vendors/counter-up/jquery.counterup.js') }}"></script>
+<script src="{{ asset('js/mail-script.js') }}"></script>
+<!-- gmaps Js -->
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCjCGmQ0Uq4exrzdcL6rvxywDDOvfAu6eE"></script>
+<script src="{{ asset('js/gmaps.min.js') }}"></script>
+<script src="{{ asset('js/theme.js') }}"></script>
+
 </body>
 
 </html>

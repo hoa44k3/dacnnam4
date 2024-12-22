@@ -9,10 +9,10 @@ use App\Models\Category;
 class BlogController extends Controller
 {
     public function index()
-{
-    $blogs = Blog::with('tags', 'category')->get(); // Sử dụng `with()` để tải danh mục cùng các thẻ
-    return view('blogs.index', compact('blogs'));
-}
+    {
+        $blogs = Blog::with('tags', 'category')->get(); // Sử dụng `with()` để tải danh mục cùng các thẻ
+        return view('blogs.index', compact('blogs'));
+    }
 
 
 

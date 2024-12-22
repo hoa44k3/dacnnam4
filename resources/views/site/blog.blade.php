@@ -65,20 +65,17 @@
                                 <article class="row blog_item">
                                     <div class="col-md-3">
                                         <div class="blog_info text-right">
-                                            <div class="post_tag">
-                                                {{-- <a href="#">Food,</a>
-                                                <a class="active" href="#">Technology,</a>
-                                                <a href="#">Politics,</a>
-                                                <a href="#">Lifestyle</a> --}}
-                                                {{-- @foreach ($blog->tags as $tag)
-                                                    <a href="{{ route('tags.show', $tag->id) }}">{{ $tag->name }}</a>
-                                                @endforeach --}}
-                                            </div>
                                             <ul class="blog_meta list">
-                                                <li><a href="#">Mark wiens<i class="lnr lnr-user"></i></a></li>
-                                                <li><a href="#">12 Dec, 2017<i class="lnr lnr-calendar-full"></i></a></li>
-                                                <li><a href="#">1.2M Views<i class="lnr lnr-eye"></i></a></li>
-                                                <li><a href="#">06 Comments<i class="lnr lnr-bubble"></i></a></li>
+                                                <li><a href="#">Mark Wiens<i class="lnr lnr-user"></i></a></li>
+                                                <li>
+                                                    <a href="#">
+                                                        {{ $blog->created_at ? $blog->created_at->format('d M, Y') : 'Unknown Date' }}
+                                                    </a>
+                                                </li>
+                                                
+                                                <li><a href="#">{{ $blog->view_count ?? 0 }} Views<i class="lnr lnr-eye"></i></a></li>
+
+                                                <li><a href="#">{{ $blog->comments->count() }} Comments<i class="lnr lnr-bubble"></i></a></li>
                                             </ul>
                                         </div>
                                     </div>
@@ -86,24 +83,24 @@
                                         <div class="blog_post">
                                             <img src="{{ asset('storage/' . $blog->image) }}" alt="{{ $blog->name }}">
                                             <div class="blog_details">
-                                                <a href="single-blog.html">
+                                                <a href="{{ route('blogdetail', $blog->id) }}">
                                                     <h2>{{ $blog->name }}</h2>
                                                 </a>
                                                 <p>{{ $blog->description }}</p>
-                                                <a href="single-blog.html" class="blog_btn">View More</a>
+                                                <a href="{{ route('blogdetail', $blog->id) }}" class="blog_btn">View More</a>
                                             </div>
                                         </div>
                                     </div>
                                 </article>
                             @endforeach
-                        
+                            
                             <!-- Phân trang -->
                             <nav class="blog-pagination justify-content-center d-flex">
                                 {{ $blogs->links('pagination::bootstrap-4') }}
                             </nav>
-                        </div>
-                        
+                        </div>  
                     </div>
+                    
                     <div class="col-lg-4">
                         <div class="blog_right_sidebar">
                             <aside class="single_sidebar_widget search_widget">

@@ -134,7 +134,7 @@
               </li>
 
                {{-- Thẻ liên hệ --}}
-               <li class="nav-item {{ request()->routeIs('contacts.*') ? 'active' : '' }}">
+              <li class="nav-item {{ request()->routeIs('contacts.*') ? 'active' : '' }}">
                   <a href="{{ route('contacts.index') }}">
                       <i class="fas fa-envelope"></i>
                       <p>Contacts</p>

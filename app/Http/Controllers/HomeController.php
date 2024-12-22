@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Models\Blog;
 use App\Models\Tag;
 use App\Models\Category;
+use App\Models\Dish;
+use App\Models\Comment;
 class HomeController extends Controller
 {
     public function index(Request $request)
@@ -15,13 +17,13 @@ class HomeController extends Controller
         if ($request->has('category')) {
             $category = Category::find($request->category);
             if ($category) {
-                // Lọc bài viết theo danh mục
-                $blogs = $category->blogs()->paginate(10); // Sử dụng phương thức blogs() đã định nghĩa ở trên
+               
+                $blogs = $category->blogs()->paginate(10); 
             } else {
-                $blogs = Blog::paginate(10); // Nếu không tìm thấy danh mục, lấy tất cả bài viết
+                $blogs = Blog::paginate(10); 
             }
         } else {
-            $blogs = Blog::paginate(10); // Nếu không có tham số category, lấy tất cả bài viết
+            $blogs = Blog::paginate(10); 
         }
     
         return view('site.home', compact('blogs'));
@@ -41,46 +43,39 @@ class HomeController extends Controller
     }
     
     public function blog()
-    {
-        // Lấy tất cả các danh mục và số lượng bài viết trong mỗi danh mục
-        $categories = Category::withCount('blogs')->get();
-    
-        // Lấy các bài viết với thẻ tag
-        $blogs = Blog::with('tags')->select('name', 'description', 'image')->paginate(3); 
-    
-        return view('site.blog', compact('blogs', 'categories')); // Truyền biến $blogs và $categories vào view
-    }
-    
-    
-    public function blogdetail(Request $request)
-    {
-        // Kiểm tra nếu có id được gửi qua AJAX
-        if ($request->has('id')) {
-            $blog = Blog::find($request->id); // Lấy bài viết theo ID
-    
-            // Lấy các bài viết liên quan cùng category
-            $relatedBlogs = Blog::where('category_id', $blog->category_id)->take(2)->get();
-    
-            // Trả về dữ liệu dạng JSON nếu sử dụng AJAX
-            return response()->json([
-                'blog' => view('site.blogdetail', compact('blog', 'relatedBlogs'))->render()
-            ]);
-        }
-    
-        // Nếu không có id, trả về bài viết mặc định
-        $blog = Blog::first();
-        $relatedBlogs = Blog::where('category_id', $blog->category_id)->take(2)->get();
-    
-        // Lấy tất cả danh mục
-        $categories = Category::all(); // Lấy tất cả danh mục
-    
-        return view('site.blogdetail', compact('blog', 'relatedBlogs', 'categories'));
-    }
-    
+{
+    // Lấy tất cả các danh mục và số lượng bài viết trong mỗi danh mục
+    $categories = Category::withCount('blogs')->get();
 
+    // Lấy các bài viết với thẻ tag, và thêm số lượng bình luận vào mỗi bài viết
+    $blogs = Blog::with(['tags', 'comments']) // Với 'comments' để lấy số lượng bình luận
+                ->select('id', 'name', 'description', 'image', 'view_count', 'category_id')
+                ->paginate(3); 
+
+    return view('site.blog', compact('blogs', 'categories')); // Truyền biến $blogs và $categories vào view
+}
+
+public function blogdetail()
+{
+    // Lấy bài viết đầu tiên (hoặc có thể thay bằng phương thức khác như lấy bài viết mới nhất)
+    $blog = Blog::with('comments', 'tags')->first(); // Lấy bài viết đầu tiên và các bình luận, thẻ tag của nó
+
+    // Tăng lượt xem
+    $blog->increment('view_count');
+
+    // Lấy các bài viết liên quan cùng danh mục
+    $relatedBlogs = Blog::where('category_id', $blog->category_id)->take(2)->get();
+
+    // Lấy tất cả danh mục
+    $categories = Category::all();
+
+    // Trả về view chi tiết bài viết, thêm biến categories vào
+    return view('site.blogdetail', compact('blog', 'relatedBlogs', 'categories'));
+}
 
     public function menu(){
-        return view('site.menu');
+        $categories = Category::with('dishes')->get(); 
+        return view('site.menu', compact('categories'));
     }
     public function showByTag(Tag $tag)
     {
@@ -93,5 +88,10 @@ class HomeController extends Controller
 
         return view('site.blog', compact('blog', 'tag'));
     }
-
+    public function dishDetail($id)
+    {
+        $dish = Dish::with('category')->findOrFail($id);
+        return view('site.dish_detail', compact('dish'));
+    }
+    
 }

@@ -17,5 +17,8 @@ class Blog extends Model
 {
     return $this->belongsTo(Category::class);
 }
-
+public function comments()
+    {
+        return $this->hasMany(Comment::class);  // Điều này giả sử bạn có model `Comment` và trường `blog_id` trong bảng comments
+    }
 }

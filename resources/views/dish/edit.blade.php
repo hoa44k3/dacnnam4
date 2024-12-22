@@ -22,6 +22,10 @@
                 <input type="number" name="sale_price" id="sale_price" class="form-control" value="{{ $dish->sale_price }}">
             </div>
             <div class="form-group">
+                <label for="description">Mô tả</label>
+                <textarea name="description" id="description" class="form-control" rows="4" required>{{ $dish->description }}</textarea>
+            </div>
+            <div class="form-group">
                 <label for="image">Hình ảnh</label>
                 <input type="file" name="image" id="image" class="form-control">
                 @if ($dish->image)

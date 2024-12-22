@@ -29,7 +29,7 @@
                     <tr>
                         <td>{{ $item->id }}</td>
                         <td>{{ $item->name }}</td>
-                        <td>{{ \Illuminate\Support\Str::limit($item->description, 50) }}</td>
+                        <td>{{ \Illuminate\Support\Str::limit($item->description, 5000) }}</td>
                         <td>{{ $item->status == 0 ? 'Ẩn' : 'Hiển thị' }}</td>
                         <td>{{ \Carbon\Carbon::parse($item->created_at)->format('d/m/Y') }}</td>
                         <td>{{ \Carbon\Carbon::parse($item->updated_at)->format('d/m/Y') }}</td>

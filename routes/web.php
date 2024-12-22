@@ -36,14 +36,14 @@ Route::group(['prefix' => ''], function() {
     Route::get('/contact', [HomeController::class, 'contact'])->name('contact');
     Route::get('/about', [HomeController::class, 'about'])->name('about');
     Route::get('/blog', [HomeController::class, 'blog'])->name('blog');
-     Route::get('/blogdetail', [HomeController::class, 'blogdetail'])->name('blogdetail');
-    //Route::get('/blogdetail/{id}', [HomeController::class, 'blogdetail'])->name('blogdetail');
+    Route::get('/blogdetail', [HomeController::class, 'blogdetail'])->name('blogdetail');
+//Route::get('/blogdetail/{id}', [HomeController::class, 'blogdetail'])->name('blogdetail');
 
     Route::get('/menu', [HomeController::class, 'menu'])->name('menu');
     Route::post('/contact', [ContactController::class, 'storeContact']);
-    
-    // Route để hiển thị bài viết theo tag
     Route::get('/tags/{tag}', [HomeController::class, 'showByTag'])->name('tags.show');
+    Route::get('/dish/{id}', [HomeController::class, 'dishDetail'])->name('dish_detail');
+
 });
 
 Route::get('auth/register',[AuthController::class,'register'])->name('auth.register');
@@ -103,6 +103,7 @@ Route::prefix('admin')->middleware('admin')->group(function () {
         Route::get('/edit/{id}', [DishController::class, 'edit'])->name('dish.edit');
         Route::put('/update/{id}', [DishController::class, 'update'])->name('dish.update');
         Route::delete('/destroy/{id}', [DishController::class, 'destroy'])->name('dish.destroy');
+        Route::get('/{dish}', [DishController::class, 'show'])->name('dish.show');
     });
     Route::prefix('blogs')->group(function () {
         Route::get('/', [BlogController::class, 'index'])->name('blogs.index');

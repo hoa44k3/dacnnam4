@@ -24,12 +24,18 @@ class Category extends Model
     ];
     use HasFactory;
 
-  public function dishes()
-    {
-        return $this->belongsToMany(Dish::class, 'category_dish');
-    }
+//   public function dishes()
+//     {
+//         return $this->belongsToMany(Dish::class, 'category_dish');
+//     }
     public function blogs()
     {
         return $this->hasMany(Blog::class);
     }
+    // Category.php
+    public function dishes()
+    {
+        return $this->hasMany(Dish::class);
+    }
+
 }
