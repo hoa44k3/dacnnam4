@@ -13,8 +13,9 @@
                         <th>Họ và tên</th>
                         <th>Email</th>
                         <th>Tin nhắn</th>
-                        <th>Ngày gửi</th>
                         <th>Phản hồi</th>
+                        <th>Ngày gửi</th>
+                        
                         <th>Ngày phản hồi</th>
                         <th>Hành động</th>
                     </tr>

@@ -8,16 +8,16 @@ use Illuminate\Database\Eloquent\Model;
 class Comment extends Model
 {
     use HasFactory;
-    protected $fillable = ['content', 'dish_id', 'customer_id'];
+    protected $fillable = ['content', 'dish_id', 'user_id'];
     public function dish()
     {
         return $this->belongsTo(Dish::class);
     }
 
     // Quan hệ nhiều-một với Customer
-    public function customer()
+    public function user()
     {
-        return $this->belongsTo(Customer::class);
+        return $this->belongsTo(User::class);
     }
     public function blog()
     {

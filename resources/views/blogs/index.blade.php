@@ -8,20 +8,25 @@
         <h4>Danh sách blog</h4>
         <a href="{{ route('blogs.create') }}" class="btn btn-primary mb-3">Thêm Blog</a>
     </div>
+   
     <div class="card-body">
         <div class="table-responsive">
             <table class="table table-striped table-hover">
                 <thead>
                     <tr>
                         <th>ID</th>
-                        <th>Tên blog</th>
+                        <th>Tiêu đề bài viết</th>
                         <th>Hình ảnh</th>
                         <th>Thẻ</th>
-                        <th>Mô tả</th>
-                        <th>Danh mục</th> <!-- Thêm cột danh mục -->
+                        <th>Mô tả ngắn</th>
+                        <th>Nội dung bài viết</th>
+                      
+                        <th>Danh mục</th> 
                         <th>Trạng thái</th>
+                     
                         <th>Lượt xem</th>
                         <th>Ngày tạo</th>
+                        <th>Video</th>
                         <th>Hành động</th>
                     </tr>
                 </thead>
@@ -38,12 +43,27 @@
                                     <span class="badge bg-primary">{{ $tag->name }}</span>
                                 @endforeach
                             </td>
-                            {{-- <td>{{ $blog->description }}</td> --}}
+                           
                             <td>{{ \Illuminate\Support\Str::limit($blog->description, 50) }}</td>
-                            <td>{{ $blog->category ? $blog->category->name : 'Chưa phân loại' }}</td> <!-- Hiển thị tên danh mục -->
+                            <td>{{ \Illuminate\Support\Str::limit($blog->position, 50) }}</td> 
+                            
+                            <td>{{ $blog->category ? $blog->category->name : 'Chưa phân loại' }}</td> 
                             <td>{{ ucfirst($blog->status) }}</td>
                             <td>{{ $blog->view_count }}</td>
                             <td>{{ $blog->created_at->format('d-m-Y') }}</td>
+                            <td>
+                                @if($blog->video)
+                                    <!-- Thêm nút nhấn để mở video -->
+                                    <button class="btn btn-primary btn-sm" onclick="playVideo('{{ $blog->video }}', {{ $blog->id }})">Xem Video</button>
+                                    <!-- Thẻ video được ẩn ban đầu -->
+                                    <div id="video-{{ $blog->id }}" style="display:none;">
+                                        <iframe width="500" height="315" id="video-frame-{{ $blog->id }}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                                        <button class="btn btn-danger btn-sm mt-2" onclick="hideVideo({{ $blog->id }})">Ẩn Video</button> <!-- Nút ẩn video -->
+                                    </div>
+                                @else
+                                    Không có video
+                                @endif
+                            </td>
                             <td>
                                 <a href="{{ route('blogs.show', $blog->id) }}" class="btn btn-info btn-sm" title="Xem chi tiết">
                                     <i class="fas fa-eye"></i>
@@ -68,3 +88,60 @@
     </div>
 </div>
 @endsection
+<script>
+    function playVideo(videoUrl, blogId) {
+        // Lấy iframe bằng ID duy nhất của blog
+        var iframe = document.getElementById('video-frame-' + blogId);
+        
+        // Hiển thị video
+        document.getElementById('video-' + blogId).style.display = 'block';
+
+        // Đặt nguồn video vào iframe
+        iframe.src = videoUrl;
+    }
+
+    function hideVideo(blogId) {
+        // Ẩn video
+        document.getElementById('video-' + blogId).style.display = 'none';
+
+        // Dừng video bằng cách xóa nguồn iframe (dừng video)
+        var iframe = document.getElementById('video-frame-' + blogId);
+        iframe.src = '';
+    }
+
+    function playVideo(videoUrl, blogId) {
+    var iframe = document.getElementById('video-frame-' + blogId);
+    var videoEmbedUrl;
+
+    // Kiểm tra và xử lý URL nếu là YouTube
+    if (videoUrl.includes('youtube.com/watch') || videoUrl.includes('youtu.be')) {
+        videoEmbedUrl = convertYouTubeUrlToEmbed(videoUrl);
+    } else {
+        videoEmbedUrl = videoUrl; // Sử dụng link trực tiếp cho video khác
+    }
+
+    // Hiển thị video
+    document.getElementById('video-' + blogId).style.display = 'block';
+
+    // Đặt nguồn video vào iframe
+    iframe.src = videoEmbedUrl;
+}
+
+function hideVideo(blogId) {
+    document.getElementById('video-' + blogId).style.display = 'none';
+    var iframe = document.getElementById('video-frame-' + blogId);
+    iframe.src = ''; // Xóa nguồn để dừng video
+}
+
+function convertYouTubeUrlToEmbed(url) {
+    if (url.includes('youtube.com/watch')) {
+        return url.replace('watch?v=', 'embed/');
+    } else if (url.includes('youtu.be')) {
+        return url.replace('youtu.be/', 'youtube.com/embed/');
+    }
+    return url; // Nếu không phải YouTube, trả về URL gốc
+}
+
+</script>
+
+

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AboutUsController;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\AdminController;
@@ -16,6 +17,8 @@ use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\PostTypeController;
+use App\Http\Controllers\RegionController;
 use App\Http\Controllers\TagController;
 use App\Models\Contact;
 use App\Models\Favorite;
@@ -36,13 +39,13 @@ Route::group(['prefix' => ''], function() {
     Route::get('/contact', [HomeController::class, 'contact'])->name('contact');
     Route::get('/about', [HomeController::class, 'about'])->name('about');
     Route::get('/blog', [HomeController::class, 'blog'])->name('blog');
-    Route::get('/blogdetail', [HomeController::class, 'blogdetail'])->name('blogdetail');
-//Route::get('/blogdetail/{id}', [HomeController::class, 'blogdetail'])->name('blogdetail');
-
+    Route::post('/comment/{blog_id}', [HomeController::class, 'storeComment'])->name('blogcomment');
+    Route::get('/blogdetail{id}', [HomeController::class, 'blogdetail'])->name('blogdetail');
     Route::get('/menu', [HomeController::class, 'menu'])->name('menu');
     Route::post('/contact', [ContactController::class, 'storeContact']);
     Route::get('/tags/{tag}', [HomeController::class, 'showByTag'])->name('tags.show');
     Route::get('/dish/{id}', [HomeController::class, 'dishDetail'])->name('dish_detail');
+   
 
 });
 
@@ -96,15 +99,7 @@ Route::prefix('admin')->middleware('admin')->group(function () {
         Route::delete('/destroy/{id}', [CategoryController::class, 'destroy'])->name('category.destroy');
     });
 
-    Route::group(['prefix' => 'dish'], function () {
-        Route::get('/', [DishController::class, 'index'])->name('dish.index');
-        Route::get('/create', [DishController::class, 'create'])->name('dish.create');
-        Route::post('/store', [DishController::class, 'store'])->name('dish.store');
-        Route::get('/edit/{id}', [DishController::class, 'edit'])->name('dish.edit');
-        Route::put('/update/{id}', [DishController::class, 'update'])->name('dish.update');
-        Route::delete('/destroy/{id}', [DishController::class, 'destroy'])->name('dish.destroy');
-        Route::get('/{dish}', [DishController::class, 'show'])->name('dish.show');
-    });
+  
     Route::prefix('blogs')->group(function () {
         Route::get('/', [BlogController::class, 'index'])->name('blogs.index');
         Route::get('/create', [BlogController::class, 'create'])->name('blogs.create');
@@ -164,9 +159,47 @@ Route::prefix('admin')->middleware('admin')->group(function () {
 
     });
 
-
+    Route::prefix('post_types')->group(function () {
+        Route::get('/', [PostTypeController::class, 'index'])->name('post_types.index');         
+        Route::get('/create', [PostTypeController::class, 'create'])->name('post_types.create');  
+        Route::post('/', [PostTypeController::class, 'store'])->name('post_types.store');        
+        Route::get('/{post_type}/edit', [PostTypeController::class, 'edit'])->name('post_types.edit'); 
+        Route::put('/{post_type}', [PostTypeController::class, 'update'])->name('post_types.update'); 
+        Route::delete('/{post_type}', [PostTypeController::class, 'destroy'])->name('post_types.destroy');  
+    });
     
-          
+    Route::prefix('about_us')->group(function () {
+        Route::get('/', [AboutUsController::class, 'index'])->name('about_us.index');         
+        Route::get('/{about_us}/edit', [AboutUsController::class, 'edit'])->name('about_us.edit'); 
+        Route::put('/{about_us}', [AboutUsController::class, 'update'])->name('about_us.update');  
+    });    
+    
+    Route::prefix('regions')->group(function () {
+        Route::get('/', [RegionController::class, 'index'])->name('regions.index');         
+        Route::get('/create', [RegionController::class, 'create'])->name('regions.create');  
+        Route::post('/', [RegionController::class, 'store'])->name('regions.store');        
+        Route::get('/{region}/edit', [RegionController::class, 'edit'])->name('regions.edit'); 
+        Route::put('/{region}', [RegionController::class, 'update'])->name('regions.update'); 
+        Route::delete('/{region}', [RegionController::class, 'destroy'])->name('regions.destroy');  
+    });
+    // Route::group(['prefix' => 'dish'], function () {
+    //     Route::get('/', [DishController::class, 'index'])->name('dish.index');
+    //     Route::get('/create', [DishController::class, 'create'])->name('dish.create');
+    //     Route::post('/store', [DishController::class, 'store'])->name('dish.store');
+    //     Route::get('/edit/{id}', [DishController::class, 'edit'])->name('dish.edit');
+    //     Route::put('/update/{id}', [DishController::class, 'update'])->name('dish.update');
+    //     Route::delete('/destroy/{id}', [DishController::class, 'destroy'])->name('dish.destroy');
+    //     Route::get('/{dish}', [DishController::class, 'show'])->name('dish.show');
+    // });
+    Route::prefix('dish')->group(function () {
+        Route::get('/', [DishController::class, 'index'])->name('dish.index');         
+        Route::get('/create', [DishController::class, 'create'])->name('dish.create');  
+        Route::post('/', [DishController::class, 'store'])->name('dish.store');        
+        Route::get('/{dish}/edit', [DishController::class, 'edit'])->name('dish.edit'); 
+        Route::put('/{dish}', [DishController::class, 'update'])->name('dish.update'); 
+        Route::delete('/{dish}', [DishController::class, 'destroy'])->name('dish.destroy');  
+        Route::get('/{dish}', [DishController::class, 'show'])->name('dish.show');
+    });
 });
 
 

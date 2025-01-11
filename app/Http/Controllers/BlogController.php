@@ -6,11 +6,13 @@ use Illuminate\Http\Request;
 use App\Models\Blog;
 use App\Models\Tag;
 use App\Models\Category;
+use App\Models\PostType; 
+
 class BlogController extends Controller
 {
     public function index()
     {
-        $blogs = Blog::with('tags', 'category')->get(); // Sử dụng `with()` để tải danh mục cùng các thẻ
+        $blogs = Blog::with('tags', 'category', 'postType')->get(); 
         return view('blogs.index', compact('blogs'));
     }
 
@@ -18,8 +20,10 @@ class BlogController extends Controller
 
     public function create()
     {
-        $categories = Category::all(); // Lấy tất cả các danh mục
-        return view('blogs.create', compact('categories'));
+        $categories = Category::all();
+        $postTypes = PostType::all();
+      
+        return view('blogs.create', compact('categories', 'postTypes'));
     }
 
     public function store(Request $request)
@@ -30,7 +34,10 @@ class BlogController extends Controller
             'description' => 'required|string',
             'position' => 'nullable|string',
             'status' => 'required|in:pending,approved',
-            'category_id' => 'required|exists:categories,id', // Kiểm tra xem category_id có tồn tại trong bảng categories hay không
+            'category_id' => 'required|exists:categories,id', 
+            'post_type_id' => 'required|exists:post_types,id',
+            'video' => 'nullable|url',
+            
         ]);
 
         $blog = new Blog();
@@ -38,10 +45,23 @@ class BlogController extends Controller
         if ($request->hasFile('image')) {
             $blog->image = $request->file('image')->store('blogs', 'public');
         }
+       
+       // Lưu video nếu có (chỉ lưu URL)
+    // if ($request->has('video') && $request->video) {
+    //     $blog->video = $request->video;
+    // }
+    if ($request->has('video') && $request->video) {
+        // Chuyển đổi URL YouTube thành URL nhúng
+        $video_url = str_replace('https://www.youtube.com/watch?v=', 'https://www.youtube.com/embed/', $request->video);
+        $blog->video = $video_url;
+    }
+    
+    
+
          // Lưu danh mục
         $blog->category_id = $request->category_id;
         if ($request->has('tag_ids')) {
-            $blog->tags()->sync($request->tag_ids); // Đồng bộ tag
+            $blog->tags()->sync($request->tag_ids); 
         }
         $blog->save();
         
@@ -49,15 +69,14 @@ class BlogController extends Controller
         return redirect()->route('blogs.index')->with('success', 'Blog created successfully!');
     }
 
-    // Show the form for editing the specified blog
     public function edit(Blog $blog)
     {
         $categories = Category::all();
         $tags = Tag::all();
-        return view('blogs.edit', compact('blog','tags','categories'));
+        $postTypes = PostType::all(); 
+        return view('blogs.edit', compact('blog','tags','categories','postTypes'));
     }
 
-    // Update the specified blog in storage
     public function update(Request $request, Blog $blog)
     {
         $validated = $request->validate([
@@ -67,17 +86,24 @@ class BlogController extends Controller
             'position' => 'nullable|string',
             'status' => 'required|in:pending,approved',
             'category_id' => 'required|exists:categories,id',
+           'video' => 'nullable|url',
+            'post_type_id' => 'required|exists:post_types,id',
         ]);
 
         $blog->fill($validated);
+        
         if ($request->hasFile('image')) {
             $blog->image = $request->file('image')->store('blogs', 'public');
         }
+        if ($request->has('video') && $request->video) {
+            // Chuyển đổi URL YouTube thành URL nhúng
+            $video_url = str_replace('https://www.youtube.com/watch?v=', 'https://www.youtube.com/embed/', $request->video);
+            $blog->video = $video_url;
+        }
 
-    // Cập nhật category_id
         $blog->category_id = $request->category_id;
         if ($request->has('tag_ids')) {
-            $blog->tags()->sync($request->tag_ids); // Đồng bộ các thẻ tag
+            $blog->tags()->sync($request->tag_ids);
         }
 
         $blog->save();
@@ -85,11 +111,12 @@ class BlogController extends Controller
         return redirect()->route('blogs.index')->with('success', 'Blog updated successfully!');
     }
 
-    // Remove the specified blog from storage
     public function destroy(Blog $blog)
     {
         $blog->delete();
-        return response()->json(['success' => 'Blog deleted successfully!']);
+       
+        return redirect()->route('blogs.index')->with('success', 'bài viết đã được xóa.');
+       
     }
     public function show(Blog $blog)
     {

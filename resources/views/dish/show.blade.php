@@ -15,8 +15,7 @@
             <!-- Thông Tin Chi Tiết -->
             <div class="col-md-6">
                 <h3>{{ $dish->name }}</h3>
-                <p><strong>Giá:</strong> ${{ $dish->price }}</p>
-                <p><strong>Giá Khuyến Mãi:</strong> ${{ $dish->sale_price ?? 'Không có' }}</p>
+                <p><strong>VÙng miền:</strong> {{ $dish->region->name ?? 'Không xác định' }}</p>
                 <p><strong>Danh Mục:</strong> {{ $dish->category->name ?? 'Không có danh mục' }}</p>
                 <p><strong>Mô Tả:</strong></p>
                 <p>{{ $dish->description }}</p>

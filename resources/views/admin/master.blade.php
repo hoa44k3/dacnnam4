@@ -6,6 +6,7 @@
     <title>Kaiadmin - Bootstrap 5 Admin Dashboard</title>
     <!-- Trong phần <head> của file admin.master.blade.php -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
     <meta
       content="width=device-width, initial-scale=1.0, shrink-to-fit=no"
@@ -81,7 +82,7 @@
               <li class="nav-item {{ request()->routeIs('admin.index') ? 'active' : '' }}">
                 <a href="{{ route('admin.index') }}">
                   <i class="fas fa-home"></i>
-                  <p>Quản lý Admin</p>
+                  <p> Admin</p>
                 </a>
               </li>
         
@@ -110,12 +111,12 @@
               </li>
         
               <!-- Thẻ Customers -->
-              <li class="nav-item {{ request()->routeIs('customers.*') ? 'active' : '' }}">
-                <a href="{{ route('customers.index') }}">
+              {{-- <li class="nav-item {{ request()->routeIs('post_types.*') ? 'active' : '' }}">
+                <a href="{{ route('post_types.index') }}">
                   <i class="fas fa-users"></i>
-                  <p>Customers</p>
+                  <p>Category_Blog</p>
                 </a>
-              </li>
+              </li> --}}
         
               <!-- Thẻ Comments -->
               <li class="nav-item {{ request()->routeIs('comments.*') ? 'active' : '' }}">
@@ -126,10 +127,10 @@
               </li>
         
               <!-- Thẻ Favorites -->
-              <li class="nav-item {{ request()->routeIs('favorites.*') ? 'active' : '' }}">
-                <a href="{{ route('favorites.index') }}">
+              <li class="nav-item {{ request()->routeIs('regions.*') ? 'active' : '' }}">
+                <a href="{{ route('regions.index') }}">
                   <i class="fas fa-heart"></i>
-                  <p>Favorites</p>
+                  <p>Regions</p>
                 </a>
               </li>
 
@@ -142,15 +143,15 @@
               </li>
 
               <!-- Thẻ Orders -->
-              <li class="nav-item {{ request()->routeIs('orders.*') ? 'active' : '' }}">
-                <a href="{{ route('orders.index') }}">
+              <li class="nav-item {{ request()->routeIs('about_us.*') ? 'active' : '' }}">
+                <a href="{{ route('about_us.index') }}">
                   <i class="fas fa-box"></i>
-                  <p>Orders</p>
+                  <p>About</p>
                 </a>
               </li>
 
               <!-- Thẻ Carts -->
-              <li class="nav-item {{ request()->routeIs('carts.*') ? 'active' : '' }}">
+              {{-- <li class="nav-item {{ request()->routeIs('carts.*') ? 'active' : '' }}">
                 <a href="{{ route('carts.index') }}">
                   <i class="fas fa-shopping-cart"></i>
                   <p>Carts</p>
@@ -163,7 +164,7 @@
                   <i class="fas fa-credit-card"></i>
                   <p>Payments</p>
                 </a>
-              </li>
+              </li> --}}
               <li class="nav-item {{ request()->routeIs('users.*')?'active' : '' }}">
                 <a href="{{ route('users.index') }}">
                   <i class="fas fa-users"></i>
@@ -179,7 +180,7 @@
               <li class="nav-item {{ request()->routeIs('users.*')?'active' : '' }}">
                 <a href="{{ route('home') }}">
                   <i class="fas fa-users"></i>
-                  <p>Đăng xuất</p>
+                  <p>Logout</p>
                 </a>
               </li>
             </ul>

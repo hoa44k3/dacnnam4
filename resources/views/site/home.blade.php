@@ -4,92 +4,38 @@
 
 @section('title','Trang chủ')
 @section('body')
-		<div class="breakfast-area section_gap_top">
-			<div class="container">
-				<div class="row align-items-center justify-content-center">
-					@foreach($blogs as $key => $blog)
-						<div class="col-lg-6 {{ $key % 2 == 0 ? 'order-lg-1' : 'order-lg-2' }}">
-							<div class="right-img">
-								<!-- Hiển thị ảnh 1 -->
-								<img class="img1 img-fluid" src="{{ asset('storage/' . $blog->image) }}" alt="{{ $blog->name }}">
-								
-								<!-- Hiển thị ảnh 2 nếu có -->
-								{{-- @if(isset($blogs[$key + 1]))
-									<img class="img2 img-fluid" src="{{ asset('storage/' . $blogs[$key + 1]->image) }}" alt="{{ $blogs[$key + 1]->name }}">
-								@endif --}}
-							</div>
-						</div>
-						<div class="col-lg-5 {{ $key % 2 == 0 ? 'order-lg-2' : 'order-lg-1' }}">
-							<div class="left-content">
-								<h1>{{ $blog->name }}</h1>
-								<p>{{ $blog->description }}</p>
-								<a href="#" class="primary-btn">Read More</a>
-							</div>
-						</div>
-						@break($key == 1) <!-- Dừng vòng lặp sau khi hiển thị 2 bài -->
-					@endforeach
-				</div>
-			</div>
-		</div>
-		
-		
-		
-		<!--================ Start Reservstion Area =================-->
-		<section class="reservation-area section_gap_top">
-			<div class="container">
-				<div class="row align-items-center justify-content-center">
-					<div class="col-lg-6 offset-lg-6">
-						<div class="contact-form-section">
-							<h1>Đặt bàn</h1>
-							<form class="contact-form-area contact-page-form contact-form text-right" id="myForm" action="mail.html" method="post">
-								<div class="form-group col-md-12">
-									<input type="text" class="form-control" id="name" name="name" placeholder="Name" onfocus="this.placeholder = ''"
-									 onblur="this.placeholder = 'Name'">
-								</div>
-								<div class="form-group col-md-12">
-									<input type="email" class="form-control" id="email" name="email" placeholder="Email Address" onfocus="this.placeholder = ''"
-									 onblur="this.placeholder = 'Email Address'">
-								</div>
-								<div class="form-group col-md-12">
-									<input type="text" class="form-control" id="subject" name="subject" placeholder="Phone Number" onfocus="this.placeholder = ''"
-									 onblur="this.placeholder = 'Phone Number'">
-								</div>
-								<div class="form-group col-md-12">
-									<div class="form-select">
-										<select>
-											<option value="1">Number of people</option>
-											<option value="1">Number of people</option>
-											<option value="1">Number of people</option>
-											<option value="1">Number of people</option>
-											<option value="1">Number of people</option>
-										</select>
-									</div>
-								</div>
-								<div class="form-group col-md-12">
-									<input type="text" class="form-control" id="datepicker" name="text" placeholder="Select Date & Time" onfocus="this.placeholder = ''"
-									 onblur="this.placeholder = 'Select Date & Time'">
-								</div>
-								<div class="form-group col-md-12">
-									<div class="form-select">
-										<select>
-											<option value="1">Select event</option>
-											<option value="1">Select event Dhaka</option>
-											<option value="1">Select event Dilli</option>
-											<option value="1">Select event Newyork</option>
-											<option value="1">Select event Islamabad</option>
-										</select>
-									</div>
-								</div>
-								<div class="col-lg-12 text-center">
-									<button class="primary-btn text-uppercase">Make Reservation</button>
-								</div>
-							</form>
-						</div>
-					</div>
-				</div>
-			</div>
-		</section>
-		<!--================ End Reservstion Area =================-->
+<div class="breakfast-area section_gap_top">
+    <div class="container">
+        <div class="row align-items-center justify-content-center">
+            @foreach($blogs as $key => $blog)
+                <div class="col-lg-6 {{ $key % 2 == 0 ? 'order-lg-1' : 'order-lg-2' }}">
+                    <div class="right-img">
+                        <!-- Hiển thị ảnh bài viết -->
+                        <img class="img1 img-fluid" src="{{ asset('storage/' . $blog->image) }}" alt="{{ $blog->name }}">
+                    </div>
+                </div>
+                <div class="col-lg-5 {{ $key % 2 == 0 ? 'order-lg-2' : 'order-lg-1' }}">
+                    <div class="left-content">
+                        <h1>{{ $blog->name }}</h1>
+                        <p>{{ $blog->description }}</p>
+                        <p><strong>Thuộc:</strong> {{ $blog->category->name ?? 'Không có' }}</p>
+                        <p><strong>Lượt xem:</strong> {{ $blog->view_count }}</p>
+                        <p><strong>Thành phần:</strong> 
+                            @if($blog->tags->isNotEmpty())
+                                {{ $blog->tags->pluck('name')->join(', ') }}
+                            @else
+                                Không có thẻ tag
+                            @endif
+                        </p>
+						<a href="{{ route('blogdetail', ['id' => $blog->id]) }}" class="blog_btn">Chi tiết</a>
+                    </div>
+                </div>
+            @endforeach
+        </div>
+    </div>
+</div>
+
+
 
 		<!--================ Start Chef Area =================-->
 		<div class="chef-area section_gap_top">

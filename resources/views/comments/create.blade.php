@@ -22,11 +22,11 @@
                 </select>
             </div>
             <div class="form-group">
-                <label for="customer_id">Customer</label>
-                <select name="customer_id" id="customer_id" class="form-control" required>
-                    <option value="">Select Customer</option>
-                    @foreach ($customers as $customer)
-                        <option value="{{ $customer->id }}">{{ $customer->name }}</option>
+                <label for="user_id">User</label>
+                <select name="user_id" id="user_id" class="form-control" required>
+                    <option value="">Select User</option>
+                    @foreach ($users as $user)
+                        <option value="{{ $user->id }}">{{ $user->name }}</option>
                     @endforeach
                 </select>
             </div>

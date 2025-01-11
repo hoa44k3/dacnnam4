@@ -16,12 +16,16 @@ class Dish extends Model
      */
     protected $fillable = [
         'name',
-        'price',
-        'sale_price',
+        'region_id',
         'description',
         'image',
         'category_id',
         'availability',
+        'origin',
+        'ingredients',
+        'preparation',
+        'cultural_value',
+       
     ];
  
     public function category()
@@ -34,8 +38,13 @@ class Dish extends Model
         return $this->hasMany(Comment::class);
     }
     public function orders()
-{
-    return $this->belongsToMany(Order::class)->withPivot('quantity');
-}
+    {
+        return $this->belongsToMany(Order::class)->withPivot('quantity');
+    }
+    public function region()
+    {
+        return $this->belongsTo(Region::class);
+    }
+
 
 }

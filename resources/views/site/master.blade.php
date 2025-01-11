@@ -18,8 +18,7 @@
     <link rel="stylesheet" href="{{ asset('vendors/nice-select/css/nice-select.css') }}">
     <link rel="stylesheet" href="{{ asset('vendors/jquery-ui/jquery-ui.css') }}">
     <link rel="stylesheet" href="{{ asset('vendors/animate-css/animate.css') }}">
-    
-    <!-- main css -->
+
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
 </head>
 
@@ -42,23 +41,46 @@
 		<div class="nav-wraper">
 			<div class="navbar">
 				<ul class="navbar-nav">
-					<li class="nav-item"><a class="nav-link active" href="{{ route('home') }}"><img src="img/header/nav-icon1.png" alt=""> home</a></li>
-					<li class="nav-item"><a class="nav-link" href="{{ route('about') }}"><img src="img/header/nav-icon2.png" alt="">about</a></li>
-					<li class="nav-item"><a class="nav-link" href="{{ route('menu') }}"><img src="img/header/nav-icon3.png" alt="">menu</a>
-
+					<li class="nav-item">
+						<a class="nav-link {{ Request::routeIs('home') ? 'active' : '' }}" href="{{ route('home') }}">
+							<img src="img/header/nav-icon1.png" alt=""> home
+						</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link {{ Request::routeIs('about') ? 'active' : '' }}" href="{{ route('about') }}">
+							<img src="img/header/nav-icon2.png" alt="">about
+						</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link {{ Request::routeIs('menu') ? 'active' : '' }}" href="{{ route('menu') }}">
+							<img src="img/header/nav-icon3.png" alt="">menu
+						</a>
 					</li>
 					<li class="nav-item submenu dropdown">
-						<a href="" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
-						 aria-expanded="false"><img src="img/header/nav-icon7.png" alt="">Blog</a>
+						<a href="#" class="nav-link dropdown-toggle {{ Request::routeIs('blog', 'blogdetail') ? 'active' : '' }}" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+							<img src="img/header/nav-icon7.png" alt="">Blog
+						</a>
 						<ul class="dropdown-menu">
-							<li class="nav-item"><a class="nav-link" href="{{ route('blog') }}">Blog</a></li>
-							<li class="nav-item"><a class="nav-link" href="{{ route('blogdetail') }}">Blog Details</a></li>
-							
+							<li class="nav-item">
+								<a class="nav-link {{ Request::routeIs('blog') ? 'active' : '' }}" href="{{ route('blog') }}">Blog</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link {{ Request::routeIs('blogdetail') ? 'active' : '' }}" href="{{ route('blogdetail', ['id' => optional($blog)->id]) }}">Blog Details</a>
+							</li>
 						</ul>
 					</li>
-					<li class="nav-item"><a class="nav-link" href="{{ route('contact') }}"><img src="img/header/nav-icon8.png" alt="">contact</a></li>
-					<li class="nav-item"><a class="nav-link" href="{{ route('auth.login') }}"><img src="img/header/nav-icon8.png" alt="">login</a></li>
+					<li class="nav-item">
+						<a class="nav-link {{ Request::routeIs('contact') ? 'active' : '' }}" href="{{ route('contact') }}">
+							<img src="img/header/nav-icon8.png" alt="">contact
+						</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link {{ Request::routeIs('auth.login') ? 'active' : '' }}" href="{{ route('auth.login') }}">
+							<img src="img/header/nav-icon8.png" alt="">login
+						</a>
+					</li>
 				</ul>
+				
 			</div>
 		</div>
 	</header>

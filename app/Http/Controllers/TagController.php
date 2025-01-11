@@ -62,11 +62,24 @@ class TagController extends Controller
         return redirect()->route('tags.index')->with('success', 'Tag updated successfully.');
     }
 
+//     public function destroy($id)
+// {
+//     try {
+//         $tag = Tag::findOrFail($id);
+//         $tag->delete();
+
+//         return response()->json(['message' => 'Tag deleted successfully.']);
+//     } catch (\Exception $e) {
+//         return response()->json(['message' => 'Error deleting tag: ' . $e->getMessage()], 500);
+//     }
+// }
     public function destroy($id)
-    {
-        $tag = Tag::findOrFail($id);
-        $tag->delete();
-        return redirect()->route('tags.index')->with('success', 'Tag deleted successfully.');
-    }
+        {
+            $tag = Tag::findOrFail($id);
+            $tag->delete();
+    
+            return redirect()->route('tags.index')->with('success', 'Thẻ đã được xóa.');
+        }
+
     
 }

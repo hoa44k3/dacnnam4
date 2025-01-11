@@ -1,4 +1,3 @@
-// View: resources/views/favorites/edit.blade.php
 
 @extends('admin.master')
 

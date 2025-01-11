@@ -27,7 +27,12 @@
                             <td>{{ $tag->name }}</td>
                             <td>
                                 <a href="{{ route('tags.edit', $tag->id) }}" class="btn btn-warning btn-sm">Sửa</a>
-                                <button type="button" class="btn btn-danger btn-sm btn-delete" data-id="{{ $tag->id }}">Xóa</button>
+                                {{-- <button type="button" class="btn btn-danger btn-sm btn-delete" data-id="{{ $tag->id }}">Xóa</button> --}}
+                                <form action="{{ route('tags.destroy', $tag->id) }}" method="POST" style="display:inline;">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Bạn có chắc chắn muốn xóa?')">Xóa</button>
+                                </form>
                             </td>
                             
                         </tr>
@@ -39,33 +44,34 @@
 </div>
 @endsection
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const deleteButtons = document.querySelectorAll('.btn-delete');
-        deleteButtons.forEach(button => {
-            button.addEventListener('click', function () {
-                const tagId = this.getAttribute('data-id');
-                if (confirm('Bạn có chắc chắn muốn xóa thẻ tag này?')) {
-                    fetch(`/tags/${tagId}`, {
-                    method: 'DELETE',
-                    headers: {
-                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-                    }
-                })
-                .then(response => {
-                    if (response.ok) {
-                        alert('Xóa thành công');
-                        // Xóa hàng trong bảng mà không tải lại trang
-                        document.querySelector(`button[data-id="${tagId}"]`).closest('tr').remove();
-                    } else {
-                        alert('Có lỗi xảy ra khi xóa!');
-                    }
-                });
+    $(document).ready(function () {
+        // Xử lý sự kiện click nút xóa
+        $('.btn-delete').click(function () {
+            const tagId = $(this).data('id'); // Lấy ID thẻ
+            const row = $(this).closest('tr'); // Dòng cần xóa
 
-
+            if (confirm('Bạn có chắc chắn muốn xóa thẻ tag này?')) {
+                $.ajax({
+                url: `/tags/${tagId}`,
+                type: 'POST', // Chuyển sang POST
+                data: {
+                    _method: 'DELETE', // Bổ sung _method để server hiểu là DELETE
+                    _token: $('meta[name="csrf-token"]').attr('content') // CSRF Token
+                },
+                success: function (response) {
+                    alert('Xóa thành công');
+                    row.remove(); // Xóa dòng khỏi bảng
+                },
+                error: function (xhr) {
+                    alert(xhr.responseJSON.message || 'Có lỗi xảy ra khi xóa!');
+                    console.error(xhr.responseJSON);
                 }
             });
+
+            }
         });
     });
 </script>
+
 
 

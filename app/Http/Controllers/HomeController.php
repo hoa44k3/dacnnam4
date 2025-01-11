@@ -8,6 +8,8 @@ use App\Models\Tag;
 use App\Models\Category;
 use App\Models\Dish;
 use App\Models\Comment;
+use App\Models\AboutUs;
+use App\Models\Region;
 class HomeController extends Controller
 {
     public function index(Request $request)
@@ -17,7 +19,6 @@ class HomeController extends Controller
         if ($request->has('category')) {
             $category = Category::find($request->category);
             if ($category) {
-               
                 $blogs = $category->blogs()->paginate(10); 
             } else {
                 $blogs = Blog::paginate(10); 
@@ -25,58 +26,65 @@ class HomeController extends Controller
         } else {
             $blogs = Blog::paginate(10); 
         }
-    
         return view('site.home', compact('blogs'));
     }
-    
-    
 
     public function contact(){
+       
         return view('site.contact');
     }
     public function about()
     {
-        $blogs = Blog::select('name', 'description', 'image')->take(2)->get(); // Lấy 2 bài viết
-        $blogTop = $blogs->first(); // Bài viết đầu tiên (phần trên)
-        $blogBottom = $blogs->skip(1)->first(); // Bài viết thứ hai (phần dưới)
-        return view('site.about', compact('blogTop', 'blogBottom')); // Truyền biến vào view
+        $aboutUs = AboutUs::all();
+        return view('site.about', compact('aboutUs'));
     }
     
     public function blog()
-{
-    // Lấy tất cả các danh mục và số lượng bài viết trong mỗi danh mục
-    $categories = Category::withCount('blogs')->get();
-
-    // Lấy các bài viết với thẻ tag, và thêm số lượng bình luận vào mỗi bài viết
-    $blogs = Blog::with(['tags', 'comments']) // Với 'comments' để lấy số lượng bình luận
-                ->select('id', 'name', 'description', 'image', 'view_count', 'category_id')
-                ->paginate(3); 
-
-    return view('site.blog', compact('blogs', 'categories')); // Truyền biến $blogs và $categories vào view
-}
-
-public function blogdetail()
-{
-    // Lấy bài viết đầu tiên (hoặc có thể thay bằng phương thức khác như lấy bài viết mới nhất)
-    $blog = Blog::with('comments', 'tags')->first(); // Lấy bài viết đầu tiên và các bình luận, thẻ tag của nó
-
-    // Tăng lượt xem
-    $blog->increment('view_count');
-
-    // Lấy các bài viết liên quan cùng danh mục
-    $relatedBlogs = Blog::where('category_id', $blog->category_id)->take(2)->get();
-
-    // Lấy tất cả danh mục
-    $categories = Category::all();
-
-    // Trả về view chi tiết bài viết, thêm biến categories vào
-    return view('site.blogdetail', compact('blog', 'relatedBlogs', 'categories'));
-}
-
-    public function menu(){
-        $categories = Category::with('dishes')->get(); 
-        return view('site.menu', compact('categories'));
+    {
+        $categories = Category::withCount('blogs')->get();
+        $blogs = Blog::with(['tags', 'category'])->select('id', 'name', 'description', 'image', 'view_count', 'category_id')->paginate(6);
+        return view('site.blog', compact('blogs', 'categories')); 
     }
+
+        public function blogdetail($id)
+        {
+            // Lấy bài viết theo id và eager load các mối quan hệ
+            $blog = Blog::with(['comments', 'tags', 'category', 'postType'])
+                        ->findOrFail($id);  // Sử dụng findOrFail thay vì firstOrFail
+
+            // Tăng lượt xem bài viết
+            $blog->increment('view_count');
+
+            // Lấy tất cả các bài viết khác (trừ bài viết hiện tại)
+            $relatedBlogs = Blog::where('id', '!=', $blog->id)
+                                ->get();
+
+            // Lấy tất cả danh mục
+            $categories = Category::all();
+
+            // Trả về view chi tiết bài viết
+            return view('site.blogdetail', compact('blog', 'relatedBlogs', 'categories'));
+        }
+
+
+    // public function menu(){
+    //     $categories = Category::with('dishes')->get(); 
+    //     $blog = Blog::first();
+    //     return view('site.menu', compact('categories','blog'));
+    // }
+        public function menu(Request $request)
+    {
+        // Lấy danh mục và món ăn liên quan
+        $categories = Category::with(['dishes' => function ($query) use ($request) {
+            if ($request->has('region') && $request->region) {
+                $query->where('region_id', $request->region);
+            }
+        }])->get();
+        $regions = Region::all();
+
+        return view('site.menu', compact('categories', 'regions'));
+    }
+
     public function showByTag(Tag $tag)
     {
         // Lấy bài viết liên kết với thẻ
@@ -93,5 +101,39 @@ public function blogdetail()
         $dish = Dish::with('category')->findOrFail($id);
         return view('site.dish_detail', compact('dish'));
     }
+
+    public function storeComment(Request $request, $blogId)
+    {
+        $request->validate([
+            'content' => 'required|string|max:1000',
+        ]);
+
+        $comment = new Comment();
+        $comment->content = $request->content;
+        $comment->blog_id = $blogId;
+        $comment->user_id = auth()->id(); 
+        $comment->save();
+
+        // Trả về bình luận mới để hiển thị mà không cần tải lại trang
+        return response()->json([
+            'content' => $comment->content,
+            'user' => $comment->user->name,
+            'created_at' => $comment->created_at->diffForHumans(),
+        ]);
+    }
+
+    public function search(Request $request)
+{
+    $searchTerm = $request->input('name');  // Lấy từ khóa tìm kiếm
+    $blog = Blog::where('name', 'like', '%' . $searchTerm . '%')->first();  // Tìm kiếm bài viết đầu tiên phù hợp
+
+    if ($blog) {
+        return redirect()->route('blogdetail', ['id' => $blog->id]);
+    } else {
+        return redirect()->back()->with('error', 'Không tìm thấy bài viết nào phù hợp.');
+    }
+}
+
+
     
 }

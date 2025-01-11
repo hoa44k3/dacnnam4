@@ -4,48 +4,75 @@
 @section('body')
 <style>
     .dish_detail_area {
-    padding-top: 60px;
-    padding-bottom: 60px;
-}
+        padding-top: 60px;
+        padding-bottom: 60px;
+    }
 
-.dish_image img {
-    max-width: 100%;
-    height: auto;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-}
+    .dish_image img {
+        max-width: 100%;
+        height: auto;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
 
-.dish_info {
-    padding-left: 30px;
-    padding-right: 30px;
-}
+    .dish_info {
+        padding-left: 30px;
+        padding-right: 30px;
+    }
 
-.dish_info h2 {
-    font-size: 32px;
-    font-weight: bold;
-}
+    .dish_info h2 {
+        font-size: 32px;
+        font-weight: bold;
+        color: #1d4ed8;
+    }
 
-.price h4 {
-    font-size: 24px;
-}
+    .price h4 {
+        font-size: 24px;
+    }
 
-.dish_description {
-    font-size: 16px;
-    line-height: 1.6;
-}
+    .dish_description {
+        font-size: 16px;
+        line-height: 1.6;
+        margin-top: 20px;
+    }
 
-.category_info {
-    font-size: 14px;
-    margin-top: 10px;
-}
+    .category_info {
+        font-size: 14px;
+        margin-top: 10px;
+    }
 
-.btn-lg {
-    font-size: 18px;
-    padding: 10px 20px;
-    border-radius: 50px;
-}
+    .btn-lg {
+        font-size: 18px;
+        padding: 10px 20px;
+        border-radius: 50px;
+    }
 
+    .dish_details_section {
+        margin-top: 40px;
+    }
+
+    .dish_details_section h3 {
+        font-size: 28px;
+        color: #1d4ed8;
+        margin-bottom: 20px;
+    }
+
+    .dish_details_section p {
+        font-size: 16px;
+        line-height: 1.6;
+        margin-bottom: 10px;
+    }
+
+    .category_info a {
+        color: #0d6efd;
+        text-decoration: none;
+    }
+
+    .category_info a:hover {
+        text-decoration: underline;
+    }
 </style>
+
 <section class="dish_detail_area section_gap">
     <div class="container">
         <div class="row">
@@ -59,20 +86,33 @@
                     @endif
                 </div>
             </div>
+            
             <!-- Thông tin món ăn -->
             <div class="col-lg-6">
                 <div class="dish_info">
-                    <h2 class="text-primary">{{ $dish->name }}</h2>
-                    <div class="price">
-                        <h4 class="text-success">Giá: ${{ $dish->price }}</h4>
-                        @if($dish->sale_price)
-                            <h4 class="text-danger text-decoration-line-through">Giá cũ: ${{ $dish->sale_price }}</h4>
+                    <h2>{{ $dish->name }}</h2>
+                    <p class="dish_description">{{ $dish->description }}</p>
+                    <p class="category_info">Danh mục: <a href="#">{{ $dish->category->name }}</a></p>
+                    
+                    <!-- Giá trị văn hóa, nguyên liệu, cách làm -->
+                    <div class="dish_details_section">
+                        <h3>Thông tin chi tiết</h3>
+
+                        @if($dish->origin)
+                            <p><strong>Nguồn gốc:</strong> {{ $dish->origin }}</p>
                         @endif
-                    </div>
-                    <p class="dish_description mt-3">{{ $dish->description }}</p>
-                    <p class="category_info">Danh mục: <a href="#" class="text-info">{{ $dish->category->name }}</a></p>
-                    <div class="mt-4">
-                        <a href="#" class="btn btn-warning btn-lg">Thêm vào giỏ hàng</a>
+
+                        @if($dish->ingredients)
+                            <p><strong>Nguyên liệu:</strong> {{ $dish->ingredients }}</p>
+                        @endif
+
+                        @if($dish->preparation)
+                            <p><strong>Cách làm:</strong> {{ $dish->preparation }}</p>
+                        @endif
+
+                        @if($dish->cultural_value)
+                            <p><strong>Giá trị văn hóa:</strong> {{ $dish->cultural_value }}</p>
+                        @endif
                     </div>
                 </div>
             </div>

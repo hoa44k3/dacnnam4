@@ -1,9 +1,9 @@
 <?php
 
 namespace App\Providers;
-
+use App\Models\Blog;
 use Illuminate\Support\ServiceProvider;
-
+use Illuminate\Support\Facades\View;
 class AppServiceProvider extends ServiceProvider
 {
     /**
@@ -19,6 +19,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        View::share('blog', Blog::first()); // Chia sẻ biến blog cho tất cả các view
     }
 }

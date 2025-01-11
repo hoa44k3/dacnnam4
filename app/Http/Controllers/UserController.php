@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Hash;
+
 class UserController extends Controller
 {
     public function index()
@@ -30,18 +31,16 @@ class UserController extends Controller
             'avatar' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
-        User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'phone' => $request->phone,
-            'role' => $request->role,
-            'password' => Hash::make($request->password),
-            
-        ]);
+        $data = $request->only(['name', 'email', 'phone', 'role']);
+        $data['password'] = Hash::make($request->password);
+
         if ($request->hasFile('avatar')) {
-            $avatarPath ['avatar'] = $request->file('avatar')->store('avatars', 'public');
+            $avatarPath = $request->file('avatar')->store('users', 'public');
             $data['avatar'] = $avatarPath;
         }
+
+        User::create($data);
+
         return redirect()->route('users.index')->with('success', 'User created successfully.');
     }
 
@@ -52,28 +51,40 @@ class UserController extends Controller
 
     public function update(Request $request, User $user)
     {
-        $validated =$request->validate([
+        $validated = $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email,' . $user->id,
             'phone' => 'nullable|string',
             'role' => 'required|in:admin,user',
             'password' => 'nullable|string|min:6',
-            'avatar' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'avatar' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', 
         ]);
 
         $data = $request->only(['name', 'email', 'phone', 'role']);
         if ($request->password) {
             $data['password'] = Hash::make($request->password);
         }
-        $user->fill($validated);
         if ($request->hasFile('avatar')) {
             if ($user->avatar) {
                 Storage::disk('public')->delete($user->avatar);
             }
-            $data['avatar'] = $request->file('avatar')->store('avatars', 'public');
+            $data['avatar'] = $request->file('avatar')->store('users', 'public');
         }
+
         $user->update($data);
 
         return redirect()->route('users.index')->with('success', 'User updated successfully.');
     }
+
+    public function destroy(User $user)
+    {
+        if ($user->avatar) {
+            Storage::disk('public')->delete($user->avatar);
+        }
+        $user->delete();
+
+        return redirect()->route('users.index')->with('success', 'User deleted successfully.');
+    }
+
+
 }
