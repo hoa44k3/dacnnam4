@@ -12,16 +12,13 @@ use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\FavoriteController;
 use App\Http\Controllers\ContactController;
-use App\Http\Controllers\OrderController;
-use App\Http\Controllers\PaymentController;
-use App\Http\Controllers\CartController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\FaqController;
 use App\Http\Controllers\PostTypeController;
 use App\Http\Controllers\RegionController;
 use App\Http\Controllers\TagController;
-use App\Models\Contact;
-use App\Models\Favorite;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -45,7 +42,7 @@ Route::group(['prefix' => ''], function() {
     Route::post('/contact', [ContactController::class, 'storeContact']);
     Route::get('/tags/{tag}', [HomeController::class, 'showByTag'])->name('tags.show');
     Route::get('/dish/{id}', [HomeController::class, 'dishDetail'])->name('dish_detail');
-   
+    Route::post('faq', [HomeController::class, 'store'])->name('faq.store');
 
 });
 
@@ -56,39 +53,9 @@ Route::post('auth/login', [AuthController::class, 'post_login'])->name('auth.log
 
 Route::prefix('admin')->middleware('admin')->group(function () {
     Route::get('/', [AdminController::class, 'index'])->name('admin.index');
+    //Route::get('/search-results', [AdminController::class, 'searchResults'])->name('admin.searchResults');
+    Route::get('/search', [AdminController::class, 'search'])->name('admin.search');
 
-    // Orders routes
-    Route::prefix('orders')->group(function () {
-        Route::get('/', [OrderController::class, 'index'])->name('orders.index');
-        Route::get('/create', [OrderController::class, 'create'])->name('orders.create');
-        Route::post('/', [OrderController::class, 'store'])->name('orders.store');
-        Route::get('/{order}/edit', [OrderController::class, 'edit'])->name('orders.edit');
-        Route::put('/{order}', [OrderController::class, 'update'])->name('orders.update');
-        Route::delete('/{order}', [OrderController::class, 'destroy'])->name('orders.destroy');
-        Route::post('/{order}/approve', [OrderController::class, 'approve'])->name('orders.approve');
-    });
-
-     // Carts routes
-     Route::prefix('carts')->group(function () {
-        Route::get('/', [CartController::class, 'index'])->name('carts.index');
-        Route::get('/create', [CartController::class, 'create'])->name('carts.create');
-        Route::post('/', [CartController::class, 'store'])->name('carts.store');
-        Route::get('/{cart}/edit', [CartController::class, 'edit'])->name('carts.edit');
-        Route::put('/{cart}', [CartController::class, 'update'])->name('carts.update');
-        Route::delete('/{cart}', [CartController::class, 'destroy'])->name('carts.destroy');
-        Route::get('carts/{id}/pay', [CartController::class, 'pay'])->name('carts.pay');
-
-    });
-
-     // Payments routes
-     Route::prefix('payments')->group(function () {
-        Route::get('/', [PaymentController::class, 'index'])->name('payments.index');
-        Route::get('/create', [PaymentController::class, 'create'])->name('payments.create');
-        Route::post('/', [PaymentController::class, 'store'])->name('payments.store');
-        Route::get('/{payment}/edit', [PaymentController::class, 'edit'])->name('payments.edit');
-        Route::put('/{payment}', [PaymentController::class, 'update'])->name('payments.update');
-        Route::delete('/{payment}', [PaymentController::class, 'destroy'])->name('payments.destroy');
-    });
 
     Route::group(['prefix' => 'category'], function () {
         Route::get('/', [CategoryController::class, 'index'])->name('category.index');
@@ -199,6 +166,12 @@ Route::prefix('admin')->middleware('admin')->group(function () {
         Route::put('/{dish}', [DishController::class, 'update'])->name('dish.update'); 
         Route::delete('/{dish}', [DishController::class, 'destroy'])->name('dish.destroy');  
         Route::get('/{dish}', [DishController::class, 'show'])->name('dish.show');
+    });
+    Route::prefix('faqs')->group(function () {
+        Route::get('/', [FaqController::class, 'index'])->name('faqs.index');
+        Route::post('/store', [FaqController::class, 'store'])->name('faqs.store'); 
+        Route::post('/answer/{id}', [FaqController::class, 'answer'])->name('faqs.answer'); 
+        Route::delete('/{faq}', [FaqController::class, 'destroy'])->name('faqs.destroy');
     });
 });
 

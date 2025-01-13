@@ -10,6 +10,7 @@ use App\Models\Dish;
 use App\Models\Comment;
 use App\Models\AboutUs;
 use App\Models\Region;
+use App\Models\Faq;
 class HomeController extends Controller
 {
     public function index(Request $request)
@@ -99,8 +100,28 @@ class HomeController extends Controller
     public function dishDetail($id)
     {
         $dish = Dish::with('category')->findOrFail($id);
-        return view('site.dish_detail', compact('dish'));
+        $faqs = Faq::all();
+        return view('site.dish_detail', compact('dish','faqs'));
     }
+    public function store(Request $request)
+{
+    $request->validate([
+        'name' => 'required|string|max:255',
+        'email' => 'required|email|max:255',
+        'question' => 'required|string|max:1000',
+    ]);
+
+    // Lưu câu hỏi vào cơ sở dữ liệu
+    $faq = Faq::create([
+        'question' => $request->question,
+        'answer' => null,  // Câu trả lời chưa có
+    ]);
+
+    // Trả về câu hỏi vừa được gửi để hiển thị trực tiếp trên trang
+    return redirect()->route('dish_detail', ['id' => $request->dish_id])
+        ->with('success', 'Câu hỏi của bạn đã được gửi đi!')
+        ->with('new_faq', $faq);  // Trả về câu hỏi mới để hiển thị
+}
 
     public function storeComment(Request $request, $blogId)
     {

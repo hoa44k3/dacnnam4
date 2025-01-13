@@ -13,14 +13,8 @@ class Comment extends Model
     {
         return $this->belongsTo(Dish::class);
     }
-
-    // Quan hệ nhiều-một với Customer
     public function user()
     {
         return $this->belongsTo(User::class);
-    }
-    public function blog()
-    {
-        return $this->belongsTo(Blog::class); // Điều này giả sử bạn có trường `blog_id` trong bảng comments
     }
 }

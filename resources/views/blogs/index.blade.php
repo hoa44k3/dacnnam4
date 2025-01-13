@@ -19,11 +19,9 @@
                         <th>Hình ảnh</th>
                         <th>Thẻ</th>
                         <th>Mô tả ngắn</th>
-                        <th>Nội dung bài viết</th>
-                      
+                        <th>Nội dung bài viết</th>     
                         <th>Danh mục</th> 
-                        <th>Trạng thái</th>
-                     
+                        <th>Trạng thái</th>                    
                         <th>Lượt xem</th>
                         <th>Ngày tạo</th>
                         <th>Video</th>

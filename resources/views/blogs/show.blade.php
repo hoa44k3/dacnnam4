@@ -21,10 +21,6 @@
                 <p>Không có video để hiển thị.</p>
             @endif
         </p>
-        
-        
-        
-        <p><strong>Loại bài viết:</strong> {{ $blog->postType->name ?? 'Không xác định' }}</p>
         <p><strong>Danh mục:</strong> {{ $blog->category->name ?? 'Không có' }}</p>
         <p><strong>Trạng thái:</strong> {{ ucfirst($blog->status) }}</p>
         <p><strong>Lượt xem:</strong> {{ $blog->view_count }}</p>

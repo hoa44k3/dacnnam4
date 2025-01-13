@@ -18,6 +18,8 @@
       type="image/x-icon"
     />
 
+
+</style>
     <!-- Fonts and icons -->
     <script src="assets/js/plugin/webfont/webfont.min.js"></script>
     <script>
@@ -109,15 +111,7 @@
                   <p>Blogs</p>
                 </a>
               </li>
-        
-              <!-- Thẻ Customers -->
-              {{-- <li class="nav-item {{ request()->routeIs('post_types.*') ? 'active' : '' }}">
-                <a href="{{ route('post_types.index') }}">
-                  <i class="fas fa-users"></i>
-                  <p>Category_Blog</p>
-                </a>
-              </li> --}}
-        
+
               <!-- Thẻ Comments -->
               <li class="nav-item {{ request()->routeIs('comments.*') ? 'active' : '' }}">
                 <a href="{{ route('comments.index') }}">
@@ -151,20 +145,15 @@
               </li>
 
               <!-- Thẻ Carts -->
-              {{-- <li class="nav-item {{ request()->routeIs('carts.*') ? 'active' : '' }}">
-                <a href="{{ route('carts.index') }}">
+              <li class="nav-item {{ request()->routeIs('faqs.*') ? 'active' : '' }}">
+                <a href="{{ route('faqs.index') }}">
                   <i class="fas fa-shopping-cart"></i>
-                  <p>Carts</p>
+                  <p>Faq</p>
                 </a>
               </li>
 
-              <!-- Thẻ Payments -->
-              <li class="nav-item {{ request()->routeIs('payments.*') ? 'active' : '' }}">
-                <a href="{{ route('payments.index') }}">
-                  <i class="fas fa-credit-card"></i>
-                  <p>Payments</p>
-                </a>
-              </li> --}}
+             
+
               <li class="nav-item {{ request()->routeIs('users.*')?'active' : '' }}">
                 <a href="{{ route('users.index') }}">
                   <i class="fas fa-users"></i>
@@ -221,9 +210,9 @@
             class="navbar navbar-header navbar-header-transparent navbar-expand-lg border-bottom"
           >
             <div class="container-fluid">
-              <nav
+              {{-- <nav
                 class="navbar navbar-header-left navbar-expand-lg navbar-form nav-search p-0 d-none d-lg-flex"
-              >
+                >
                 <div class="input-group">
                   <div class="input-group-prepend">
                     <button type="submit" class="btn btn-search pe-1">
@@ -236,7 +225,19 @@
                     class="form-control"
                   />
                 </div>
-              </nav>
+              </nav> --}}
+              <nav class="navbar navbar-header-left navbar-expand-lg navbar-form nav-search p-0 d-none d-lg-flex">
+                <form action="{{ route('admin.search') }}" method="GET" class="w-100">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <button type="submit" class="btn btn-search pe-1">
+                                <i class="fa fa-search search-icon"></i>
+                            </button>
+                        </div>
+                        <input type="text" name="query" placeholder="Search ..." class="form-control" />
+                    </div>
+                </form>
+            </nav>
 
               <ul class="navbar-nav topbar-nav ms-md-auto align-items-center">
                 <li
@@ -654,32 +655,24 @@
     <script src="assets/js/setting-demo.js"></script>
     <script src="assets/js/demo.js"></script>
     <script>
-      $("#lineChart").sparkline([102, 109, 120, 99, 110, 105, 115], {
-        type: "line",
-        height: "70",
-        width: "100%",
-        lineWidth: "2",
-        lineColor: "#177dff",
-        fillColor: "rgba(23, 125, 255, 0.14)",
-      });
+      document.querySelector('.form-control').addEventListener('input', function () {
+    const query = this.value;
+    if (query.length > 2) {
+        fetch(`/admin/search?query=${query}`)
+            .then(response => response.json())
+            .then(data => {
+                // Hiển thị kết quả gợi ý
+                let suggestions = document.getElementById('suggestions');
+                suggestions.innerHTML = '';
+                data.forEach(item => {
+                    let div = document.createElement('div');
+                    div.textContent = item.title || item.name;
+                    suggestions.appendChild(div);
+                });
+            });
+    }
+});
 
-      $("#lineChart2").sparkline([99, 125, 122, 105, 110, 124, 115], {
-        type: "line",
-        height: "70",
-        width: "100%",
-        lineWidth: "2",
-        lineColor: "#f3545d",
-        fillColor: "rgba(243, 84, 93, .14)",
-      });
-
-      $("#lineChart3").sparkline([105, 103, 123, 100, 95, 105, 115], {
-        type: "line",
-        height: "70",
-        width: "100%",
-        lineWidth: "2",
-        lineColor: "#ffa534",
-        fillColor: "rgba(255, 165, 52, .14)",
-      });
     </script>
   </body>
 </html>

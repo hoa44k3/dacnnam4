@@ -50,17 +50,6 @@
                 </select>
             </div>
             <div class="form-group">
-                <label for="post_type_id">Phân loại bài viết</label>
-                <select name="post_type_id" id="post_type_id" class="form-control">
-                    <option value="">Chọn loại bài viết</option>
-                    @foreach($postTypes as $type)
-                        <option value="{{ $type->id }}" {{ old('post_type_id', $blog->post_type_id) == $type->id ? 'selected' : '' }}>
-                            {{ $type->name }}
-                        </option>
-                    @endforeach
-                </select>
-            </div>
-            <div class="form-group">
                 <label for="video">Video</label>
                 <!-- Hiển thị video hiện tại (nếu có) -->
                 @if($blog->video)

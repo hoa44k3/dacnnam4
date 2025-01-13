@@ -43,40 +43,50 @@
 				<ul class="navbar-nav">
 					<li class="nav-item">
 						<a class="nav-link {{ Request::routeIs('home') ? 'active' : '' }}" href="{{ route('home') }}">
-							<img src="img/header/nav-icon1.png" alt=""> home
+							<img src="img/header/nav-icon1.png" alt=""> Trang chủ
 						</a>
 					</li>
 					<li class="nav-item">
 						<a class="nav-link {{ Request::routeIs('about') ? 'active' : '' }}" href="{{ route('about') }}">
-							<img src="img/header/nav-icon2.png" alt="">about
-						</a>
-					</li>
-					<li class="nav-item">
-						<a class="nav-link {{ Request::routeIs('menu') ? 'active' : '' }}" href="{{ route('menu') }}">
-							<img src="img/header/nav-icon3.png" alt="">menu
+							<img src="img/header/nav-icon2.png" alt="">Giới thiệu
 						</a>
 					</li>
 					<li class="nav-item submenu dropdown">
-						<a href="#" class="nav-link dropdown-toggle {{ Request::routeIs('blog', 'blogdetail') ? 'active' : '' }}" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-							<img src="img/header/nav-icon7.png" alt="">Blog
+						<a href="#" class="nav-link dropdown-toggle {{ Request::routeIs('menu', 'dish_detail') ? 'active' : '' }}" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+							<img src="img/header/nav-icon7.png" alt="">Món ăn
 						</a>
 						<ul class="dropdown-menu">
 							<li class="nav-item">
-								<a class="nav-link {{ Request::routeIs('blog') ? 'active' : '' }}" href="{{ route('blog') }}">Blog</a>
+								<a class="nav-link {{ Request::routeIs('menu') ? 'active' : '' }}" href="{{ route('menu') }}">Món ăn</a>
 							</li>
 							<li class="nav-item">
-								<a class="nav-link {{ Request::routeIs('blogdetail') ? 'active' : '' }}" href="{{ route('blogdetail', ['id' => optional($blog)->id]) }}">Blog Details</a>
+								
+								<a class="nav-link {{ Request::routeIs('dish_detail') ? 'active' : '' }}" href="{{ route('dish_detail', ['id' => isset($dish) ? $dish->id : 1]) }}">Chi tiết món ăn</a>
+							</li>
+						</ul>
+					</li>
+					
+					<li class="nav-item submenu dropdown">
+						<a href="#" class="nav-link dropdown-toggle {{ Request::routeIs('blog', 'blogdetail') ? 'active' : '' }}" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+							<img src="img/header/nav-icon7.png" alt="">Bài viết
+						</a>
+						<ul class="dropdown-menu">
+							<li class="nav-item">
+								<a class="nav-link {{ Request::routeIs('blog') ? 'active' : '' }}" href="{{ route('blog') }}">Bài viết</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link {{ Request::routeIs('blogdetail') ? 'active' : '' }}" href="{{ route('blogdetail', ['id' => optional($blog)->id]) }}">Chi tiết bài viết</a>
 							</li>
 						</ul>
 					</li>
 					<li class="nav-item">
 						<a class="nav-link {{ Request::routeIs('contact') ? 'active' : '' }}" href="{{ route('contact') }}">
-							<img src="img/header/nav-icon8.png" alt="">contact
+							<img src="img/header/nav-icon8.png" alt="">Liên hệ
 						</a>
 					</li>
 					<li class="nav-item">
 						<a class="nav-link {{ Request::routeIs('auth.login') ? 'active' : '' }}" href="{{ route('auth.login') }}">
-							<img src="img/header/nav-icon8.png" alt="">login
+							<img src="img/header/nav-icon8.png" alt="">Đăng nhập
 						</a>
 					</li>
 				</ul>
@@ -115,8 +125,8 @@
 				<div class="banner_content">
 					<div class="row d-flex align-items-center">
 						<div class="col-lg-8 col-md-12">
-							<p class="top-text"> Cung cấp các món ngon nhất trong nhà hàng Steak Shop</p>
-							<h1>Giới thiệu các món ăn ngon trong nhà hàng Steak Shop</h1>
+							<p class="top-text"> Đảm bảo mọi nội dung luôn đúng sự thật với thực tế!</p>
+							<h1>Giới thiệu các món ăn ngon ở mọi nơi</h1>
 							{{-- <p>Khẩu vị của khách hàng luôn là tiêu chí hàng đầu trong nhà hàng của chúng tôi! Mong mọi quý khách sẽ có một bữa ăn ngon nhất.</p> --}}
 						</div>
 						<div class="col-lg-4 col-md-12">
@@ -258,6 +268,41 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCjCGmQ0Uq4exrzdcL6rvxywDDOvfAu6eE"></script>
 <script src="{{ asset('js/gmaps.min.js') }}"></script>
 <script src="{{ asset('js/theme.js') }}"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const searchInput = document.querySelector('.form-control');
+        const searchResults = document.createElement('div');
+        searchResults.className = 'search-results';
+        document.body.appendChild(searchResults);
+
+        searchInput.addEventListener('input', function () {
+            const query = this.value;
+            if (query.length > 1) {
+                fetch(`/admin/search?query=${query}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        searchResults.innerHTML = '';
+                        if (data.blogs.length || data.dishes.length) {
+                            data.blogs.forEach(blog => {
+                                const item = document.createElement('div');
+                                item.textContent = `Bài viết: ${blog.title}`;
+                                searchResults.appendChild(item);
+                            });
+                            data.dishes.forEach(dish => {
+                                const item = document.createElement('div');
+                                item.textContent = `Món ăn: ${dish.name}`;
+                                searchResults.appendChild(item);
+                            });
+                        } else {
+                            searchResults.innerHTML = '<p>Không tìm thấy kết quả</p>';
+                        }
+                    });
+            } else {
+                searchResults.innerHTML = '';
+            }
+        });
+    });
+</script>
 
 </body>
 

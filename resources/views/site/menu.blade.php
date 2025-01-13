@@ -52,6 +52,24 @@
     button:hover {
         background-color: #0056b3;
     }
+
+    .dishes-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 50px;  /* Khoảng cách giữa các món ăn */
+    }
+
+    .dish-item {
+        width: calc(50% - 30px);  /* Mỗi món ăn chiếm 50% chiều rộng */
+        box-sizing: border-box;   /* Đảm bảo các phần tử không vượt quá chiều rộng của cột */
+    }
+
+    @media (max-width: 768px) {
+        .dish-item {
+            width: 100%;  /* Trên thiết bị di động, mỗi món ăn chiếm toàn bộ chiều rộng */
+        }
+}
+
 </style>
 <!-- Start banner bottom -->
 <div class="row banner-bottom common-bottom-banner align-items-center justify-content-center">
@@ -59,14 +77,14 @@
         <div class="banner_content">
             <div class="row d-flex align-items-center">
                 <div class="col-lg-7 col-md-12">
-                    <h1>Danh sách thực đơn</h1>
+                    <h1>Danh sách các món ăn</h1>
                     <p>Tổng hợp tất cả các món ăn và đồ uống có trong nhà hàng!</p>
                 </div>
                 <div class="col-lg-5 col-md-12">
                     <div class="page-link-wrap">
                         <div class="page_link">
-                            <a href="#">Home</a>
-                            <a href="#">Menu</a>
+                            
+                            <a href="#">Món ăn</a>
                         </div>
                     </div>
                 </div>
@@ -88,67 +106,33 @@
             </select>
             <button type="submit">Lọc</button>
         </form>
-        <div class="row menu_inner mt-4">
+        <div class="row menu_inner">
             @foreach($categories as $category)
-                <div class="col-lg-5 @if($loop->iteration % 2 == 0) offset-lg-1 @endif">
-                    <div class="menu_list" style="background-color: #f8f9fa; border-radius: 10px; padding: 20px;">
+                <div class="col-lg-6 @if($loop->iteration % 2 == 0) offset-lg-0 @endif">
+                    <div class="menu_list" style="background-color: #f8f9fa; border-radius: 40px; padding: 30px; width: 100%; box-sizing: border-box; margin-bottom: 20px;">
                         <h1 style="color: #d9534f; font-weight: bold;">{{ $category->name }}</h1>
-                        <ul class="list">
+                        <div class="dishes-container">
                             @foreach($category->dishes as $dish)
-                                <li style="padding: 10px; margin-bottom: 15px; border: 1px solid #ccc; border-radius: 5px; background-color: #fff; transition: all 0.3s ease;">
+                                <div class="dish-item" style="padding: 15px; margin-bottom: 20px; border: 1px solid #ccc; border-radius: 5px; background-color: #fff; transition: all 0.3s ease;">
                                     <h4 style="color: #007bff; font-weight: bold;">
-                                        <a href="javascript:void(0)" class="dish-link" data-dish-id="{{ $dish->id }}" style="text-decoration: none;">
+                                        <a href="#" class="dish-link" data-dish-id="{{ $dish->id }}" style="text-decoration: none;">
                                             {{ $dish->name }}
                                         </a>
                                     </h4>
-                                    <p>{!! \Illuminate\Support\Str::limit(strip_tags($dish->description), 100) !!}</p>
-        
-                                    <!-- Chi tiết món ăn, ban đầu ẩn -->
-                                    <div class="dish-detail" id="dish-detail-{{ $dish->id }}" style="display: none;">
-                                        <div class="row">
-                                            <div class="col-lg-6">
-                                                <img src="{{ asset('storage/' . $dish->image) }}" alt="{{ $dish->name }}" class="img-fluid" style="border-radius: 10px;">
-                                            </div>
-                                            <div class="col-lg-6">
-                                                <h3>{{ $dish->name }}</h3>
-                                                <p><strong>Mô tả:</strong> {{ $dish->description }}</p>
-                                                <p><strong>Thuộc:</strong> <a href="#">{{ $dish->category->name }}</a></p>
-                                                <p><strong>Nguyên liệu:</strong> {{ $dish->ingredients }}</p>
-                                                <p><strong>Cách làm:</strong> {{ $dish->preparation }}</p>
-                                                <p><strong>Giá trị văn hóa:</strong> {{ $dish->cultural_value }}</p>
-                                                <p><strong>Nguồn gốc:</strong> {{ $dish->origin }}</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </li>
+                                    <img src="{{ asset('storage/' . $dish->image) }}" alt="{{ $dish->name }}" class="img-fluid" style="border-radius: 10px; width: 100%; height: auto;">
+                                    
+                                    <p><strong>Mô tả: </strong>{!! \Illuminate\Support\Str::limit(strip_tags($dish->description), 100) !!}</p>
+                                    
+                                    <!-- Nút xem chi tiết -->
+                                    <a href="{{ route('dish_detail', ['id' => $dish->id]) }}" class="blog_btn" style="text-decoration: none; color: #007bff; font-weight: bold;">Xem thêm</a>
+                                </div>
                             @endforeach
-                        </ul>
+                        </div>
                     </div>
                 </div>
             @endforeach
         </div>
+        
     </div>
 </section>
-
-
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const dishLinks = document.querySelectorAll('.dish-link');
-        
-        dishLinks.forEach(link => {
-            link.addEventListener('click', function () {
-                const dishId = this.getAttribute('data-dish-id');
-                const dishDetail = document.getElementById('dish-detail-' + dishId);
-                
-                // Toggle display of the dish details
-                if (dishDetail.style.display === 'none' || dishDetail.style.display === '') {
-                    dishDetail.style.display = 'block';
-                } else {
-                    dishDetail.style.display = 'none';
-                }
-            });
-        });
-    });
-</script>
-
 @endsection

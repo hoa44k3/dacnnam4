@@ -17,8 +17,6 @@ return new class extends Migration
             $table->unsignedBigInteger('dish_id')->nullable();
             $table->unsignedBigInteger('user_id')->nullable();
             $table->timestamps();
-            $table->unsignedBigInteger('blog_id'); 
-            $table->foreign('blog_id')->references('id')->on('blogs')->onDelete('cascade');
             $table->foreign('dish_id')->references('id')->on('dishes')->onDelete('cascade'); 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade'); 
         });

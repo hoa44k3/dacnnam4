@@ -17,6 +17,7 @@
                 <h3>{{ $dish->name }}</h3>
                 <p><strong>VÙng miền:</strong> {{ $dish->region->name ?? 'Không xác định' }}</p>
                 <p><strong>Danh Mục:</strong> {{ $dish->category->name ?? 'Không có danh mục' }}</p>
+                <p><strong>Lượt xem:</strong> {{ $dish->view_count }}</p>
                 <p><strong>Mô Tả:</strong></p>
                 <p>{{ $dish->description }}</p>
             </div>

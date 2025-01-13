@@ -22,7 +22,6 @@ class AboutUsController extends Controller
     {
         $aboutUs = AboutUs::findOrFail($id);
     
-        // Validate dữ liệu
         $request->validate([
             'title' => 'required|string|max:255',
             'content' => 'required',
@@ -34,17 +33,16 @@ class AboutUsController extends Controller
         // Xử lý hình ảnh nếu có upload mới
         if ($request->hasFile('image_path')) {
             $image = $request->file('image_path');
-            $imagePath = $image->store('about_us', 'public'); // Lưu ảnh vào thư mục storage/public/uploads/about_us
-            $aboutUs->image_path = $imagePath; // Cập nhật đường dẫn ảnh trong DB
+            $imagePath = $image->store('about_us', 'public'); 
+            $aboutUs->image_path = $imagePath; 
         }
-    
-        // Cập nhật các trường còn lại
+
         $aboutUs->title = $request->title;
         $aboutUs->content = $request->content;
         $aboutUs->mission = $request->mission;
         $aboutUs->vision = $request->vision;
     
-        $aboutUs->save(); // Lưu các thay đổi
+        $aboutUs->save(); 
     
         return redirect()->route('about_us.index')->with('success', 'Cập nhật thông tin thành công.');
     }

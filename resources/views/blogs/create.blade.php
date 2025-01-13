@@ -43,17 +43,6 @@
                     @endforeach
                 </select>
             </div>
-            <div class="form-group">
-                <label for="post_type_id">Phân loại bài viết</label>
-                <select name="post_type_id" id="post_type_id" class="form-control">
-                    <option value="">Chọn loại bài viết</option>
-                    @foreach($postTypes as $type)
-                        <option value="{{ $type->id }}" {{ old('post_type_id') == $type->id ? 'selected' : '' }}>
-                            {{ $type->name }}
-                        </option>
-                    @endforeach
-                </select>
-            </div>
 
             <!-- Video -->
             {{-- <div class="form-group">
@@ -64,8 +53,6 @@
                 <label for="video">Video (YouTube)</label>
                 <input type="text" name="video" class="form-control" id="video" value="{{ old('video') }}" placeholder="Nhập link video YouTube">
             </div>
-            
-            
             <button type="submit" class="btn btn-success">Lưu</button>
         </form>
     </div>

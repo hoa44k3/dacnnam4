@@ -24,6 +24,7 @@
                         <th>Cách làm</th>
                         <th>Giá trị</th>
                         <th>Danh mục</th>
+                        <th>Lượt xem</th>
                         <th>Hành động</th>
                     </tr>
                 </thead>
@@ -42,6 +43,7 @@
                             <td>{{ Str::limit($dish->preparation, 50, '...') }}</td> 
                             <td>{{ Str::limit($dish->cultural_value, 50, '...') }}</td> 
                             <td>{{ $dish->category->name ?? 'Không có danh mục' }}</td>
+                            <td>{{ $dish->view_count }}</td>
                             <td>
                                 <a href="{{ route('dish.show', $dish->id) }}" class="btn btn-info btn-sm" title="Xem chi tiết">
                                     <i class="fas fa-eye"></i>

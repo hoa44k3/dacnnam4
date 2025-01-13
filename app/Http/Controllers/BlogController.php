@@ -12,7 +12,7 @@ class BlogController extends Controller
 {
     public function index()
     {
-        $blogs = Blog::with('tags', 'category', 'postType')->get(); 
+        $blogs = Blog::with('tags', 'category')->get(); 
         return view('blogs.index', compact('blogs'));
     }
 
@@ -21,9 +21,7 @@ class BlogController extends Controller
     public function create()
     {
         $categories = Category::all();
-        $postTypes = PostType::all();
-      
-        return view('blogs.create', compact('categories', 'postTypes'));
+        return view('blogs.create', compact('categories'));
     }
 
     public function store(Request $request)
@@ -35,7 +33,6 @@ class BlogController extends Controller
             'position' => 'nullable|string',
             'status' => 'required|in:pending,approved',
             'category_id' => 'required|exists:categories,id', 
-            'post_type_id' => 'required|exists:post_types,id',
             'video' => 'nullable|url',
             
         ]);
@@ -64,8 +61,6 @@ class BlogController extends Controller
             $blog->tags()->sync($request->tag_ids); 
         }
         $blog->save();
-        
-
         return redirect()->route('blogs.index')->with('success', 'Blog created successfully!');
     }
 
@@ -73,8 +68,7 @@ class BlogController extends Controller
     {
         $categories = Category::all();
         $tags = Tag::all();
-        $postTypes = PostType::all(); 
-        return view('blogs.edit', compact('blog','tags','categories','postTypes'));
+        return view('blogs.edit', compact('blog','tags','categories'));
     }
 
     public function update(Request $request, Blog $blog)
@@ -87,7 +81,6 @@ class BlogController extends Controller
             'status' => 'required|in:pending,approved',
             'category_id' => 'required|exists:categories,id',
            'video' => 'nullable|url',
-            'post_type_id' => 'required|exists:post_types,id',
         ]);
 
         $blog->fill($validated);
