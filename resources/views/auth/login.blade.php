@@ -107,11 +107,11 @@
                 </div>
                 @endif
                 <?php
-                $message = session()->get('message');
-                if ($message) {
-                    echo '<h5 class="text-alert"> ' . $message . ' </h5>';
-                    session()->put('message', null);
-                }
+                    $message = session()->get('message');
+                    if ($message) {
+                        echo '<h5 class="text-alert"> ' . $message . ' </h5>';
+                        session()->put('message', null);
+                    }
                 ?>
                 <label for="email">
                         Email:

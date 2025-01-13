@@ -4,7 +4,7 @@
 <div class="card">
     <div class="card-header">
         <h4>Danh sách danh mục</h4>
-        <!-- Nút Thêm Danh Mục -->
+        
         <a href="{{ route('category.create') }}" class="btn btn-primary mb-3">
             Thêm danh mục
         </a>
@@ -20,8 +20,8 @@
                         <th>Status</th>
                         <th>Created_at</th>
                         <th>Updated_at</th>
-                        <th>Blogs Count</th> <!-- Cột số lượng bài viết -->
-                        <th>Actions</th> <!-- Cột hành động -->
+                        <th>Blogs Count</th> 
+                        <th>Actions</th> 
                     </tr>
                 </thead>
                 <tbody>
@@ -33,18 +33,18 @@
                         <td>{{ $item->status == 0 ? 'Ẩn' : 'Hiển thị' }}</td>
                         <td>{{ \Carbon\Carbon::parse($item->created_at)->format('d/m/Y') }}</td>
                         <td>{{ \Carbon\Carbon::parse($item->updated_at)->format('d/m/Y') }}</td>
-                        <td>{{ $item->blogs_count }}</td> <!-- Hiển thị số lượng bài viết -->
+                        <td>{{ $item->blogs_count }}</td> 
                         <td>
-                            <!-- Nút Sửa -->
+                            
                             <a href="{{ route('category.edit', $item->id) }}" class="btn btn-warning btn-sm">
                                 Sửa
                             </a>
-
-                            <!-- Nút Xóa -->
-                            <form action="{{ route('category.destroy', $item->id) }}" method="POST" style="display: inline;">
+                            <form action="{{ route('category.destroy', $item->id) }}" method="POST" class="d-inline delete-form" title="Xóa">
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit" class="btn btn-danger btn-sm">Xóa</button>
+                                <button type="submit" class="btn btn-danger btn-sm">
+                                    <i class="fas fa-trash"></i>
+                                </button>
                             </form>
                         </td>
                     </tr>    
@@ -54,28 +54,4 @@
         </div>
     </div>
 </div>
-
-<script>
-    $(document).on('click', '.delete-category', function(e) {
-        e.preventDefault();
-        if (confirm('Are you sure you want to delete this category?')) {
-            const url = $(this).attr('href');
-            $.ajax({
-                url: url,
-                type: 'DELETE',
-                data: {
-                    _token: '{{ csrf_token() }}'
-                },
-                success: function(response) {
-                    alert(response.message);
-                    location.reload();
-                },
-                error: function(xhr) {
-                    alert('Failed to delete category.');
-                }
-            });
-        }
-    });
-</script>
-
 @endsection

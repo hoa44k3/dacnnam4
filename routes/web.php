@@ -39,7 +39,8 @@ Route::group(['prefix' => ''], function() {
     Route::post('/comment/{blog_id}', [HomeController::class, 'storeComment'])->name('blogcomment');
     Route::get('/blogdetail{id}', [HomeController::class, 'blogdetail'])->name('blogdetail');
     Route::get('/menu', [HomeController::class, 'menu'])->name('menu');
-    Route::post('/contact', [ContactController::class, 'storeContact']);
+    //Route::post('/contact', [ContactController::class, 'storeContact']);
+    Route::post('/contact', [HomeController::class, 'storeContact']);
     Route::get('/tags/{tag}', [HomeController::class, 'showByTag'])->name('tags.show');
     Route::get('/dish/{id}', [HomeController::class, 'dishDetail'])->name('dish_detail');
     Route::post('faq', [HomeController::class, 'store'])->name('faq.store');
@@ -63,7 +64,7 @@ Route::prefix('admin')->middleware('admin')->group(function () {
         Route::post('/store', [CategoryController::class, 'store'])->name('category.store');
         Route::get('/edit/{id}', [CategoryController::class, 'edit'])->name('category.edit');
         Route::put('/update/{id}', [CategoryController::class, 'update'])->name('category.update');
-        Route::delete('/destroy/{id}', [CategoryController::class, 'destroy'])->name('category.destroy');
+        Route::delete('/{category}', [CategoryController::class, 'destroy'])->name('category.destroy');
     });
 
   
@@ -77,14 +78,6 @@ Route::prefix('admin')->middleware('admin')->group(function () {
         Route::get('/{blog}', [BlogController::class, 'show'])->name('blogs.show');
 
     });
-    Route::prefix('customers')->group(function () {
-        Route::get('/', [CustomerController::class, 'index'])->name('customers.index');
-        Route::get('/create', [CustomerController::class, 'create'])->name('customers.create');
-        Route::post('/', [CustomerController::class, 'store'])->name('customers.store');
-        Route::get('/{customer}/edit', [CustomerController::class, 'edit'])->name('customers.edit');
-        Route::put('/{customer}', [CustomerController::class, 'update'])->name('customers.update');
-        Route::delete('/{customer}', [CustomerController::class, 'destroy'])->name('customers.destroy');
-    });
     Route::prefix('comments')->group(function () {
         Route::get('/', [CommentController::class, 'index'])->name('comments.index');
         Route::get('/create', [CommentController::class, 'create'])->name('comments.create');
@@ -92,14 +85,6 @@ Route::prefix('admin')->middleware('admin')->group(function () {
         Route::get('/{comment}/edit', [CommentController::class, 'edit'])->name('comments.edit');
         Route::put('/{comment}', [CommentController::class, 'update'])->name('comments.update');
         Route::delete('/{comment}', [CommentController::class, 'destroy'])->name('comments.destroy');
-    });
-    Route::prefix('favorites')->group(function () {
-        Route::get('/', [FavoriteController::class, 'index'])->name('favorites.index');         
-        Route::get('/create', [FavoriteController::class, 'create'])->name('favorites.create');  
-        Route::post('/', [FavoriteController::class, 'store'])->name('favorites.store');        
-        Route::get('/{favorite}/edit', [FavoriteController::class, 'edit'])->name('favorites.edit'); 
-        Route::put('/{favorite}', [FavoriteController::class, 'update'])->name('favorites.update'); 
-        Route::delete('/{favorite}', [FavoriteController::class, 'destroy'])->name('favorites.destroy');  
     });
     
     Route::prefix('contacts')->group(function () {
@@ -126,15 +111,6 @@ Route::prefix('admin')->middleware('admin')->group(function () {
 
     });
 
-    Route::prefix('post_types')->group(function () {
-        Route::get('/', [PostTypeController::class, 'index'])->name('post_types.index');         
-        Route::get('/create', [PostTypeController::class, 'create'])->name('post_types.create');  
-        Route::post('/', [PostTypeController::class, 'store'])->name('post_types.store');        
-        Route::get('/{post_type}/edit', [PostTypeController::class, 'edit'])->name('post_types.edit'); 
-        Route::put('/{post_type}', [PostTypeController::class, 'update'])->name('post_types.update'); 
-        Route::delete('/{post_type}', [PostTypeController::class, 'destroy'])->name('post_types.destroy');  
-    });
-    
     Route::prefix('about_us')->group(function () {
         Route::get('/', [AboutUsController::class, 'index'])->name('about_us.index');         
         Route::get('/{about_us}/edit', [AboutUsController::class, 'edit'])->name('about_us.edit'); 

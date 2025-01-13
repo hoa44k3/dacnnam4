@@ -90,7 +90,7 @@
                 <!-- Paginate -->
                 <div class="row">
                     <div class="col-12 text-center">
-                        {{ $blogs->links() }} <!-- Hiển thị phân trang nếu có nhiều bài viết -->
+                        {{ $blogs->links() }} 
                     </div>
                 </div>
             </div>

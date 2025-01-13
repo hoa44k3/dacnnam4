@@ -55,7 +55,7 @@
 
 					<div class="col-lg-9">
 						<form class="row contact_form" action="{{ url('/contact') }}" method="POST" id="contactForm" novalidate="novalidate">
-							@csrf  <!-- Token bảo vệ CSRF -->
+							@csrf  
 
 							<div class="col-md-6">
 								<div class="form-group">

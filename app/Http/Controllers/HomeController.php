@@ -11,11 +11,12 @@ use App\Models\Comment;
 use App\Models\AboutUs;
 use App\Models\Region;
 use App\Models\Faq;
+use App\Models\Contact;
 class HomeController extends Controller
 {
     public function index(Request $request)
     {
-        $blogs = Blog::select('name', 'description', 'image')->take(2)->get(); // Lấy 2 bài viết đầu tiên
+        $blogs = Blog::select('name', 'description', 'image')->take(2)->get(); // Lấy 2 bài viết đầu tiê
     
         if ($request->has('category')) {
             $category = Category::find($request->category);
@@ -34,6 +35,21 @@ class HomeController extends Controller
        
         return view('site.contact');
     }
+    public function storeContact(Request $request)
+    {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|max:255',
+            'message' => 'required|string|max:1000',
+        ]);
+
+        Contact::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'message' => $request->message,
+        ]);
+        return redirect()->route('contact')->with('success', 'Your message has been sent successfully!');
+    }
     public function about()
     {
         $aboutUs = AboutUs::all();
@@ -49,52 +65,32 @@ class HomeController extends Controller
 
         public function blogdetail($id)
         {
-            // Lấy bài viết theo id và eager load các mối quan hệ
-            $blog = Blog::with(['comments', 'tags', 'category', 'postType'])
-                        ->findOrFail($id);  // Sử dụng findOrFail thay vì firstOrFail
-
-            // Tăng lượt xem bài viết
+            $blog = Blog::with(['comments', 'tags', 'category'])
+                        ->findOrFail($id); 
             $blog->increment('view_count');
-
-            // Lấy tất cả các bài viết khác (trừ bài viết hiện tại)
             $relatedBlogs = Blog::where('id', '!=', $blog->id)
                                 ->get();
-
-            // Lấy tất cả danh mục
             $categories = Category::all();
-
-            // Trả về view chi tiết bài viết
             return view('site.blogdetail', compact('blog', 'relatedBlogs', 'categories'));
         }
-
-
-    // public function menu(){
-    //     $categories = Category::with('dishes')->get(); 
-    //     $blog = Blog::first();
-    //     return view('site.menu', compact('categories','blog'));
-    // }
         public function menu(Request $request)
-    {
-        // Lấy danh mục và món ăn liên quan
-        $categories = Category::with(['dishes' => function ($query) use ($request) {
-            if ($request->has('region') && $request->region) {
-                $query->where('region_id', $request->region);
-            }
-        }])->get();
-        $regions = Region::all();
+        {
+            $categories = Category::with(['dishes' => function ($query) use ($request) {
+                if ($request->has('region') && $request->region) {
+                    $query->where('region_id', $request->region);
+                }
+            }])->get();
+            $regions = Region::all();
 
-        return view('site.menu', compact('categories', 'regions'));
-    }
+            return view('site.menu', compact('categories', 'regions'));
+        }
 
     public function showByTag(Tag $tag)
     {
-        // Lấy bài viết liên kết với thẻ
         $blog = $tag->blog;
-
         if (!$blog) {
             return redirect()->route('blog')->with('error', 'Không có bài viết nào được liên kết với thẻ này.');
         }
-
         return view('site.blog', compact('blog', 'tag'));
     }
     public function dishDetail($id)
@@ -104,24 +100,20 @@ class HomeController extends Controller
         return view('site.dish_detail', compact('dish','faqs'));
     }
     public function store(Request $request)
-{
-    $request->validate([
-        'name' => 'required|string|max:255',
-        'email' => 'required|email|max:255',
-        'question' => 'required|string|max:1000',
-    ]);
-
-    // Lưu câu hỏi vào cơ sở dữ liệu
-    $faq = Faq::create([
-        'question' => $request->question,
-        'answer' => null,  // Câu trả lời chưa có
-    ]);
-
-    // Trả về câu hỏi vừa được gửi để hiển thị trực tiếp trên trang
-    return redirect()->route('dish_detail', ['id' => $request->dish_id])
-        ->with('success', 'Câu hỏi của bạn đã được gửi đi!')
-        ->with('new_faq', $faq);  // Trả về câu hỏi mới để hiển thị
-}
+    {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|max:255',
+            'question' => 'required|string|max:1000',
+        ]);
+        $faq = Faq::create([
+            'question' => $request->question,
+            'answer' => null, 
+        ]);
+        return redirect()->route('dish_detail', ['id' => $request->dish_id])
+            ->with('success', 'Câu hỏi của bạn đã được gửi đi!')
+            ->with('new_faq', $faq);  
+    }
 
     public function storeComment(Request $request, $blogId)
     {
@@ -135,7 +127,6 @@ class HomeController extends Controller
         $comment->user_id = auth()->id(); 
         $comment->save();
 
-        // Trả về bình luận mới để hiển thị mà không cần tải lại trang
         return response()->json([
             'content' => $comment->content,
             'user' => $comment->user->name,
@@ -144,17 +135,14 @@ class HomeController extends Controller
     }
 
     public function search(Request $request)
-{
-    $searchTerm = $request->input('name');  // Lấy từ khóa tìm kiếm
-    $blog = Blog::where('name', 'like', '%' . $searchTerm . '%')->first();  // Tìm kiếm bài viết đầu tiên phù hợp
+    {
+        $searchTerm = $request->input('name'); 
+        $blog = Blog::where('name', 'like', '%' . $searchTerm . '%')->first(); 
 
-    if ($blog) {
-        return redirect()->route('blogdetail', ['id' => $blog->id]);
-    } else {
-        return redirect()->back()->with('error', 'Không tìm thấy bài viết nào phù hợp.');
-    }
-}
-
-
-    
+        if ($blog) {
+            return redirect()->route('blogdetail', ['id' => $blog->id]);
+        } else {
+            return redirect()->back()->with('error', 'Không tìm thấy bài viết nào phù hợp.');
+        }
+    } 
 }

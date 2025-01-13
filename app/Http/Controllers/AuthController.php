@@ -74,7 +74,7 @@ class AuthController extends Controller
 
         }
         return back()->withErrors([
-            'email' => 'Invalid email or password.',
+            'email' => 'Lỗi email hoặc mật khẩu.',
         ])->withInput();
     }
    

@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Blog;
 use App\Models\Tag;
 use App\Models\Category;
-use App\Models\PostType; 
+
 
 class BlogController extends Controller
 {
@@ -44,11 +44,7 @@ class BlogController extends Controller
         }
        
        // Lưu video nếu có (chỉ lưu URL)
-    // if ($request->has('video') && $request->video) {
-    //     $blog->video = $request->video;
-    // }
     if ($request->has('video') && $request->video) {
-        // Chuyển đổi URL YouTube thành URL nhúng
         $video_url = str_replace('https://www.youtube.com/watch?v=', 'https://www.youtube.com/embed/', $request->video);
         $blog->video = $video_url;
     }
@@ -61,7 +57,7 @@ class BlogController extends Controller
             $blog->tags()->sync($request->tag_ids); 
         }
         $blog->save();
-        return redirect()->route('blogs.index')->with('success', 'Blog created successfully!');
+        return redirect()->route('blogs.index')->with('success', 'Thêm bài viết thành công!');
     }
 
     public function edit(Blog $blog)
@@ -101,7 +97,7 @@ class BlogController extends Controller
 
         $blog->save();
 
-        return redirect()->route('blogs.index')->with('success', 'Blog updated successfully!');
+        return redirect()->route('blogs.index')->with('success', 'Cập nhật thành công!');
     }
 
     public function destroy(Blog $blog)

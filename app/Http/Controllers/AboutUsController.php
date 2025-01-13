@@ -30,7 +30,6 @@ class AboutUsController extends Controller
             'vision' => 'nullable|string',
         ]);
     
-        // Xử lý hình ảnh nếu có upload mới
         if ($request->hasFile('image_path')) {
             $image = $request->file('image_path');
             $imagePath = $image->store('about_us', 'public'); 

@@ -17,8 +17,6 @@ return new class extends Migration
             $table->text('description')->change();
             $table->string('image');
             $table->unsignedBigInteger('category_id')->nullable();
-            $table->timestamp('availability');
-            $table->integer('quantity')->default(0);
             $table->text('origin')->nullable(); // Nguồn gốc món ăn
             $table->text('ingredients')->nullable(); // Nguyên liệu
             $table->text('preparation')->nullable(); // Cách làm

@@ -148,7 +148,7 @@
                                         @endforeach
                                     </div>
                                     <ul class="blog_meta list">
-                                        <li><a href="#">Loại bài viết: {{ $blog->postType->name ?? 'Không có' }}<i class="lnr lnr-bookmark"></i></a></li>
+                                       
                                         <li><a href="#">Danh mục: {{ $blog->category ? $blog->category->name : 'Uncategorized' }}<i class="lnr lnr-list"></i></a></li>
                                         <li><a href="#">Lượt xem: {{ $blog->view_count }}<i class="lnr lnr-eye"></i></a></li>
                                         <li><a href="#">Ngày tạo: {{ $blog->created_at ? $blog->created_at->format('d M, Y') : 'Unknown Date' }}<i class="lnr lnr-calendar-full"></i></a></li>
@@ -192,18 +192,7 @@
                                 </div>
                             @endforeach
                         </div>
-                        <!-- Form tìm kiếm -->
-                        {{-- <div class="search-form mt-5">
-                            <h4>Tìm kiếm bài viết</h4>
-                            <form action="{{ route('blogdetail') }}" method="GET" class="search-form">
-                                <input type="text" name="name" class="form-control" placeholder="Tìm bài viết theo tên">
-                                <button type="submit" class="btn btn-primary mt-2">Tìm kiếm</button>
-                            </form>
-                            @if(session('error'))
-                                <div class="alert alert-danger mt-2">{{ session('error') }}</div>
-                            @endif
-                            
-                        </div> --}}
+    
                         
                          <!-- Form bình luận -->
                         <form id="commentForm" action="{{ route('blogcomment', $blog->id) }}" method="POST">
@@ -232,7 +221,7 @@
         
 @endsection
 <script>
-    // Xử lý gửi bình luận
+   
     document.getElementById('commentForm').addEventListener('submit', function (e) {
         e.preventDefault();
 
@@ -260,8 +249,8 @@
                     <span>${data.created_at}</span>
                 </div>
             `;
-            commentSection.innerHTML += newComment; // Thêm bình luận mới vào cuối danh sách
-            document.getElementById('content').value = ''; // Xóa nội dung đã nhập
+            commentSection.innerHTML += newComment; 
+            document.getElementById('content').value = ''; 
         })
         .catch(error => {
             console.error('Error:', error);

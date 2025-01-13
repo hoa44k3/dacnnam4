@@ -6,7 +6,7 @@
         <h4 class="card-title">Edit Category</h4>
     </div>
     <div class="card-body">
-        <!-- Hiển thị lỗi nếu có -->
+      
         @if ($errors->any())
             <div class="alert alert-danger">
                 <ul>
@@ -17,7 +17,7 @@
             </div>
         @endif
 
-        <!-- Form sửa danh mục -->
+      
         <form action="{{ route('category.update', $category->id) }}" method="POST">
             @csrf
             @method('PUT')

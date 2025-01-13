@@ -10,7 +10,6 @@
             @csrf
             @method('PUT')
 
-            <!-- Title -->
             <div class="form-group">
                 <label for="title">Title:</label>
                 <input type="text" name="title" value="{{ old('title', $aboutUs->title) }}" class="form-control" required>
@@ -19,7 +18,6 @@
                 @enderror
             </div>
 
-            <!-- Content -->
             <div class="form-group">
                 <label for="content">Content:</label>
                 <textarea name="content" class="form-control" required>{{ old('content', $aboutUs->content) }}</textarea>
@@ -28,7 +26,6 @@
                 @enderror
             </div>
 
-            <!-- Mission -->
             <div class="form-group">
                 <label for="mission">Mission:</label>
                 <textarea name="mission" class="form-control">{{ old('mission', $aboutUs->mission) }}</textarea>
@@ -37,7 +34,6 @@
                 @enderror
             </div>
 
-            <!-- Vision -->
             <div class="form-group">
                 <label for="vision">Vision:</label>
                 <textarea name="vision" class="form-control">{{ old('vision', $aboutUs->vision) }}</textarea>
@@ -46,7 +42,6 @@
                 @enderror
             </div>
 
-            <!-- Image Upload -->
             <div class="form-group">
                 <label for="image_path">Image:</label>
                 <input type="file" name="image_path" class="form-control">

@@ -15,9 +15,9 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->text('content');
-            $table->string('image_path')->nullable(); // Hình ảnh không bắt buộc
-            $table->text('mission')->nullable(); // Sứ mệnh có thể tùy chọn
-            $table->text('vision')->nullable(); // Tầm nhìn có thể tùy chọn
+            $table->string('image_path')->nullable(); 
+            $table->text('mission')->nullable(); 
+            $table->text('vision')->nullable();
             $table->timestamps();
         });
     }

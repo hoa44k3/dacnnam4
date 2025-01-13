@@ -5,34 +5,33 @@
 @section('body')
 <style>
 	.about-us-section {
-    display: flex; /* Đặt Flexbox cho các phần tử con */
-    justify-content: space-between; /* Cân chỉnh nội dung và ảnh sang hai bên */
-    align-items: center; /* Căn chỉnh dọc giữa các phần tử */
-    margin-bottom: 30px; /* Khoảng cách dưới mỗi phần giới thiệu */
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center;
+    margin-bottom: 30px; 
 }
 
 .left-content {
-    max-width: 100%; /* Giới hạn chiều rộng của phần nội dung */
-    padding-right: 30px; /* Khoảng cách giữa nội dung và ảnh */
+    max-width: 100%; 
+    padding-right: 30px; 
 }
 
 .right-img img.about-img {
-    width: 100%; /* Giữ chiều rộng ảnh bằng 100% */
-    height: auto; /* Giữ tỷ lệ khung hình cho ảnh */
-    object-fit: cover; /* Cắt ảnh nếu cần để tránh bị méo */
-    border-radius: 10px; /* Góc bo tròn cho ảnh */
+    width: 100%; 
+    height: auto; 
+    object-fit: cover; 
+    border-radius: 10px; 
 }
 
-/* Đảm bảo responsive cho ảnh và nội dung khi thu nhỏ màn hình */
 @media (max-width: 992px) {
     .about-us-section {
-        flex-direction: column; /* Sắp xếp theo chiều dọc trên màn hình nhỏ */
-        text-align: center; /* Căn chỉnh nội dung vào giữa */
+        flex-direction: column; 
+        text-align: center; 
     }
 
     .right-img img.about-img {
-        width: 80%; /* Giảm kích thước ảnh trên màn hình nhỏ */
-        margin: 0 auto; /* Căn giữa ảnh */
+        width: 80%; 
+        margin: 0 auto;
     }
 }
 
@@ -65,7 +64,7 @@
 		<div class="container">
 			@foreach ($aboutUs as $about)
 				<div class="row align-items-center justify-content-center about-us-section">
-					<!-- Left content -->
+					
 					<div class="col-lg-6">
 						<div class="left-content">
 							<h1>{{ $about->title }}</h1>
@@ -74,8 +73,7 @@
 							<p><strong>Tầm nhìn:</strong> {{ $about->vision }}</p>
 						</div>
 					</div>
-					
-					<!-- Right image -->
+	
 					<div class="col-lg-6">
 						<div class="right-img">
 							@if($about->image_path)

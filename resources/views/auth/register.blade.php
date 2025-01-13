@@ -120,8 +120,7 @@
 
             <label for="password_confirmation">Nhập lại mật khẩu:</label>
             <input type="password" id="password_confirmation" name="password_confirmation" placeholder="Nhập lại mật khẩu">
-            {{-- <label for="image">Ảnh đại diện:</label>
-            <input type="file" id="image" name="image" accept="image/*"> --}}
+           
             
             <button type="submit">Đăng Ký</button>
         </form>

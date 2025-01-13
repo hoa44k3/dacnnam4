@@ -29,8 +29,7 @@
                             <td>{{ $contact->message }}</td>
                             
                             <td>{{ $contact->response ?? 'Chưa phản hồi' }}</td>
-                            {{-- <td>{{ $contact->created_at ? $contact->created_at->format('d/m/Y H:i') : '-' }}</td>
-                            <td>{{ $contact->response_date ? $contact->response_date->format('d/m/Y H:i') : '-' }}</td> --}}
+                            
                             <td>{{ $contact->created_at ? \Carbon\Carbon::parse($contact->created_at)->format('d/m/Y H:i') : '-' }}</td>
                             <td>{{ $contact->response_date ? \Carbon\Carbon::parse($contact->response_date)->format('d/m/Y H:i') : '-' }}</td>
 
@@ -51,7 +50,7 @@
             </table>
         </div>
     </div>
-</div>
+</div>3
 <div class="modal fade" id="replyModal" tabindex="-1" aria-labelledby="replyModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">

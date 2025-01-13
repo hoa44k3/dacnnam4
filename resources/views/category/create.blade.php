@@ -6,7 +6,7 @@
         <h4 class="card-title">Add New Category</h4>
     </div>
     <div class="card-body">
-        <!-- Hiển thị lỗi nếu có -->
+        
         @if ($errors->any())
             <div class="alert alert-danger">
                 <ul>
@@ -17,7 +17,6 @@
             </div>
         @endif
 
-        <!-- Form thêm danh mục -->
         <form action="{{ route('category.store') }}" method="POST">
             @csrf
             <div class="form-group">
@@ -37,7 +36,7 @@
             </div>
             <div class="form-group">
                 <label for="blogs_count">Number of Blogs</label>
-                <input type="text" id="blogs_count" class="form-control" value="0" disabled> <!-- Chỉ hiển thị số lượng bài viết, không cần nhập -->
+                <input type="text" id="blogs_count" class="form-control" value="0" disabled> 
             </div>
             <button type="submit" class="btn btn-primary">Save</button>
         </form>

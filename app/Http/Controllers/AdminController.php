@@ -14,21 +14,21 @@ class AdminController extends Controller
     }
     
     public function search(Request $request)
-{
-    $query = $request->input('query');
+    {
+        $query = $request->input('query');
 
-    $blog = Blog::where('name', 'LIKE', $query)->first();
-    if ($blog) {
-        return redirect()->route('blogs.show', ['blog' => $blog->id]);
+        $blog = Blog::where('name', 'LIKE', $query)->first();
+        if ($blog) {
+            return redirect()->route('blogs.show', ['blog' => $blog->id]);
+        }
+
+        $dish = Dish::where('name', 'LIKE', $query)->first();
+        if ($dish) {
+            return redirect()->route('dish.show', ['dish' => $dish->id]);
+        }
+
+        return back()->with('error', 'No results found for: ' . $query);
     }
-
-    $dish = Dish::where('name', 'LIKE', $query)->first();
-    if ($dish) {
-        return redirect()->route('dish.show', ['dish' => $dish->id]);
-    }
-
-    return back()->with('error', 'No results found for: ' . $query);
-}
 
     
 }

@@ -20,7 +20,7 @@ class Dish extends Model
         'description',
         'image',
         'category_id',
-        'availability',
+       // 'availability',
         'origin',
         'ingredients',
         'preparation',
@@ -37,10 +37,7 @@ class Dish extends Model
     {
         return $this->hasMany(Comment::class);
     }
-    public function orders()
-    {
-        return $this->belongsToMany(Order::class)->withPivot('quantity');
-    }
+    
     public function region()
     {
         return $this->belongsTo(Region::class);

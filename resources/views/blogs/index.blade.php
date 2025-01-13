@@ -51,9 +51,9 @@
                             <td>{{ $blog->created_at->format('d-m-Y') }}</td>
                             <td>
                                 @if($blog->video)
-                                    <!-- Thêm nút nhấn để mở video -->
+                                   
                                     <button class="btn btn-primary btn-sm" onclick="playVideo('{{ $blog->video }}', {{ $blog->id }})">Xem Video</button>
-                                    <!-- Thẻ video được ẩn ban đầu -->
+                                    
                                     <div id="video-{{ $blog->id }}" style="display:none;">
                                         <iframe width="500" height="315" id="video-frame-{{ $blog->id }}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                                         <button class="btn btn-danger btn-sm mt-2" onclick="hideVideo({{ $blog->id }})">Ẩn Video</button> <!-- Nút ẩn video -->

@@ -108,13 +108,6 @@ class DishController extends Controller
 
         return response()->json(['success' => 'Món ăn đã được xóa thành công!']);
     }
-
-    // public function show($id)
-    // {
-       
-    //     $dish = Dish::with(['category', 'region'])->findOrFail($id); 
-    //     return view('dish.show', compact('dish'));
-    // }
     public function show(Dish $dish)
     {
         $dish->increment('view_count');

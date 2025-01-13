@@ -13,9 +13,5 @@ class Region extends Model
     {
         return $this->hasMany(Dish::class);
     }
-// public function blogs()
-// {
-//     return $this->hasMany(Blog::class);
-// }
 
 }

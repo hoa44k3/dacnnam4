@@ -10,7 +10,7 @@
             @foreach($blogs as $key => $blog)
                 <div class="col-lg-6 {{ $key % 2 == 0 ? 'order-lg-1' : 'order-lg-2' }}">
                     <div class="right-img">
-                        <!-- Hiển thị ảnh bài viết -->
+                       
                         <img class="img1 img-fluid" src="{{ asset('storage/' . $blog->image) }}" alt="{{ $blog->name }}">
                     </div>
                 </div>

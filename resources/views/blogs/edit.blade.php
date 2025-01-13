@@ -51,17 +51,15 @@
             </div>
             <div class="form-group">
                 <label for="video">Video</label>
-                <!-- Hiển thị video hiện tại (nếu có) -->
                 @if($blog->video)
                     <div>
                         <video width="320" height="240" controls>
                             <source src="{{ asset('storage/' . $blog->video) }}" type="video/mp4">
-                            Your browser does not support the video tag.
+                                Trình duyệt của bạn không hỗ trợ thẻ video.
                         </video>
                     </div>
                 @endif
             
-                <!-- Cho phép tải lên video mới -->
                 <input type="file" name="video" class="form-control" id="video" accept="video/*">
             </div>
             <button type="submit" class="btn btn-success">Cập nhật</button>

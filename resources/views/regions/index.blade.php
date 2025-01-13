@@ -12,9 +12,9 @@
             <table class="table table-striped table-hover">
                 <thead>
                     <tr>
-                        <th>Name</th>
-                        <th>Description</th>
-                        <th>Actions</th>
+                        <th>Tên</th>
+                        <th>Mô tả</th>
+                        <th>Hành động</th>
                     </tr>
                 </thead>
                 <tbody>

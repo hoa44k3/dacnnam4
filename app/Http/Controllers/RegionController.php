@@ -34,7 +34,7 @@ class RegionController extends Controller
         ]);
 
         Region::create($request->all());
-        return redirect()->route('regions.index')->with('success', 'Region created successfully.');
+        return redirect()->route('regions.index')->with('success', 'Thêm thành công.');
     }
 
     /**
@@ -64,7 +64,7 @@ class RegionController extends Controller
         ]);
 
         $region->update($request->all());
-        return redirect()->route('regions.index')->with('success', 'Region updated successfully.');
+        return redirect()->route('regions.index')->with('success', 'Cập nhật thành công.');
     }
 
 
@@ -74,6 +74,6 @@ class RegionController extends Controller
     public function destroy(Region $region)
     {
         $region->delete();
-        return redirect()->route('regions.index')->with('success', 'Region deleted successfully.');
+        return redirect()->route('regions.index')->with('success', 'Xóa thành công.');
     }
 }

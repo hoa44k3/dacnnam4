@@ -242,12 +242,12 @@
 </section>
 <script>
     document.addEventListener('DOMContentLoaded', function () {
-        // Lắng nghe sự kiện click vào câu hỏi
+       
         const questions = document.querySelectorAll('.faq_question');
 
         questions.forEach(function (question) {
             question.addEventListener('click', function () {
-                // Tìm phần đáp án tương ứng và chuyển đổi trạng thái hiển thị
+            
                 const answer = question.nextElementSibling;
                 if (answer.style.display === 'none') {
                     answer.style.display = 'block';

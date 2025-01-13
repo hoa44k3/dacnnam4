@@ -17,7 +17,6 @@ class TagController extends Controller
     {
         $blogs = Blog::select('id', 'name')->get();
         return view('tags.create', compact('blogs'));
-        // return view('tags.create');
     }
 
     public function store(Request $request)
@@ -28,7 +27,7 @@ class TagController extends Controller
         ]);
 
         Tag::create($request->all());
-        return redirect()->route('tags.index')->with('success', 'Tag created successfully.');
+        return redirect()->route('tags.index')->with('success', 'Thêm thành công.');
     }
 
     public function show($id)
@@ -37,14 +36,9 @@ class TagController extends Controller
         return view('tags.show', compact('tag'));
     }
 
-    // public function edit($id)
-    // {
-    //     $tag = Tag::findOrFail($id);
-    //     return view('tags.edit', compact('tag'));
-    // }
     public function edit(Tag $tag)
     {
-        $blogs = Blog::all(); // Lấy tất cả các blog
+        $blogs = Blog::all(); 
         return view('tags.edit', compact('tag', 'blogs'));
     }
 
@@ -55,31 +49,14 @@ class TagController extends Controller
             'name' => 'required|string|max:255',
             'blog_id' => 'required|exists:blogs,id',
         ]);
-
-        // $tag = Tag::findOrFail($id);
         $tag->update($validated);
-        // $tag->update($request->all());
         return redirect()->route('tags.index')->with('success', 'Tag updated successfully.');
     }
-
-//     public function destroy($id)
-// {
-//     try {
-//         $tag = Tag::findOrFail($id);
-//         $tag->delete();
-
-//         return response()->json(['message' => 'Tag deleted successfully.']);
-//     } catch (\Exception $e) {
-//         return response()->json(['message' => 'Error deleting tag: ' . $e->getMessage()], 500);
-//     }
-// }
-    public function destroy($id)
-        {
-            $tag = Tag::findOrFail($id);
-            $tag->delete();
-    
-            return redirect()->route('tags.index')->with('success', 'Thẻ đã được xóa.');
-        }
-
-    
+    public function destroy(Tag $tag)
+    {
+        $tag->delete();
+       
+        return redirect()->route('tags.index')->with('success', ' đã được xóa.');
+       
+    }
 }

@@ -8,8 +8,6 @@ class CategoryController extends Controller
 {
     public function index()
     {
-       // $data = Category::orderBy('id', 'asc')->paginate(6);
-        // Lấy danh sách các danh mục và số lượng bài viết
         $data = Category::withCount('blogs')->orderBy('id', 'asc')->paginate(6);
         return view('category.index', compact('data'));
        
@@ -35,8 +33,8 @@ class CategoryController extends Controller
             'status' => 'required|boolean',
         ]);
         
-        Category::create($validated); // Lưu danh mục vào cơ sở dữ liệu
-        return redirect()->route('category.index')->with('success', 'Category created successfully.');
+        Category::create($validated); 
+        return redirect()->route('category.index')->with('success', 'Thêm danh mục thành công.');
     }
 
 
@@ -54,8 +52,8 @@ class CategoryController extends Controller
      */
     public function edit($id)
     {
-        $category = Category::findOrFail($id); // Lấy danh mục theo ID
-        return view('category.edit', compact('category')); // Truyền biến $category vào view
+        $category = Category::findOrFail($id); 
+        return view('category.edit', compact('category')); 
     }
 
 
@@ -73,18 +71,18 @@ class CategoryController extends Controller
         $category = Category::findOrFail($id);
         $category->update($validated);
 
-        return redirect()->route('category.index')->with('success', 'Category updated successfully.');
+        return redirect()->route('category.index')->with('success', 'Cập nhật thành công.');
     }
 
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy($id)
+    public function destroy(Category $category)
     {
-        $category = Category::findOrFail($id);
         $category->delete();
-    
-        return response()->json(['message' => 'Category deleted successfully.']);
+       
+        return redirect()->route('category.index')->with('success', ' đã được xóa.');
+       
     }
 }

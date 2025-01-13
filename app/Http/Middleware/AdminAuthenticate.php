@@ -18,7 +18,7 @@ class AdminAuthenticate
     {
         
        
-        if (Auth::check() && Auth::user()->role == 'admin') {  // 1 là admin
+        if (Auth::check() && Auth::user()->role == 'admin') {  
             return $next($request);
         }
 

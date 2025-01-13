@@ -11,7 +11,6 @@ class CommentController extends Controller
     public function index()
     {
          $comments = Comment::all();
-       
         return view('comments.index', compact('comments'));
     }
 
@@ -31,10 +30,10 @@ class CommentController extends Controller
         Comment::create([
             'content' => $request->content,
             'dish_id' => $request->dish_id,
-            'user_id' => auth()->id(),  // Gán user hiện tại
+            'user_id' => auth()->id(),  
         ]);
 
-        return back()->with('success', 'Your comment has been posted.');
+        return back()->with('success', 'Bình luận đã được đăng.');
     }
 
 
@@ -57,12 +56,14 @@ class CommentController extends Controller
         $comment = Comment::findOrFail($id);
         $comment->update($request->all());
 
-        return redirect()->route('comments.index')->with('success', 'Comment updated successfully.');
+        return redirect()->route('comments.index')->with('success', 'Cập nhật thành công.');
     }
 
-    public function destroy($id)
+    public function destroy(Comment $comment)
     {
-        Comment::destroy($id);
-        return response()->json(['success' => 'Comment deleted successfully.']);
+        $comment->delete();
+       
+        return redirect()->route('comments.index')->with('success', ' đã được xóa.');
+       
     }
 }

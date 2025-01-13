@@ -23,10 +23,7 @@
                         </option>
                     @endforeach
                 </select>
-              
-
-            </div>
-            
+            </div>          
             
             <div class="form-group">
                 <label for="description">Mô tả</label>

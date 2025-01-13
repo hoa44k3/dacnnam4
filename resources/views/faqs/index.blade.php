@@ -5,15 +5,11 @@
     <div class="row">
         <div class="col-md-12">
             <h1>Quản lý Câu hỏi thường gặp </h1>
-
-            <!-- Thông báo -->
             @if (session('success'))
                 <div class="alert alert-success">
                     {{ session('success') }}
                 </div>
             @endif
-
-            <!-- Form thêm câu hỏi -->
             <div class="card mb-4">
                 <div class="card-header">
                     <h2>Thêm câu hỏi mới</h2>
@@ -29,8 +25,6 @@
                     </form>
                 </div>
             </div>
-
-            <!-- Danh sách câu hỏi -->
             <div class="card">
                 <div class="card-header">
                     <h2>Danh sách câu hỏi</h2>
@@ -52,7 +46,7 @@
                                     <td>{{ $faq->question }}</td>
                                     <td>{{ $faq->answer ?? 'Chưa trả lời' }}</td>
                                     <td>
-                                        <!-- Form trả lời câu hỏi -->
+                                     
                                         @if (!$faq->answer)
                                             <form method="POST" action="{{ route('faqs.answer', $faq->id) }}" class="mb-2">
                                                 @csrf
@@ -63,7 +57,7 @@
                                             </form>
                                         @endif
 
-                                        <!-- Xóa câu hỏi -->
+                                     
                                         <form method="POST" action="{{ route('faqs.destroy', $faq->id) }}">
                                             @csrf
                                             @method('DELETE')
