@@ -56,7 +56,7 @@
                                     
                                     <div id="video-{{ $blog->id }}" style="display:none;">
                                         <iframe width="500" height="315" id="video-frame-{{ $blog->id }}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                                        <button class="btn btn-danger btn-sm mt-2" onclick="hideVideo({{ $blog->id }})">Ẩn Video</button> <!-- Nút ẩn video -->
+                                        <button class="btn btn-danger btn-sm mt-2" onclick="hideVideo({{ $blog->id }})">Ẩn Video</button>
                                     </div>
                                 @else
                                     Không có video
@@ -76,6 +76,7 @@
                                         <i class="fas fa-trash"></i>
                                     </button>
                                 </form>
+                                
                             </td>
                         </tr>
                     @endforeach
@@ -88,21 +89,13 @@
 @endsection
 <script>
     function playVideo(videoUrl, blogId) {
-        // Lấy iframe bằng ID duy nhất của blog
         var iframe = document.getElementById('video-frame-' + blogId);
-        
-        // Hiển thị video
         document.getElementById('video-' + blogId).style.display = 'block';
-
-        // Đặt nguồn video vào iframe
         iframe.src = videoUrl;
     }
 
     function hideVideo(blogId) {
-        // Ẩn video
         document.getElementById('video-' + blogId).style.display = 'none';
-
-        // Dừng video bằng cách xóa nguồn iframe (dừng video)
         var iframe = document.getElementById('video-frame-' + blogId);
         iframe.src = '';
     }
@@ -111,24 +104,19 @@
     var iframe = document.getElementById('video-frame-' + blogId);
     var videoEmbedUrl;
 
-    // Kiểm tra và xử lý URL nếu là YouTube
     if (videoUrl.includes('youtube.com/watch') || videoUrl.includes('youtu.be')) {
         videoEmbedUrl = convertYouTubeUrlToEmbed(videoUrl);
     } else {
-        videoEmbedUrl = videoUrl; // Sử dụng link trực tiếp cho video khác
+        videoEmbedUrl = videoUrl; 
     }
-
-    // Hiển thị video
     document.getElementById('video-' + blogId).style.display = 'block';
-
-    // Đặt nguồn video vào iframe
     iframe.src = videoEmbedUrl;
 }
 
 function hideVideo(blogId) {
     document.getElementById('video-' + blogId).style.display = 'none';
     var iframe = document.getElementById('video-frame-' + blogId);
-    iframe.src = ''; // Xóa nguồn để dừng video
+    iframe.src = '';
 }
 
 function convertYouTubeUrlToEmbed(url) {
@@ -137,7 +125,7 @@ function convertYouTubeUrlToEmbed(url) {
     } else if (url.includes('youtu.be')) {
         return url.replace('youtu.be/', 'youtube.com/embed/');
     }
-    return url; // Nếu không phải YouTube, trả về URL gốc
+    return url;
 }
 
 </script>

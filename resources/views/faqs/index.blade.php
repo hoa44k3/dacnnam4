@@ -56,12 +56,13 @@
                                                 <button type="submit" class="btn btn-success btn-sm mt-2">Trả lời</button>
                                             </form>
                                         @endif
-
-                                     
-                                        <form method="POST" action="{{ route('faqs.destroy', $faq->id) }}">
+                                       
+                                        <form action="{{ route('faqs.destroy', $faq->id) }}" method="POST" class="d-inline delete-form" title="Xóa">
                                             @csrf
                                             @method('DELETE')
-                                            <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Bạn có chắc chắn muốn xóa?')">Xóa</button>
+                                            <button type="submit" class="btn btn-danger btn-sm">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
                                         </form>
                                     </td>
                                 </tr>

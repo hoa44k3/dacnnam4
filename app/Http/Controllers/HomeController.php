@@ -16,7 +16,7 @@ class HomeController extends Controller
 {
     public function index(Request $request)
     {
-        $blogs = Blog::select('name', 'description', 'image')->take(2)->get(); // Lấy 2 bài viết đầu tiê
+        $blogs = Blog::select('name', 'description', 'image')->take(2)->get(); 
     
         if ($request->has('category')) {
             $category = Category::find($request->category);
@@ -48,7 +48,7 @@ class HomeController extends Controller
             'email' => $request->email,
             'message' => $request->message,
         ]);
-        return redirect()->route('contact')->with('success', 'Your message has been sent successfully!');
+        return redirect()->route('contact')->with('success', 'Gửi thành công!');
     }
     public function about()
     {
@@ -134,15 +134,4 @@ class HomeController extends Controller
         ]);
     }
 
-    public function search(Request $request)
-    {
-        $searchTerm = $request->input('name'); 
-        $blog = Blog::where('name', 'like', '%' . $searchTerm . '%')->first(); 
-
-        if ($blog) {
-            return redirect()->route('blogdetail', ['id' => $blog->id]);
-        } else {
-            return redirect()->back()->with('error', 'Không tìm thấy bài viết nào phù hợp.');
-        }
-    } 
 }

@@ -35,11 +35,9 @@ class FaqController extends Controller
 
         return redirect()->back()->with('success', 'Câu trả lời đã được lưu.');
     }
-    public function destroy($id)
+    public function destroy(Faq $faq)
     {
-        $faq = Faq::findOrFail($id);
         $faq->delete();
-        return redirect()->back()->with('success', 'Câu hỏi đã được xóa.');
+        return redirect()->route('faqs.index')->with('success', ' đã được xóa.');
     }
-
 }

@@ -54,7 +54,6 @@ Route::post('auth/login', [AuthController::class, 'post_login'])->name('auth.log
 
 Route::prefix('admin')->middleware('admin')->group(function () {
     Route::get('/', [AdminController::class, 'index'])->name('admin.index');
-    //Route::get('/search-results', [AdminController::class, 'searchResults'])->name('admin.searchResults');
     Route::get('/search', [AdminController::class, 'search'])->name('admin.search');
 
 
@@ -125,15 +124,6 @@ Route::prefix('admin')->middleware('admin')->group(function () {
         Route::put('/{region}', [RegionController::class, 'update'])->name('regions.update'); 
         Route::delete('/{region}', [RegionController::class, 'destroy'])->name('regions.destroy');  
     });
-    // Route::group(['prefix' => 'dish'], function () {
-    //     Route::get('/', [DishController::class, 'index'])->name('dish.index');
-    //     Route::get('/create', [DishController::class, 'create'])->name('dish.create');
-    //     Route::post('/store', [DishController::class, 'store'])->name('dish.store');
-    //     Route::get('/edit/{id}', [DishController::class, 'edit'])->name('dish.edit');
-    //     Route::put('/update/{id}', [DishController::class, 'update'])->name('dish.update');
-    //     Route::delete('/destroy/{id}', [DishController::class, 'destroy'])->name('dish.destroy');
-    //     Route::get('/{dish}', [DishController::class, 'show'])->name('dish.show');
-    // });
     Route::prefix('dish')->group(function () {
         Route::get('/', [DishController::class, 'index'])->name('dish.index');         
         Route::get('/create', [DishController::class, 'create'])->name('dish.create');  

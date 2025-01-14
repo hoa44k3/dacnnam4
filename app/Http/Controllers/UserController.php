@@ -85,5 +85,11 @@ class UserController extends Controller
 
         return redirect()->route('users.index')->with('success', 'Xóa thành công.');
     }
+    // public function destroy(User $user)
+    // {
+    //     $user->comments()->delete(); 
+    //     $user->delete();
+    //     return redirect()->route('users.index')->with('success', ' đã được xóa.');
+    // }
 
 }

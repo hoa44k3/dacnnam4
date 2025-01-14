@@ -129,17 +129,16 @@
         <section class="blog_area single-post-area section_gap">
             <div class="container">
                 <div class="row">
-                    <!-- Main Content -->
+                 
                     <div class="col-lg-8 posts-list">
                         <div class="single-post row">
-                            <!-- Image -->
+                        
                             <div class="col-lg-8">
                                 <div class="feature-img">
                                     <img class="img-fluid" src="{{ asset('storage/' . $blog->image) }}" alt="{{ $blog->name }}">
                                 </div>
                             </div>
-                            
-                            <!-- Blog Info -->
+                       
                             <div class="col-lg-4">
                                 <div class="blog_info text-left">
                                     <div class="post_tag">
@@ -148,8 +147,7 @@
                                         @endforeach
                                     </div>
                                     <ul class="blog_meta list">
-                                       
-                                        <li><a href="#">Danh mục: {{ $blog->category ? $blog->category->name : 'Uncategorized' }}<i class="lnr lnr-list"></i></a></li>
+                                        <li><a href="#">Thuộc: {{ $blog->category ? $blog->category->name : 'Uncategorized' }}<i class="lnr lnr-list"></i></a></li>
                                         <li><a href="#">Lượt xem: {{ $blog->view_count }}<i class="lnr lnr-eye"></i></a></li>
                                         <li><a href="#">Ngày tạo: {{ $blog->created_at ? $blog->created_at->format('d M, Y') : 'Unknown Date' }}<i class="lnr lnr-calendar-full"></i></a></li>
                                     </ul>
@@ -157,7 +155,6 @@
                             </div>
                         </div>
         
-                        <!-- Blog Content -->
                         <div class="col-lg-12 blog_details">
                             <h2>{{ $blog->name }}</h2>
                             <p class="excert">{{ $blog->description }}</p>
@@ -177,8 +174,7 @@
                             @endif
                         </div>
                     </div>
-        
-                    <!-- Related Posts -->
+ 
                     <div class="col-lg-4 related-posts mt-5">
                         <h4>Bài viết liên quan</h4>
                         <div class="row">
@@ -193,8 +189,6 @@
                             @endforeach
                         </div>
     
-                        
-                         <!-- Form bình luận -->
                         <form id="commentForm" action="{{ route('blogcomment', $blog->id) }}" method="POST">
                             @csrf
                             <div class="form-group">
@@ -204,7 +198,6 @@
                             <button type="submit" class="btn btn-primary">Gửi bình luận</button>
                         </form>
 
-                        <!-- Hiển thị các bình luận -->
                         <div id="comments-section">
                             @foreach ($blog->comments as $comment)
                                 <div class="comment">

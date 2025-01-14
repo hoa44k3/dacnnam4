@@ -39,7 +39,6 @@ class DishController extends Controller
         $dish = new Dish();
         $dish->name = $validated['name'];
         $dish->region_id = $validated['region_id'];  
-       
         $dish->description = $validated['description'];
         $dish->origin = $validated['origin'];
         $dish->ingredients = $validated['ingredients'];
@@ -65,48 +64,43 @@ class DishController extends Controller
     }
   
     public function update(Request $request, Dish $dish)
-{
-    $validated = $request->validate([
-        'name' => 'required|string|max:255',
-        'description' => 'required|string',
-        'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-        'category_id' => 'nullable|exists:categories,id',
-        'origin' => 'required|string',
-        'ingredients' => 'required|string',
-        'preparation' => 'required|string',
-        'cultural_value' => 'required|string',
-        'region_id' => 'nullable|exists:regions,id',
-    ]);
-    $dish->name = $validated['name']; 
-    $dish->description = $validated['description'];
-    $dish->origin = $validated['origin'];
-    $dish->ingredients = $validated['ingredients'];
-    $dish->preparation = $validated['preparation'];
-    $dish->cultural_value = $validated['cultural_value'];
-    $dish->category_id = $validated['category_id'];
-    $dish->region_id = $validated['region_id'];
-  
-    if ($request->hasFile('image')) {
-        if ($dish->image) {
-            Storage::disk('public')->delete($dish->image);
+    {
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'description' => 'required|string',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'category_id' => 'nullable|exists:categories,id',
+            'origin' => 'required|string',
+            'ingredients' => 'required|string',
+            'preparation' => 'required|string',
+            'cultural_value' => 'required|string',
+            'region_id' => 'nullable|exists:regions,id',
+        ]);
+        $dish->name = $validated['name']; 
+        $dish->description = $validated['description'];
+        $dish->origin = $validated['origin'];
+        $dish->ingredients = $validated['ingredients'];
+        $dish->preparation = $validated['preparation'];
+        $dish->cultural_value = $validated['cultural_value'];
+        $dish->category_id = $validated['category_id'];
+        $dish->region_id = $validated['region_id'];
+    
+        if ($request->hasFile('image')) {
+            if ($dish->image) {
+                Storage::disk('public')->delete($dish->image);
+            }
+            $dish->image = $request->file('image')->store('dishes', 'public');
         }
-        $dish->image = $request->file('image')->store('dishes', 'public');
+
+        $dish->save();
+        
+        return redirect()->route('dish.index')->with('success', 'Món ăn đã được cập nhật thành công!');
     }
 
-    $dish->save();
-    
-    return redirect()->route('dish.index')->with('success', 'Món ăn đã được cập nhật thành công!');
-}
-
-    public function destroy($id)
+    public function destroy(Dish $dish)
     {
-        $dish = Dish::findOrFail($id);
-        if ($dish->image) {
-            Storage::disk('public')->delete($dish->image);
-        }
         $dish->delete();
-
-        return response()->json(['success' => 'Món ăn đã được xóa thành công!']);
+        return redirect()->route('dish.index')->with('success', ' đã được xóa.');
     }
     public function show(Dish $dish)
     {

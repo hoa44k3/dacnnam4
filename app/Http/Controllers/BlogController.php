@@ -16,8 +16,6 @@ class BlogController extends Controller
         return view('blogs.index', compact('blogs'));
     }
 
-
-
     public function create()
     {
         $categories = Category::all();
@@ -34,7 +32,6 @@ class BlogController extends Controller
             'status' => 'required|in:pending,approved',
             'category_id' => 'required|exists:categories,id', 
             'video' => 'nullable|url',
-            
         ]);
 
         $blog = new Blog();
@@ -42,20 +39,12 @@ class BlogController extends Controller
         if ($request->hasFile('image')) {
             $blog->image = $request->file('image')->store('blogs', 'public');
         }
-       
-       // Lưu video nếu có (chỉ lưu URL)
-    if ($request->has('video') && $request->video) {
-        $video_url = str_replace('https://www.youtube.com/watch?v=', 'https://www.youtube.com/embed/', $request->video);
-        $blog->video = $video_url;
-    }
-    
-    
-
-         // Lưu danh mục
-        $blog->category_id = $request->category_id;
-        if ($request->has('tag_ids')) {
-            $blog->tags()->sync($request->tag_ids); 
+        if ($request->has('video') && $request->video) {
+            $video_url = str_replace('https://www.youtube.com/watch?v=', 'https://www.youtube.com/embed/', $request->video);
+            $blog->video = $video_url;
         }
+    
+        $blog->category_id = $request->category_id;
         $blog->save();
         return redirect()->route('blogs.index')->with('success', 'Thêm bài viết thành công!');
     }
@@ -76,7 +65,7 @@ class BlogController extends Controller
             'position' => 'nullable|string',
             'status' => 'required|in:pending,approved',
             'category_id' => 'required|exists:categories,id',
-           'video' => 'nullable|url',
+            'video' => 'nullable|url',
         ]);
 
         $blog->fill($validated);
@@ -85,16 +74,11 @@ class BlogController extends Controller
             $blog->image = $request->file('image')->store('blogs', 'public');
         }
         if ($request->has('video') && $request->video) {
-            // Chuyển đổi URL YouTube thành URL nhúng
             $video_url = str_replace('https://www.youtube.com/watch?v=', 'https://www.youtube.com/embed/', $request->video);
             $blog->video = $video_url;
         }
 
         $blog->category_id = $request->category_id;
-        if ($request->has('tag_ids')) {
-            $blog->tags()->sync($request->tag_ids);
-        }
-
         $blog->save();
 
         return redirect()->route('blogs.index')->with('success', 'Cập nhật thành công!');
@@ -103,9 +87,7 @@ class BlogController extends Controller
     public function destroy(Blog $blog)
     {
         $blog->delete();
-       
         return redirect()->route('blogs.index')->with('success', 'bài viết đã được xóa.');
-       
     }
     public function show(Blog $blog)
     {
